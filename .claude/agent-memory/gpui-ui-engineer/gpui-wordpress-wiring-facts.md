@@ -1,0 +1,22 @@
+---
+name: gpui-wordpress-wiring-facts
+description: Verified APIs for lazily adding a panel per workspace (trust gate, worktree events, keepalive) and wiring pattern used in zenith_wordpress
+metadata:
+  type: reference
+---
+
+Verified @ fork e13b1f697d (worktree ../zed-wire, branch feat/wire-tools).
+
+- Lazy panel owner: `cx.observe_new::<Workspace>` -> `cx.new(Wiring)` (plain entity, subscribes to Project, SettingsStore, TrustedWorktrees store) kept alive by `cx.on_release(move |_,_| drop(wiring)).detach()` on the Workspace (context.rs:126). Take `cx.entity().downgrade()` / `window.window_handle()` BEFORE `cx.new` (inside the closure `cx` is Context<Wiring>).
+- Add panel from a task: `self.window.update(cx, |_, window, cx| workspace.update(cx, |ws, cx| ws.add_panel(p, window, cx)))` (window.rs:8039 `AnyWindowHandle::update`, workspace.rs:2931). Only call from tasks, not from inside an event emit (window may be leased).
+- Trust: `TrustedWorktrees::try_get_global` trusted_worktrees.rs:111 (None in tests unless `project::trusted_worktrees::init(Default::default(), cx)` before the project); events `TrustedWorktreesEvent::{Trusted,Restricted}` :189; `can_trust` :423 emits Restricted on first untrusted check, so react to Trusted only. `Project::test_with_worktree_trust` project.rs:2197. zenith_php_tools::worktree_trusted returns true with no store.
+- Project events: `Event::{WorktreeAdded,WorktreeRemoved,WorktreeUpdatedEntries(id, UpdatedEntriesSet)}` project.rs:381-384; `UpdatedEntriesSet = Arc<[(Arc<RelPath>, ProjectEntryId, PathChange)]>`; decide index/forget from the live snapshot (`entry_for_path` worktree.rs:2905, `is_file && !is_ignored`), not from PathChange. `Worktree::snapshot()` :823 is a cheap Send clone: walk it (`files(false,0)` :2833, `absolutize` :2616) on the background executor.
+- Jump to line after open: `open_abs_path(..)` then `window.spawn`, `.downcast::<Editor>()`, `editor.go_to_singleton_buffer_point(Point, window, cx)` (navigation.rs:991). Index lines are 1-based; Point rows 0-based.
+- Test pattern: real tempdir for detect_project/read_regular + same tree in FakeFs for the worktree. `cx.run_until_parked()` alone is enough (no allow_parking/sleep): sync std::fs reads inside `background_spawn` are one test-scheduler task. `cx.update_global::<SettingsStore,_>` needs `BorrowAppContext` in scope.
+- Deterministic race tests: `cx.executor().tick()` runs one task (executor.rs:221); step until the worker took its batch, then act. Drive a second `Wiring` by hand with the setting off (inert) to poke private fields. Delete a file via `project.delete_file(ProjectPath, cx)` (project.rs:2820) - no `fs` dev-dep needed (Cargo.lock stays unchanged).
+- Virtualised panel list: `uniform_list` + `ListItem::height(px(26.))` + `.track_scroll(&UniformListScrollHandle)` copied from zenith_todo.rs:1086 / zenith_problems.rs:680; expanded children are flat rows (Row enum) to keep uniform height.
+- TRAP: worktrees zed and zed-wire share CARGO_TARGET_DIR; path-crate artifacts (settings_content) get clobbered by the other checkout's build -> bogus "no field wordpress" errors. Fix: `touch crates/settings_content/src/*.rs` and rebuild.
+- TRAP: macOS `sed -i 's/..//' file` treats the script as backup suffix; `w` command wrote a stray file. Use python for edits.
+- `cargo fmt` is run by a post-write hook: re-Read before editing after a Write.
+- TRAP: dev builds read assets (keymaps/settings) from the checkout that owns the TEST EXE (util.rs:683 `dev_repo_root`, first `.git` ancestor of current_exe). With a shared CARGO_TARGET_DIR a worktree's tests read the MAIN checkout's assets/keymaps/zenith.json; `KeymapFile::load_asset(ZENITH_KEYMAP_PATH)` tests (zenith_search) never see worktree edits and do not fail on unknown actions. Test your keymap with `KeymapFile::load(include_str!("../../../assets/keymaps/zenith.json"), cx)` (accepts SomeFailedToLoad) and assert action+key+`binding.predicate().to_string()`.
+- Panel keyboard recipe (wp_hooks_panel.rs, copied from zenith_problems): root `.key_context(..).track_focus(..).on_action(cx.listener(Self::select_next)..)`; Cancel -> `workspace.focus_center_pane` (workspace.rs:4974, needs an active item). ListItem `.toggle(..)` only sets aria_toggled (list_item.rs:352), not expanded -> put expanded/collapsed in the label. Button default role = Role::Button (button_like.rs:775); `.toggle_state(b)` -> aria_toggled. Base keymap binds up/down/enter/escape/home/end context-free; left/right only for "menu" contexts.
