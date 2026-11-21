@@ -92,7 +92,7 @@ Facts learned while building Zenith in the fork (`wp-sigmadevs/zed`). Moved verb
 - Intelephense `stubs` setting replaces defaults — templates list defaults + `wordpress`.
 - phpcbf exit codes: 0 none, 1 fixed, 2 fixed+remaining, 3 error (wrapper treats ≤2 as success).
 
-- PHP servers: the fork's defaults turn off `phptools`/`phpantom`/`phpactor`, but a user `languages.PHP.language_servers` ending in `"..."` turns them back on. PHPantom 0.11.1 flags every WordPress function as `Function 'x' not found`; phpactor 2026.10.07.0 dies (`Class "Amp\Failure" not found`). LSP `workspace/configuration` returns `lsp.<server>.settings.<section>`, so Intelephense stubs go under `settings.intelephense.stubs`.
+- PHP servers: since `de9214e025` the fork default is PHPantom (`["phpantom","!intelephense","!phpactor","!phptools","..."]`) with `code_lens` "on" (global only; unverified in the app, plan 41). Before that the defaults turned off `phptools`/`phpantom`/`phpactor`, but a user `languages.PHP.language_servers` ending in `"..."` turns them back on. PHPantom 0.11.1 flags every WordPress function as `Function 'x' not found`; phpactor 2026.10.07.0 dies (`Class "Amp\Failure" not found`). LSP `workspace/configuration` returns `lsp.<server>.settings.<section>`, so Intelephense stubs go under `settings.intelephense.stubs`.
 
 ## Look and mockups
 
@@ -119,7 +119,7 @@ Facts learned while building Zenith in the fork (`wp-sigmadevs/zed`). Moved verb
 
 ## Editor look and features (2026-11-19)
 
-- Code lens exists upstream (`settings_content/src/editor.rs:575-583`, `editor/src/code_lens.rs`, `default.json:467` is `"off"`). The default PHP language server is Phpactor, with inlay hints off by default (key names UNVERIFIED). Intelephense inlay hints (1.15.0) and code lens (1.12.0) are Premium only. The zed-config `language_servers` PHP setting is Zed-only, so Zenith runs Phpactor.
+- Code lens exists upstream (`settings_content/src/editor.rs:575-583`, `editor/src/code_lens.rs`, `default.json:467` is `"off"`). The default PHP language server is PHPantom (was Intelephense from `29ab1ddb12` to `de9214e025`; "Phpactor" here was stale), with inlay hints off by default (key names UNVERIFIED). Intelephense inlay hints (1.15.0) and code lens (1.12.0) are Premium only. The zed-config `language_servers` PHP setting is Zed-only, so Zenith runs Phpactor.
 - Fold placeholder `⋯` is drawn at `editor.rs:2049` / `fold_map.rs:572` (`display_map.rs:3733` is a test). The fold chevron already shows on folded, cursor and hover rows (`fold.rs:57`). A chip restyle = 1 call site + an appended helper behind `RailsActive`.
 - Inlay hint style is tunable only through theme `hint` / `hint.background` (`editor.rs:588-598`). Rounded UI-font chips would need `display_map`/element changes: rejected as high risk (upstream-PR candidate).
 - Italic property: Driftwood `property` is already italic (`archipelago.json:1007-1010`). `@property` is also used by css/yaml/json/rust, so "no effect elsewhere" is impossible theme-only. PHP `property_element` capture vs `@variable` precedence is UNVERIFIED.
@@ -137,3 +137,5 @@ Facts learned while building Zenith in the fork (`wp-sigmadevs/zed`). Moved verb
 - Under `cfg(test)` the text group interval is 0, so edits do not coalesce into one undo step. Call `set_group_interval` in tests that count undo steps.
 - A test binary that loads `zenith.json` with `.expect` needs stub actions for actions defined in other crates, or it panics on the unknown name.
 - `cargo sweep --maxsize 40000` reclaims the shared `target/`.
+
+- Upstream-hook exceptions accepted by owner (beyond plan 02's 5 lines): `project_panel.rs` (9 hook lines + 475-line module), `picker` 12 lines, `ui/tab.rs` ~12 lines, External Libraries rework ~10 lines (+1 line for the section menu). Hover card lives in `zenith_card`; Find in Files may clip below ~620px window height.
