@@ -28,9 +28,9 @@ No `wp-hooks-ls` or `laravel-ls` exists. Fork default today: `["intelephense","!
 - **(d) Keep Phpactor:** broken on PHP 8.5, slow. Rejected.
 
 ## Plan
-- **M0 verify (2 days, lead + owner):** run the latest PHPantom on a WordPress plugin and a Laravel fixture. Record from the LSP log: initialize capabilities, lens titles and commands, macOS `$XDG_CONFIG_HOME` resolution, init-option key `stubs.path` vs `stubs.paths`, whether `~` expands.
+- **M0 verify (2 days, lead + owner):** run the latest PHPantom on a WordPress plugin and a Laravel fixture. Record from the LSP log: initialize capabilities, lens titles and commands, macOS `$XDG_CONFIG_HOME` resolution, init-option key `stubs.paths` (array; PHPantom config-schema has no `stubs.path`), whether `~` expands.
 - **M1 defaults:** `default.json:2638` and `:3073` → `["phpantom","!intelephense","!phpactor","!phptools","..."]`. Run the touched crates' tests and `cargo check -p zenith`.
-- **M2 WordPress stubs:** in `zenith_php_tools`, behind the existing consent banner, write `lsp.phpantom.initialization_options.stubs.path = <managed_root>/wordpress/vendor/php-stubs/wordpress-stubs` via `update_settings_file`. Idempotent, WordPress projects only. Tests: path builder, idempotent write, consent never defaults to yes. Sabotage each.
+- **M2 WordPress stubs:** in `zenith_php_tools`, behind the existing consent banner, write `lsp.phpantom.initialization_options.stubs.paths = [<managed_root>/wordpress/vendor/php-stubs/wordpress-stubs]` via `update_settings_file` (built, fork `878e868254`, whether PHPantom reads it from init options is UNVERIFIED). Idempotent, WordPress projects only. Tests: path builder, idempotent write, consent never defaults to yes. Sabotage each.
 - **M3 code lens:** turn `code_lens` on (per-language key UNVERIFIED; global default is `"off"` at `default.json:468`). A lens click needs a command `editor.action.showReferences|goToLocations|peekLocations` with args[2] = `Location[]` (`code_lens.rs:85-88`, `:190-195`). If PHPantom lacks "N usages / N implementations" lenses, send them a pull request in that shape. Zero fork code.
 - **M4 usages popup:** the PhpStorm-style popup is covered by the PhpStorm-parity plan (M3 there, `zenith_search::ShowUsages`). Routing a lens click into it needs one hook in `code_lens.rs` (hot editor code).
 
