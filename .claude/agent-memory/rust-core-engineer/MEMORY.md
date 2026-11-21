@@ -3,3 +3,4 @@
 - [gpui capture APIs](gpui-capture-apis.md) — verified buffer-save/worktree/settings APIs used by local_history C2
 - [trust gate facts](trust-gate-facts.md) — can_trust holes for single-file/invisible worktrees, fix site, test recipe
 - [hover card facts](hover-card-facts.md) — hover_popover internals, hook recipe, shared-target sweep flake
+- [PHPantom config facts](phpantom-config-facts.md) — global toml path on macOS; no stubs key in 0.11.1
