@@ -53,6 +53,7 @@ Goal: make Zed a full replacement for PhpStorm/WebStorm for classic **and** agen
 | 39 | [External Libraries](39-external-libraries.md) | Core | ~1.5 wk | 🟨 built + reviewed, wired (only wired extlib crate): `zenith_external_libraries` + `project_panel` hooks, fork `zenith` @ `7ef1dc7da2`. Not built: M3 (read-only banner, trust exclusions), hook 5 (drag-and-drop). Hooks over plan 02 budget (owner decision) |
 | 40 | [Next.js & React Tools](40-nextjs-react-tools.md) | Web | ~1.5 wk | 🔨 built + reviewed, unwired (`crates/zenith_nextjs` in fork `zenith` @ `7ef1dc7da2`; no init/umbrella feature) (M1, M2) |
 | 41 | [PHP language server](41-php-language-server.md) | Core | ~1–2 wk | ✅ M1 done: PHPantom default + code lens on (fork `de9214e025`, unverified in app); M0, M2 stubs, M3, M4 pending |
+| 42 | [PHPantom from main](42-phpantom-main-build.md) | Core | ~2 d | 📝 proposed: pinned source build for WordPress stubs and library roots (owner approval pending) |
 
 ## Build order & rationale
 
