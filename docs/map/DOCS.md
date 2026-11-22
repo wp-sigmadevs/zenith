@@ -17,4 +17,5 @@ Open the row for your task, then only the file it links.
 | Brand assets | [brand/](../../brand/) | Icon SVG + PNGs |
 | gh accounts, repo admin, licences, issue tracking | [docs/guides/repo-admin.md](../guides/repo-admin.md) | Which account for admin tasks |
 | Releasing a build, GPL source offer, Zed trademark/credit, Zed cloud terms | [docs/guides/release-compliance.md](../guides/release-compliance.md) | Checklist before sharing any build |
+| Free AI for users: free model tiers, local models, Pi/OpenCode via ACP | [docs/guides/free-ai-options.md](../guides/free-ai-options.md) | Research 2026-11-23; limits change often, re-check before UI use |
 | Security reporting | [SECURITY.md](../../SECURITY.md) | |
