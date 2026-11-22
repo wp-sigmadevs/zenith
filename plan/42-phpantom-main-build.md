@@ -1,6 +1,6 @@
 # 42 — PHPantom from `main`: WordPress stubs and external library roots
 
-Status: PROPOSED (owner approval pending). Date: 2026-11-22. Fork `zenith` @ `c9d7fcc95a`. Follows plan 41 (M2 stubs, which turned out to be a no-op).
+Status: 🟨 M1 config writer built (`cce1a4825b`, `d58e761135`; stubs write dropped); binary SHA-256 recorded in docs only, not checked in code — audit 2026-11-22. Originally PROPOSED. Date: 2026-11-22. Fork `zenith` @ `c9d7fcc95a`. Follows plan 41 (M2 stubs, which turned out to be a no-op).
 
 ## Problem
 Two owner-visible bugs, one cause: PHPantom 0.11.1 (the latest release, the one Zed's PHP extension downloads) has no way to learn about code outside the project.

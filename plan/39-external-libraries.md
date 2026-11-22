@@ -218,8 +218,8 @@ M3, M4, M5 can be done in parallel after M2.
 | Milestone | Commit | Status |
 |---|---|---|
 | M1 detection | `ef1ff99115`, merged `7ef1dc7da2` | ✅ done, reviewed |
-| M2 panel integration | `ef1ff99115`, merged `7ef1dc7da2` | 🟨 built + reviewed; hook 5 (no drag-and-drop) not built; hooks over budget |
-| M3 read-only + trust | not built | ⬜ read-only banner and trust exclusions not built |
+| M2 panel integration | `ef1ff99115`, merged `7ef1dc7da2` | 🟨 built + reviewed; hook 5 (no drag-and-drop) built (`7ac3658fe4`, `f6ec1f24f7`); hooks over budget |
+| M3 read-only + trust | `banner.rs`; `zenith_local_settings_trust` gate (`project_settings.rs:1262`) | 🟨 built, in `zenith` @ `d58e761135`; not checked in a running app — audit 2026-11-22 |
 | M4 indexing verification | not verified | ⬜ no measurement recorded |
 | M5 settings + polish | `7ef1dc7da2` | 🟨 `zenith.external_libraries.enabled` done; other polish not verified |
 

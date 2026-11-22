@@ -31,7 +31,7 @@ Laravel Idea–level navigation and tooling.
 
 | Step | State | Commit |
 |---|---|---|
-| M1 Navigation & Code Intelligence Indexer | ✅ Laravel project detection (`artisan`, `bootstrap/app.php`, `composer.json`); view dot-name mapping (`resources/views/**/*.blade.php`), view completion; Blade `<x-component>` tag mapping; route parsing (`routes/web.php`, `routes/api.php`) with method, URI, action, name completions; nested config key parsing (`config/*.php`) for `config('app.name')`; `.env` variable parsing and completion; clippy clean; sabotage tested. | `993be8275c` |
+| M1 Navigation & Code Intelligence Indexer | ✅ Laravel project detection (`artisan`, `bootstrap/app.php`, `composer.json`); view dot-name mapping (`resources/views/**/*.blade.php`), view completion; Blade `<x-component>` tag mapping; route parsing (`routes/web.php`, `routes/api.php`) with method, URI, action, name completions (index functions only; not yet connected to any completion provider — audit 2026-11-22); nested config key parsing (`config/*.php`) for `config('app.name')`; `.env` variable parsing and completion; clippy clean; sabotage tested. | `993be8275c` |
 | M2 Artisan & Routes Panels | ✅ Dock panel (`LaravelPanel`) implementing `Panel`, `Focusable`, `EventEmitter`; Routes & Views tabs; search filter; method badges (`GET`, `POST`, `DELETE`); route name, URI, and controller action; file location jumping via `workspace.open_abs_path`; action `ToggleLaravelPanel`; tested with `gpui::test`. | `4649576782` |
 
 ## Milestones

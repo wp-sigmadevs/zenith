@@ -16,11 +16,11 @@ Goal: make Zed a full replacement for PhpStorm/WebStorm for classic **and** agen
 | 02 | [Fork architecture & conventions](02-fork-architecture.md) | Core | — | 🟨 |
 | 03 | [Config layer: PHP/JS intelligence, inspections, frameworks](03-config-layer.md) | Config/Extension | 1–3 wk | 🟨 |
 | 04 | [Scratch files](04-scratches.md) | Core | ~1 wk | ⬜ |
-| 05 | [Local history](05-local-history.md) | Core | 1–2 wk | 🔨 C1–C5 done in fork (unpushed unless pushed later, app check pending); known limits in plan 05 |
+| 05 | [Local history](05-local-history.md) | Core | 1–2 wk | 🔨 C1–C5 done, in fork `zenith` (app check pending); known limits in plan 05 |
 | 06 | [Zed as MCP/IDE server for external agents](06-ide-mcp-server.md) | Core | 2–3 wk | ⬜ |
 | 07 | [Test runner UI](07-test-runner.md) | Core | 2–3 wk | ⬜ |
-| 08 | [HTTP client](08-http-client.md) | Core | 3–4 wk | 🔨 built + reviewed, unwired (`crates/zenith_http` in fork `zenith` @ `7ef1dc7da2`; no init/umbrella feature) |
-| 09 | [Advanced refactoring](09-refactoring.md) | Extension + Core | 4–6 wk | 🔨 built + reviewed, unwired (`crates/zenith_refactor` in fork `zenith` @ `7ef1dc7da2`; no init/umbrella feature) |
+| 08 | [HTTP client](08-http-client.md) | Core | 3–4 wk | 🔨 built + reviewed, wired 2026-11-21 (`crates/zenith_http`, fork `zenith` @ `d58e761135`) |
+| 09 | [Advanced refactoring](09-refactoring.md) | Extension + Core | 4–6 wk | 🔨 built + reviewed, wired 2026-11-21 (`crates/zenith_refactor`, fork `zenith` @ `d58e761135`) |
 | 10 | [Git: merge conflicts & interactive rebase](10-git-merge-rebase.md) | Core | 3–4 wk | ⬜ |
 | 11 | [Docker / remote interpreters](11-docker-interpreters.md) | Core | 4+ wk | ⬜ |
 | 12 | [Database tool](12-database-tool.md) | Core | 2–3 mo | ⬜ |
@@ -30,14 +30,14 @@ Goal: make Zed a full replacement for PhpStorm/WebStorm for classic **and** agen
 | 16 | [Upstream contributions & extension-first](16-upstream-and-extensions.md) | Process | ongoing | ⬜ |
 | 17 | [Build optimization & Cargo features](17-build-optimization.md) | Dev | 1–2 d | ⬜ |
 | 18 | [Performance guard, LS tuning, telemetry](18-performance-and-telemetry.md) | Core/Config | ~2 wk | ⬜ |
-| 19 | [WordPress tools](19-wordpress-tools.md) | LS + Core | 2–3 wk | 🔨 built + reviewed, unwired (`crates/zenith_wordpress` in fork `zenith` @ `7ef1dc7da2`; no init/umbrella feature) (M1, M2) |
+| 19 | [WordPress tools](19-wordpress-tools.md) | LS + Core | 2–3 wk | 🔨 built + reviewed, wired 2026-11-21 (`crates/zenith_wordpress`, fork `zenith` @ `d58e761135`) (M1, M2) |
 | 20 | [File & project templates](20-file-templates.md) | Core | 1 wk | ⬜ |
-| 21 | [Project-wide inspections & Problems panel](21-project-inspections.md) | Core | 1–2 wk | 🔨 M1a, M1b, M3a, M3b (all scopes); B0–B3 new-since-branch done in fork (unpushed, app check pending) |
+| 21 | [Project-wide inspections & Problems panel](21-project-inspections.md) | Core | 1–2 wk | 🔨 M1a, M1b, M3a, M3b (all scopes); B0–B3 new-since-branch done, in fork `zenith` (app check pending) |
 | 22 | [Agent worktree manager](22-agent-worktrees.md) | Core | 2–3 wk | ⬜ |
 | 23 | [Agent review queue](23-agent-review-queue.md) | Core | 1–2 wk | ⬜ |
 | 24 | [Composer & npm panel](24-package-manager-panel.md) | Core | 1 wk | ⬜ |
-| 25 | [Laravel tools](25-laravel-tools.md) | LS + Core | 2–3 wk | 🔨 built + reviewed, unwired (`crates/zenith_laravel` in fork `zenith` @ `7ef1dc7da2`; no init/umbrella feature) (M1, M2) |
-| 26 | [Live templates & postfix completion](26-live-templates-postfix.md) | LS + Core | 1–2 wk | 🔨 built + reviewed, unwired (`crates/zenith_postfix` in fork `zenith` @ `7ef1dc7da2`; no init/umbrella feature) |
+| 25 | [Laravel tools](25-laravel-tools.md) | LS + Core | 2–3 wk | 🔨 built + reviewed, wired 2026-11-21 (`crates/zenith_laravel`, fork `zenith` @ `d58e761135`) (M1, M2) |
+| 26 | [Live templates & postfix completion](26-live-templates-postfix.md) | LS + Core | 1–2 wk | 🔨 built + reviewed, wired 2026-11-21 (`crates/zenith_postfix`, fork `zenith` @ `d58e761135`) |
 | 27 | [TODO panel](27-todo-panel.md) | Core | 2–3 d | ⬜ |
 | 28 | [Bookmarks](28-bookmarks.md) | Core | 3–4 d | ⬜ |
 | 29 | [Zenith settings UI](29-settings-ui.md) | Core | 1–2 wk | ⬜ |
@@ -50,8 +50,8 @@ Goal: make Zed a full replacement for PhpStorm/WebStorm for classic **and** agen
 | 36 | [Notifications tool window](36-notifications.md) | Core | TBD | ⬜ |
 | 37 | [Deployment (FTP/FTPS/SFTP)](37-deployment.md) | Core | TBD | ⬜ blocked on owner decisions |
 | 38 | [Terminal parity](38-terminal.md) | Config + upstream PR | TBD | ⬜ |
-| 39 | [External Libraries](39-external-libraries.md) | Core | ~1.5 wk | 🟨 built + reviewed, wired (only wired extlib crate): `zenith_external_libraries` + `project_panel` hooks, fork `zenith` @ `7ef1dc7da2`. Not built: M3 (read-only banner, trust exclusions), hook 5 (drag-and-drop). Hooks over plan 02 budget (owner decision) |
-| 40 | [Next.js & React Tools](40-nextjs-react-tools.md) | Web | ~1.5 wk | 🔨 built + reviewed, unwired (`crates/zenith_nextjs` in fork `zenith` @ `7ef1dc7da2`; no init/umbrella feature) (M1, M2) |
+| 39 | [External Libraries](39-external-libraries.md) | Core | ~1.5 wk | 🟨 built + reviewed, wired (only wired extlib crate): `zenith_external_libraries` + `project_panel` hooks, fork `zenith` @ `7ef1dc7da2`. M3 banner + trust gate and hook 5 (no drag-and-drop) built since (audit 2026-11-22). Hooks over plan 02 budget (owner decision) |
+| 40 | [Next.js & React Tools](40-nextjs-react-tools.md) | Web | ~1.5 wk | 🔨 built + reviewed, wired 2026-11-21 (`crates/zenith_nextjs`, fork `zenith` @ `d58e761135`; wiring merged unreviewed `d94951dfb3`) (M1, M2) |
 | 41 | [PHP language server](41-php-language-server.md) | Core | ~1–2 wk | ✅ M1 done: PHPantom default + code lens on (fork `de9214e025`, unverified in app); M0, M2 stubs, M3, M4 pending |
 | 42 | [PHPantom from main](42-phpantom-main-build.md) | Core | ~2 d | 📝 proposed: pinned source build for WordPress stubs and library roots (owner approval pending) |
 

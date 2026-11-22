@@ -9,17 +9,17 @@ JetBrains HTTP Client parity: `.http`/`.rest` files with run gutter buttons, env
 ## Parity checklist
 
 - [ ] `.http` syntax highlighting (tree-sitter grammar; check existing Zed extension first) (must)
-- [x] Run request at cursor (gutter ▶ + action) (must)
+- [~] Run request at cursor: action + `ctrl-enter` ✅; gutter ▶ not built — audit 2026-11-22 (must)
 - [x] Multiple requests separated by `###` with request names (must)
 - [x] Variables `{{var}}`, env files `http-client.env.json` + `http-client.private.env.json` (JetBrains format) with private overriding (must)
 - [x] Environment switcher (`EnvironmentStore`) (must)
 - [x] Response viewer: status badge, duration ms, size bytes, headers, pretty JSON, raw HTTP, and cURL export (must)
-- [x] Save response to history (`HttpHistoryStore`) (must)
+- [ ] Save response to history: `HttpHistoryStore` exists but nothing records responses — audit 2026-11-22 (must)
 - [ ] Request chaining: `> {% client.global.set("token", response.body.token) %}` response handlers (later — needs JS engine)
 - [x] Dynamic vars `{{$uuid}}`, `{{$timestamp}}`, `{{$randomInt}}` (must)
-- [x] Auth helpers: Basic, Bearer (must); OAuth2 flow (later)
-- [x] Multipart / file upload `< ./file.json` (must)
-- [x] Copy as cURL / import from cURL (`to_curl`, `parse_curl`) (must)
+- [ ] Auth helpers: Basic, Bearer — not built (write the header by hand) — audit 2026-11-22 (must); OAuth2 flow (later)
+- [ ] Multipart / file upload `< ./file.json` — not built — audit 2026-11-22 (must)
+- [~] Copy as cURL ✅; import from cURL: `parse_curl` exists, no action calls it — audit 2026-11-22 (must)
 - [ ] GraphQL, WebSocket, gRPC (later)
 
 ## Progress (crate `zenith_http`)

@@ -8,8 +8,8 @@ PhpStorm live templates (abbreviation → expandable snippet with tab stops & ex
 
 ## Parity checklist
 
-- [x] Live templates per language with tab stops, defaults, `$END$` (must)
-- [x] Template expressions: `$CLASS_NAME$`, `$METHOD_NAME$`, `$FILE_NAME$`, `$DATE$`, `$YEAR$`, `$NAMESPACE$` (must)
+- [~] Live templates per language: `$END$` cursor only; no tab stops or defaults — audit 2026-11-22 (must)
+- [~] Template expressions (`expand_live_template` handles all; the wired call fills only `$CLASS_NAME$` — audit 2026-11-22): `$CLASS_NAME$`, `$METHOD_NAME$`, `$FILE_NAME$`, `$DATE$`, `$YEAR$`, `$NAMESPACE$` (must)
 - [x] Surround-with templates (select → wrap in `try/catch`, `if`, `foreach`, `while`, `function`) (must)
 - [x] Postfix PHP: `.if .notnull .null .foreach .return .var .isset .empty .throw .par .not .echo .dd .dump` with intelligent singular deduction (e.g. `$users` -> `$user`) (must)
 - [x] Postfix JS/TS: `.if .const .let .return .log .await .forof .not .par` (must)
