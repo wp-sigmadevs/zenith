@@ -159,3 +159,13 @@ Facts learned while building Zenith in the fork (`wp-sigmadevs/zed`). Moved verb
 - `zenith_*` `init`s that read their `enabled` setting need a `SettingsStore` first: tests that call `crate::init` before `EditorLspTestContext::new_*` set `SettingsStore::test(cx)` themselves (`5d12e161da`).
 - Upstream "remove dead code" PRs (#67199, #67200) delete accessors only Zenith calls. A sync that fails `cargo check -p zed` on a missing upstream fn: re-add it as a Zenith block at the end of the upstream file.
 - `cargo sweep --maxsize 50GB` freed 46 GiB of `target/` (91 → ≈ 45 GiB) without a clean; check `pgrep -x cargo` first (`pgrep -f cargo` matches `.cargo/bin` in other processes' PATH).
+
+## Scratches node, Deployment M1a, PHP config (2026-11-23, home)
+
+- Invisible worktrees are NOT invisible everywhere: `workspace.rs:4170` counts any worktree for "is this window empty", and collab `worktree_store.rs:1293` shares invisible ones too. The scratches store worktree therefore breaks empty-window reuse (code-reviewer, merged over DO NOT MERGE as `5e71fb6096`; fix: hold it only while a visible worktree exists). Search, file finder, trust and git skip invisible worktrees (`project_search.rs:125`, `worktree_store.rs:517`, `trusted_worktrees.rs:440`, `worktree.rs:1375`).
+- `add_entry` on a row of an invisible worktree focuses a hidden name editor: upstream inserts the new-entry placeholder row only for visible worktrees (`project_panel.rs` ≈ 4700).
+- Root folders are safe from Trash/Delete/Duplicate/Cut: `disjoint_effective_entries_excluding_roots` (`project_panel.rs:4410`) uses `entry_is_worktree_root`, which covers invisible worktrees. F2 on a root is not: guard it in the glue (`394cda4ed0`).
+- suppaftp 13.0.0: trusts the PASV reply IP by default (`set_passive_nat_workaround(true)` fixes it), logs `PASS <pw>` at trace (`control.rs:107`; `RUST_LOG`/`ZED_LOG`/user `log` setting can enable it, project settings cannot), does not re-export `futures_rustls` (direct dep needed), and FTPS needs a DNS-name host (raw IP fails closed). Its MLSD parser mistypes `unix.slink=` facts as files.
+- System `sftp`: `get` of a remote symlink downloads the target; `!` batch lines run local shell commands; glob escaping does not round-trip, so paths with `* ? [ \` are refused.
+- PHPantom has no interpreter key; language level is `[php] version` in `.phpantom.toml` (UNVERIFIED: project-over-global merge rule; arrays reportedly replace).
+- Adding `suppaftp` re-resolved Windows-only `Cargo.lock` edges (windows-sys → 0.61.2, heck, itertools); cause not established — expect upstream-sync conflicts in `Cargo.lock`.
