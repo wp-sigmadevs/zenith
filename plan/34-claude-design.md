@@ -48,7 +48,7 @@ Make the running editor match `mockups/claude-design/` (11 boards, Driftwood dar
 6. **Debug and Run** (boards 2, 8): layout defaults, then plan 07.
 7. **Stripes, Narrow, Islands** (boards 9, 10): only after measuring the upstream diff each needs; owner decides.
 
-## Progress (fork `feat/look`, pushed; not yet merged into `zenith`, not in an installed app)
+## Progress (fork `feat/look`: merged into `zenith`; the PhpStorm-look fixes are on `integrate/batch-b`, not in an installed app)
 
 | Step | State | Commits |
 |---|---|---|
