@@ -13,3 +13,4 @@
 - [Find scope/pin facts](gpui-find-scope-pin-facts.md) — modal pin via on_before_dismiss, search buffers/match_full_paths, funnel menu (zenith_search M1a)
 - [Mask history/syntax facts](gpui-mask-history-syntax-facts.md) — kvp store, chunk highlights, PopoverMenu focus-in-test trap (zenith_search M1b)
 - [Agent review facts](gpui-agent-review-facts.md) — click-not-dispatch for panel buttons, ActionLog stats, chip repaint via workspace notify, agent keys (zenith_agent_review C)
+- [Scratches node facts](gpui-scratches-node-facts.md) — invisible-worktree owner, glue rows in project panel, ContextMenu/file-finder test traps (zenith_scratches node)

@@ -4,3 +4,4 @@
 - [trust gate facts](trust-gate-facts.md) — can_trust holes for single-file/invisible worktrees, fix site, test recipe
 - [hover card facts](hover-card-facts.md) — hover_popover internals, hook recipe, shared-target sweep flake
 - [PHPantom config facts](phpantom-config-facts.md) — global toml path on macOS; no stubs key in 0.11.1
+- [deploy M1a facts](deploy-m1a-facts.md) — suppaftp 13 smol/rustls API, sftp -D test trick, sftp quoting quirks, hook trap
