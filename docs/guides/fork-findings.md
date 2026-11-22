@@ -149,3 +149,13 @@ Facts learned while building Zenith in the fork (`wp-sigmadevs/zed`). Moved verb
 
 - `4c4cf69555`: `.zenith/settings.json` replaces `.zed/` (no longer merged), PHPantom gets a Zenith-only `XDG_CONFIG_HOME`, instance port base 47737 (Zed and Zenith can run side by side).
 - `205d3c3827`: Zenith keeps its zed.dev sign-in in its own keychain entry, `credentials_url = https://zed.dev/zenith`.
+
+## Batch B gate and sync (2026-11-22, home)
+
+- zsh does not word-split `$VAR`: build `-p` lists as an array (`P=(${(f)"$(…)"})`, then `"${P[@]}"`), or cargo gets one package named ` zenith -p …`.
+- A workspace holds two `ZenithWelcome` views: the tab and upstream's cached empty-pane `WelcomePage` (`workspace/src/pane.rs` `welcome_page`), which stays alive after a tab opens. A page request is now cleared by a deferred reset in `view::request_page`, not by the first view that sees it (`5e13493d92`).
+- In a `VisualTestContext`, `cx.update(|window, cx| cx.windows())` leaves out the current window (leased during the update). Read windows through `cx.cx.update(|cx| …)`.
+- `Editor::navigate_to_hover_links` jumps instead of opening a multibuffer when all locations fit in one excerpt (rows within 2 × `excerpt_context_lines`). The code-lens "Open in Tab" now calls `open_locations_in_multibuffer` itself (`6e2204e036`).
+- `zenith_*` `init`s that read their `enabled` setting need a `SettingsStore` first: tests that call `crate::init` before `EditorLspTestContext::new_*` set `SettingsStore::test(cx)` themselves (`5d12e161da`).
+- Upstream "remove dead code" PRs (#67199, #67200) delete accessors only Zenith calls. A sync that fails `cargo check -p zed` on a missing upstream fn: re-add it as a Zenith block at the end of the upstream file.
+- `cargo sweep --maxsize 50GB` freed 46 GiB of `target/` (91 → ≈ 45 GiB) without a clean; check `pgrep -x cargo` first (`pgrep -f cargo` matches `.cargo/bin` in other processes' PATH).
