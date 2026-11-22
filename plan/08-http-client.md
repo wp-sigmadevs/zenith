@@ -1,6 +1,6 @@
 # 08 — HTTP Client
 
-> **Status (2026-11-21):** code in `crates/zenith_http`, merged into fork `zenith` @ `7ef1dc7da2` (from `feat/external-libraries` @ `3ec7baecab`); built + reviewed (code + security, 2 rounds, fixes landed), UNWIRED: workspace member only, no init/umbrella feature, so its actions/panels are unreachable in the app. Wiring = its own reviewed task. Milestone ✅ below means code and tests only.
+> **Status (2026-11-22):** wired in fork `zenith` (2026-11-21, `crates/zenith_http`). On `integrate/batch-b` @ `205d3c3827` (tests + `cargo check -p zenith` + clippy pass; not built into an app): gutter ▶ per request line + session response history (`d0bf6e7cdd`), Basic auth shorthand / Bearer, `< file` and multipart bodies, import from cURL (`e8c1277ed5`). Disk-backed history in progress (`feat/http-disk-history`). Milestone ✅ below means code and tests.
 
 ## Goal
 

@@ -1,6 +1,8 @@
 # 41 — PHP language server decision
 
-Status: PROPOSED (owner review pending). Date: 2026-11-21. Fork `zenith` @ `85ae9afa91`.
+> **Status (2026-11-22):** 🟨 M1 done (PHPantom default + code lens on, `de9214e025`; unverified in app). M2 superseded by plan 42 (M0 done). M3/M4 in progress (branch `feat/php-ls-m3m4`).
+
+Originally PROPOSED. Date: 2026-11-21. Fork `zenith` @ `85ae9afa91`.
 Source: read-only audit by `lead-engineer` (agent ac1152b5951dd2416). Not run against binaries; items marked UNVERIFIED need M0.
 
 ## Question

@@ -1,5 +1,7 @@
 # 27 — TODO Panel (F9)
 
+> **Status (2026-11-22):** 🟨 panel done in fork `zenith`. `enabled` setting, author/age filters (git blame), commit warning: branch `feat/todo-filters` @ `9d09c9e6dd`, not merged.
+
 ## Goal
 
 JetBrains TODO tool window: find all TODO-style comments, grouped, navigable.

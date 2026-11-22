@@ -6,7 +6,8 @@ Open the row for your task, then only the file it links.
 |---|---|---|
 | What's built, what's next, machine setup | [HANDOFF.md](../../HANDOFF.md) | §2 state table + machine facts + plan-03 open issues, §4 next steps, §2b rebrand keep-as-"Zed" list |
 | Resume the last session | [.claude/handoff-*.md](../../.claude/) | Exactly one brief; newest session's state, failures, reproduce commands |
-| Roadmap, phases, plan status | [plan/README.md](../../plan/README.md) | Index of the 38 plan docs; status ⬜ 🟨 ✅ |
+| Roadmap, phases, plan status | [plan/README.md](../../plan/README.md) | Index of the 42 plan docs; status ⬜ 🟨 ✅ |
+| Plan status vs code, audit (2026-11-22) | [plan/status-2026-11-22.md](../../plan/status-2026-11-22.md), [plan/audit-2026-11-22.md](../../plan/audit-2026-11-22.md) | Snapshot: what's left per plan; security/code audit |
 | Spec for one feature | `plan/NN-*.md` | `§Progress` lists fork commits once work starts |
 | Fork gotchas: build, disk, tests, GPUI, upstream edits, PHP tools | [docs/guides/fork-findings.md](../guides/fork-findings.md) | Grouped by topic; read the group your change touches |
 | Upstream hooks and extension tracking | [plan/16-upstream-and-extensions.md](../../plan/16-upstream-and-extensions.md) | Hook budget table |

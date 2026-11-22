@@ -1,5 +1,7 @@
 # 14 — UI: PhpStorm-style Toolbar & Interface
 
+> **Status (2026-11-22):** 🟨 fork-only parts (owner 2026-11-22; upstream-heavy items listed, not built). On `integrate/batch-b` @ `205d3c3827` (tests + `cargo check -p zenith` + clippy pass; not built into an app): bottom navigation bar `zenith_navbar` (`a5d7ef188c`), 8 px before the tab icon (`d064cf5ba7`). Run widget (configurations, stop, rerun): branch `feat/run-widget` @ `35648a90f2`, not merged.
+
 ## Goal
 
 PhpStorm "New UI" look and flow: main toolbar with project/branch widgets and a run widget, tool-window stripes (icon bars) on the left/right, navigation bar, configurable toolbar buttons.

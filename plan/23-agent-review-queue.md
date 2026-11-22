@@ -1,5 +1,7 @@
 # 23 — Agent Review Queue (F5)
 
+> **Status (2026-11-22):** 🟨 M1 + review fixes merged in fork `zenith` (`aa2247a2d2`, fixes `5960463a49`, `180d8b20cd`, keymap ⇧⌥R `162879fba2`); `zenith` @ `8ef52d743d`. Not seen in a running app.
+
 ## Goal
 
 Every change an agent makes — via Zed Agent Panel, ACP agents, the IDE server (06), or a CLI agent writing files directly — lands in one review queue, backed by local-history checkpoints (05), so nothing is applied blind and everything is revertible.

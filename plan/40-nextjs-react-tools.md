@@ -1,6 +1,6 @@
 # 40 — Next.js & React Tools (WebStorm Parity)
 
-> **Status (2026-11-21):** code in `crates/zenith_nextjs`, merged into fork `zenith` @ `7ef1dc7da2` (from `feat/external-libraries` @ `3ec7baecab`); built + reviewed (code + security, 2 rounds, fixes landed), UNWIRED: workspace member only, no init/umbrella feature, so its actions/panels are unreachable in the app. Wiring = its own reviewed task. Milestone ✅ below means code and tests only.
+> **Status (2026-11-22):** wired in fork `zenith` (2026-11-21, `crates/zenith_nextjs`). Route paths complete inside `href` and `router.push` strings (`dd589402c6`, on `integrate/batch-b` @ `205d3c3827` (tests + `cargo check -p zenith` + clippy pass; not built into an app)).
 
 ## Goal
 

@@ -1,5 +1,7 @@
 # Plan 39 — External Libraries
 
+> **Status (2026-11-22):** 🟨 wired (see Progress). 3 library-worktree tests in `zenith` @ `8ef52d743d` (owner kept 3 of 5). One External Libraries node below all project roots (`e12759eb00`) on `integrate/batch-b` @ `205d3c3827` (tests + `cargo check -p zenith` + clippy pass; not built into an app).
+
 **Goal:** Add a read-only "External Libraries" node at the bottom of Zenith's project panel that aggregates dependency folders (`vendor/`, `node_modules/`, WordPress core path) — matching PhpStorm's behaviour.
 
 **Crate:** `zenith_external_libraries` (GPL-3.0-or-later)

@@ -1,6 +1,8 @@
 # 34 — Claude Design: implementing the target look
 
-Status: ⬜ plan (2026-11-17) — run `lead-engineer` on each step before code.
+> **Status (2026-11-22):** 🟨 `feat/look` merged into fork `zenith`. Owner: fork-only parts; upstream-heavy items listed, not built. Editor look = PhpStorm (replaces the earlier indent-background choice): thin indent guides by default (`6e11ff3720`), parameter hints only for literal arguments, as pills (`ed5d116df1`), amber 16 px gutter bulb (`80c305331b`); Find in Files colours every row and the preview is editable (`0a317ac1f1`); all on `integrate/batch-b` @ `205d3c3827` (not built into an app).
+
+Originally: ⬜ plan (2026-11-17) — run `lead-engineer` on each step before code.
 
 ## Goal
 

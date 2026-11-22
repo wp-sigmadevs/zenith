@@ -1,6 +1,6 @@
 # 42 — PHPantom from `main`: WordPress stubs and external library roots
 
-Status: 🟨 M1 config writer built (`cce1a4825b`, `d58e761135`; stubs write dropped); binary SHA-256 recorded in docs only, not checked in code — audit 2026-11-22. Originally PROPOSED. Date: 2026-11-22. Fork `zenith` @ `c9d7fcc95a`. Follows plan 41 (M2 stubs, which turned out to be a no-op).
+> **Status (2026-11-22):** 🟨 approved (owner 2026-11-22). M0 done: `main` @ `b759b41da6` built + installed (`docs/guides/fork-findings.md`). M1 config writer in fork `zenith` (`cce1a4825b`, `d58e761135`; stubs write dropped). On `integrate/batch-b` @ `205d3c3827` (tests + `cargo check -p zenith` + clippy pass; not built into an app) the writer uses a Zenith-only `XDG_CONFIG_HOME` (`4c4cf69555`). Binary SHA-256 is recorded in docs only, not checked in code. Originally PROPOSED; follows plan 41 (M2 stubs, a no-op).
 
 ## Problem
 Two owner-visible bugs, one cause: PHPantom 0.11.1 (the latest release, the one Zed's PHP extension downloads) has no way to learn about code outside the project.
@@ -61,4 +61,4 @@ Upstream touches: 0 lines. No new crate dependency expected (`toml_edit` only if
 - UNKNOWN: are paths outside the workspace in `indexing.include` treated as library code (no diagnostics, lower priority)? M0.
 - UNKNOWN: does the PHP extension honour `lsp.phpantom.binary.path`? Standard Zed setting; M0 confirms.
 - UNKNOWN: memory and startup cost with WordPress core included.
-- NOT DONE: nothing is built or written yet.
+- M0 (2026-11-22, work machine): security review 0.11.1..`b759b41` found no new network, process-spawn or file-write sites. Stdio test: `add_action` resolved into WordPress `wp-includes/plugin.php:441`. Not yet confirmed in the app (step 5).

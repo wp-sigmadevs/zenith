@@ -1,6 +1,6 @@
 # 25 — Laravel Tools (F7)
 
-> **Status (2026-11-21):** code in `crates/zenith_laravel`, merged into fork `zenith` @ `7ef1dc7da2` (from `feat/external-libraries` @ `3ec7baecab`); built + reviewed (code + security, 2 rounds, fixes landed), UNWIRED: workspace member only, no init/umbrella feature, so its actions/panels are unreachable in the app. Wiring = its own reviewed task. Milestone ✅ below means code and tests only.
+> **Status (2026-11-22):** wired in fork `zenith` (2026-11-21, `crates/zenith_laravel`). Route names complete inside `route()` strings (`eed27708e2`, on `integrate/batch-b` @ `205d3c3827` (tests + `cargo check -p zenith` + clippy pass; not built into an app)).
 
 ## Goal
 

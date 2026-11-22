@@ -1,5 +1,7 @@
 # 04 — Scratch Files
 
+> **Status (2026-11-22):** 🟨 new/list/rename/trash/reveal + ⌘⇧N in fork `zenith`. Run scratch (ctrl-r), `zenith.scratches.*` settings, group by language: branch `feat/scratches-run` @ `da0a6707c1`, not merged.
+
 ## Goal
 
 JetBrains-style scratches: global, project-independent files of any language, listed in a panel, runnable, persistent.
