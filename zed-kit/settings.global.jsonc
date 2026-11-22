@@ -8,7 +8,9 @@
   },
 
   "lsp": {
-    // Premium licence (rename, implementations): put the key in ~/intelephense/licence.txt
+    // Premium licence (rename, implementations): Intelephense reads ~/intelephense/licence.txt by itself.
+    // To keep the file elsewhere, pass its ABSOLUTE PATH (never the key; ~ is not expanded):
+    // "intelephense": { "initialization_options": { "licenceKey": "/Users/<you>/intelephense/licence.txt" } },
     "tailwindcss-language-server": {
       "settings": { "includeLanguages": { "php": "html", "blade": "html" } }
     }
@@ -21,7 +23,12 @@
     "twig": true,
     "dockerfile": true,
     "make": true,
-    "http": true
+    "http": true,
+    "vue": true,
+    "env": true,
+    "sql": true,
+    "toml": true
+    // neon: no Neon (PHPStan config) extension in the registry as of 2026-11-22; .neon gets no highlighting
   },
 
   // plan/18 A8: no telemetry

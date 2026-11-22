@@ -1,0 +1,8 @@
+[
+  { "label": "npm: dev", "command": "npm run dev", "use_new_terminal": true },
+  { "label": "npm: build", "command": "npm run build" },
+  { "label": "npm: test", "command": "npm test" },
+  { "label": "npm: lint", "command": "npm run lint" },
+  { "label": "tsc: typecheck", "command": "npx tsc --noEmit" },
+  { "label": "Run current file", "command": "npx tsx \"$ZED_FILE\"" }
+]

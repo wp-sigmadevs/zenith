@@ -1,0 +1,3 @@
+[
+  { "label": "Node: current file", "adapter": "JavaScript", "type": "pwa-node", "request": "launch", "program": "$ZED_FILE", "cwd": "$ZED_WORKTREE_ROOT" }
+]

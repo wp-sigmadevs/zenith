@@ -1,0 +1,40 @@
+// Zenith zed-kit — WordPress plugin/theme project settings
+{
+  "hard_tabs": true,
+  "languages": {
+    "PHP": {
+      "language_servers": ["intelephense", "phpactor", "..."],
+      // phpcbf with the project's phpcs.xml.dist (WordPress standard). Format on demand: legacy code makes huge diffs.
+      "formatter": { "external": { "command": "zed-php-fmt", "arguments": ["phpcbf"] } },
+      "format_on_save": "off"
+    }
+  },
+  "lsp": {
+    "intelephense": {
+      "settings": {
+        "intelephense": {
+          // Intelephense defaults + wordpress. Intelephense has no wordpress-globals/woocommerce stubs;
+          // those come from php-stubs packages via includePaths below.
+          "stubs": [
+            "apache", "bcmath", "bz2", "calendar", "com_dotnet", "Core", "ctype", "curl", "date", "dba", "dom",
+            "enchant", "exif", "FFI", "fileinfo", "filter", "fpm", "ftp", "gd", "gettext", "gmp", "hash", "iconv",
+            "imap", "intl", "json", "ldap", "libxml", "mbstring", "meta", "mysqli", "oci8", "odbc", "openssl", "pcntl",
+            "pcre", "PDO", "pgsql", "Phar", "posix", "pspell", "random", "readline", "Reflection", "session", "shmop",
+            "SimpleXML", "snmp", "soap", "sockets", "sodium", "SPL", "sqlite3", "standard", "superglobals", "sysvmsg",
+            "sysvsem", "sysvshm", "tidy", "tokenizer", "uri", "xml", "xmlreader", "xmlrpc", "xmlwriter", "xsl",
+            "Zend OPcache", "zip", "zlib",
+            "wordpress"
+          ],
+          // php-stubs/wordpress-globals + php-stubs/woocommerce-stubs (composer global, see install.sh).
+          // apply-template.sh fills in @COMPOSER_HOME@; Intelephense does not expand ~.
+          "environment": {
+            "includePaths": [
+              "@COMPOSER_HOME@/vendor/php-stubs/wordpress-globals",
+              "@COMPOSER_HOME@/vendor/php-stubs/woocommerce-stubs"
+            ]
+          }
+        }
+      }
+    }
+  }
+}

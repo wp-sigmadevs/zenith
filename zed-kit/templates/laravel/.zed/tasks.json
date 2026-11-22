@@ -1,0 +1,13 @@
+[
+  { "label": "Artisan: list", "command": "php artisan list" },
+  { "label": "Artisan: route:list", "command": "php artisan route:list" },
+  { "label": "Artisan: tinker", "command": "php artisan tinker", "use_new_terminal": true },
+  { "label": "Tests: all", "command": "php artisan test" },
+  { "label": "Tests: current file", "command": "php artisan test \"$ZED_RELATIVE_FILE\"" },
+  { "label": "Tests: current symbol", "command": "php artisan test --filter \"$ZED_SYMBOL\"" },
+  { "label": "Pint: project", "command": "vendor/bin/pint" },
+  { "label": "PHPStan: project", "command": "vendor/bin/phpstan analyse --memory-limit=1G" },
+  { "label": "IDE helper: generate", "command": "php artisan ide-helper:generate && php artisan ide-helper:models -N && php artisan ide-helper:meta" },
+  { "label": "Composer: install", "command": "composer install" },
+  { "label": "npm: dev", "command": "npm run dev", "use_new_terminal": true }
+]

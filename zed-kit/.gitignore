@@ -1,0 +1,2 @@
+# Root .gitignore drops .zed/ (personal editor config); these are templates to ship.
+!templates/*/.zed/

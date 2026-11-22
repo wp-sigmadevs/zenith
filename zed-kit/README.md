@@ -13,9 +13,12 @@ Zenith plan 03 — the config layer. It works on **stock Zed** today; no fork ne
 
 ```sh
 zed-kit/install.sh --dry-run      # see what it would do
-zed-kit/install.sh                # link zed-php-fmt, install Phpactor config, check tools
+zed-kit/install.sh                # asks before each step
+zed-kit/install.sh --yes          # no questions
 zed-kit/install.sh --with-xdebug  # also pecl install xdebug
 ```
+
+It installs only what is missing: brew `php composer node php-cs-fixer`, npm `intelephense`, composer global `wpcs` (+ phpcs installer plugin), `php-stubs/wordpress-globals`, `php-stubs/woocommerce-stubs`; then links `zed-php-fmt` and copies the Phpactor config if absent. It never installs Homebrew, edits your shell profile or overwrites config; those show as `TODO`. Versions are not pinned.
 
 Then merge `settings.global.jsonc` into `~/.config/zed/settings.json`. Merge by hand; don't replace the file.
 
@@ -30,9 +33,13 @@ Existing files are never overwritten.
 
 | Template | Gives |
 |---|---|
-| wordpress | tabs, WordPress stubs, phpcbf formatter (on demand), PHPCS diagnostics via Phpactor, `phpcs.xml.dist` (set text domain and prefixes), tasks, Xdebug |
+| wordpress | tabs, WordPress stubs + WordPress globals/WooCommerce stubs (from the global Composer home), phpcbf formatter (on demand), PHPCS diagnostics via Phpactor, `phpcs.xml.dist` (set text domain and prefixes), tasks, Xdebug |
 | laravel | Pint on save, PHPStan diagnostics via Phpactor, `laravel-official` extension, artisan/test tasks, Xdebug |
-| node | npm and tsc tasks, Node debug |
+| node | ESLint fix + Prettier on save (JS/TS/TSX, Prettier for JSON/CSS), npm and tsc tasks, Node debug |
+
+## Intelephense premium licence
+
+Put the key in `~/intelephense/licence.txt`; Intelephense reads that file itself, so no setting is needed. To keep it elsewhere, set `lsp.intelephense.initialization_options.licenceKey` to the file's absolute path (a value containing `/` is read as a path; `~` is not expanded). Never paste the key itself into settings: settings files get shared and committed.
 
 ## `zed-php-fmt`
 

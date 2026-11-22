@@ -1,0 +1,14 @@
+// Zenith zed-kit — Laravel project settings
+{
+  "hard_tabs": false,
+  "tab_size": 4,
+  "languages": {
+    "PHP": {
+      "language_servers": ["intelephense", "phpactor", "..."],
+      "formatter": { "external": { "command": "zed-php-fmt", "arguments": ["pint"] } },
+      "format_on_save": "on"
+    },
+    "Blade": { "tab_size": 4 }
+  },
+  "auto_install_extensions": { "laravel-official": true }
+}

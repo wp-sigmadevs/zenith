@@ -1,0 +1,11 @@
+[
+  { "label": "PHPCS: current file", "command": "phpcs -s \"$ZED_FILE\"" },
+  { "label": "PHPCBF: current file", "command": "phpcbf \"$ZED_FILE\"" },
+  { "label": "PHPCS: project", "command": "phpcs -s --report=summary ." },
+  { "label": "PHPUnit: all", "command": "vendor/bin/phpunit" },
+  { "label": "PHPUnit: current symbol", "command": "vendor/bin/phpunit --filter \"$ZED_SYMBOL\"" },
+  { "label": "Composer: install", "command": "composer install" },
+  { "label": "npm: build", "command": "npm run build" },
+  { "label": "npm: start", "command": "npm start" },
+  { "label": "WP-CLI: i18n make-pot", "command": "wp i18n make-pot . languages/$(basename \"$ZED_WORKTREE_ROOT\").pot" }
+]

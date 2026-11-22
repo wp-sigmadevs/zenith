@@ -1,0 +1,23 @@
+// Zenith zed-kit — Node/TypeScript project settings
+// On save: ESLint fixes first (source.fixAll.eslint), then Prettier formats.
+// Prettier uses the project's prettier config and version; keep eslint-config-prettier so they don't fight.
+{
+  "tab_size": 2,
+  "format_on_save": "on",
+  "languages": {
+    "JavaScript": {
+      "formatter": "prettier",
+      "code_actions_on_format": { "source.fixAll.eslint": true }
+    },
+    "TypeScript": {
+      "formatter": "prettier",
+      "code_actions_on_format": { "source.fixAll.eslint": true }
+    },
+    "TSX": {
+      "formatter": "prettier",
+      "code_actions_on_format": { "source.fixAll.eslint": true }
+    },
+    "JSON": { "formatter": "prettier" },
+    "CSS": { "formatter": "prettier" }
+  }
+}
