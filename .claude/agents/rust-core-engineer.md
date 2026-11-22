@@ -82,7 +82,7 @@ lead-engineer.
   lead-engineer decided.
 - **Store:** one SQLite DB per feature via Zed's `db`/`sqlez` (`Bind`,
   `Column`, `ThreadSafeConnection`; find the current migration macro in the
-  fork); data under `~/.local/share/zenith/`; blobs content-addressed + zstd;
+  fork); data under `paths::data_dir()`; blobs content-addressed + zstd;
   migrations append-only.
 - **Tracing:** wrap feature work in `zenith_core::trace` spans (plan 18).
 - **Dependencies:** use what the fork's `[workspace.dependencies]` already has.

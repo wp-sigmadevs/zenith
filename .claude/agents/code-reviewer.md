@@ -48,7 +48,7 @@ formatting and naming taste; skip pre-existing upstream code.
    approved more.
 2. Fork code doing what an LS could (completion, diagnostics, go-to, hover).
 3. Naming: `zenith_*` crates, `actions!(zenith_<feature>, …)`, settings under
-   `"zenith"` with `enabled`, data under `~/.local/share/zenith/`; no "Zed" in
+   `"zenith"` with `enabled`, data under `paths::data_dir()`; no "Zed" in
    Zenith-facing names, titles or icons.
 4. `zenith_core` grew without a second user; UI code in `process`/`store`/`jobs`.
 5. A Zed API used as the plan doc remembers it rather than as the fork defines

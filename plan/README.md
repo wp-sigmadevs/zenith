@@ -17,7 +17,7 @@ Goal: make Zed a full replacement for PhpStorm/WebStorm for classic **and** agen
 | 01 | [Prerequisites & fork setup](01-prerequisites.md) | Machine | 1 day | ✅ |
 | 02 | [Fork architecture & conventions](02-fork-architecture.md) | Core | — | 🟨 feature flags in progress (branch `feat/feature-flags`, with 17); upstream hooks over the 5-line budget (`status-2026-11-22.md`) |
 | 03 | [Config layer: PHP/JS intelligence, inspections, frameworks](03-config-layer.md) | Config/Extension | 1–3 wk | 🟨 |
-| 04 | [Scratch files](04-scratches.md) | Core | ~1 wk | 🟨 new/list/rename/trash/reveal done in fork `zenith`; run scratch (ctrl-r), `zenith.scratches.*`, group by language on branch `feat/scratches-run` @ `da0a6707c1` (not merged) |
+| 04 | [Scratch files](04-scratches.md) | Core | ~1 wk | 🟨 new/list/rename/trash/reveal, run scratch (ctrl-r), `zenith.scratches.*`, group by language in fork `zenith` (`da0a6707c1`); project-panel node on `feat/scratches-node` (plan 39) |
 | 05 | [Local history](05-local-history.md) | Core | 1–2 wk | 🔨 C1–C5 done, in fork `zenith` (app check pending); known limits in plan 05 |
 | 06 | [Zed as MCP/IDE server for external agents](06-ide-mcp-server.md) | Core | 2–3 wk | ⬜ |
 | 07 | [Test runner UI](07-test-runner.md) | Core | 2–3 wk | ⬜ |
@@ -48,11 +48,11 @@ Goal: make Zed a full replacement for PhpStorm/WebStorm for classic **and** agen
 | 32 | [Welcome screen](32-welcome-screen.md) | UI | 1.5 wk | 🟨 merged in fork `zenith`. Plugin install state, Finish/Skip, New Project, tests on branch `feat/welcome-finish` @ `3da2b49dd3` (not merged) |
 | 33 | [Zenith accounts](33-zenith-accounts.md) | Service | TBD | ⬜ |
 | 34 | [Claude Design: target look](34-claude-design.md) | UI | per board | 🟨 merged in fork `zenith`; fork-only parts (owner 2026-11-22). PhpStorm editor look (thin indent guides, literal-only parameter hints, amber 16 px bulb) on `integrate/batch-b` |
-| 35 | [PHP toolchain, zero setup](35-php-toolchain.md) | Core | 2–3 wk | 🔨 M1, M2a; M3+ in progress (`feat/php-toolchain`) |
+| 35 | [PHP toolchain, zero setup](35-php-toolchain.md) | Core | 2–3 wk | 🔨 M1, M2a; M3+ in progress (`feat/php-toolchain`); new user setting `zenith.php_tools.php_binary` |
 | 36 | [Notifications tool window](36-notifications.md) | Core | TBD | ⬜ |
-| 37 | [Deployment (FTP/FTPS/SFTP)](37-deployment.md) | Core | TBD | ⬜ blocked on owner decisions |
+| 37 | [Deployment (FTP/FTPS/SFTP)](37-deployment.md) | Core | ≈16 d | 🟨 owner decisions made 2026-11-22; M1a on `feat/deploy-m1a` |
 | 38 | [Terminal parity](38-terminal.md) | Config + upstream PR | TBD | ⬜ |
-| 39 | [External Libraries](39-external-libraries.md) | Core | ~1.5 wk | 🟨 wired: `zenith_external_libraries` + `project_panel` hooks; M3 banner + trust gate and hook 5 built; 3 library-worktree tests in `zenith` @ `8ef52d743d` (owner kept 3 of 5). Single External Libraries node below all roots on `integrate/batch-b`. Hooks over plan 02 budget (owner decision) |
+| 39 | [External Libraries](39-external-libraries.md) | Core | ~1.5 wk | 🟨 wired: `zenith_external_libraries` + `project_panel` hooks; M3 banner + trust gate and hook 5 built; 3 library-worktree tests in `zenith` @ `8ef52d743d` (owner kept 3 of 5). Single External Libraries node below all roots on `integrate/batch-b`. Hooks over plan 02 budget (owner decision). Owner-approved 2026-11-22, not merged: Scratches and Consoles node (`feat/scratches-node`, in progress), "Configure PHP Include Paths…" modal (not started) |
 | 40 | [Next.js & React Tools](40-nextjs-react-tools.md) | Web | ~1.5 wk | 🔨 wired in fork `zenith` (`crates/zenith_nextjs`) (M1, M2). Route-path completion in `href`/`router.push` strings on `integrate/batch-b` |
 | 41 | [PHP language server](41-php-language-server.md) | Core | ~1–2 wk | 🟨 M1 done: PHPantom default + code lens on (fork `de9214e025`, unverified in app); M3/M4 in progress (`feat/php-ls-m3m4`); M2 superseded by plan 42 |
 | 42 | [PHPantom from main](42-phpantom-main-build.md) | Core | ~2 d | 🟨 approved 2026-11-22. M0 done (PHPantom `main` @ `b759b41da6` built + installed, see fork-findings); M1 config writer in fork `zenith`; on `integrate/batch-b` the writer uses a Zenith-only `XDG_CONFIG_HOME` |

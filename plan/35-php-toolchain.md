@@ -58,6 +58,8 @@ Why now: every PHP feature in the plan (19 WordPress, 21 inspections, 25 Laravel
 }
 ```
 
+`php_binary` is the chosen CLI interpreter (set from the PHP modal, plan 39). User settings only: a project-chosen binary would run repo code. Project settings are ignored for this key.
+
 ## Progress (fork `feat/look`, crate `zenith_php_tools`)
 
 | Step | State | Commit |

@@ -45,7 +45,7 @@ JetBrains HTTP Client parity: `.http`/`.rest` files with run gutter buttons, env
 - Variable resolution: env files (project root or `.http` file dir), private env merged on top, `.env` optional.
 - HTTP: Zed's `http_client` crate (reqwest-based? *verify*) — must support custom TLS (self-signed toggle), redirects toggle, timeouts, cookies jar per env.
 - Response handlers (later): embed a JS engine (`boa` or `rquickjs`) — significant dep; decide in milestone 5.
-- History: files under `.idea/httpRequests`-like `~/.local/share/zenith/http-history/<project-hash>/` (bodies on disk, index in SQLite).
+- History: files under `.idea/httpRequests`-like `paths::data_dir()/http-history/<project-hash>/` (bodies on disk, index in SQLite).
 
 ## Settings
 

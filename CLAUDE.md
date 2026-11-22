@@ -21,7 +21,7 @@ Zenith = fork of Zed aiming at full PhpStorm/WebStorm parity (classic + agentic 
 ## Conventions
 
 - Commits: conventional (`docs:`, `feat(zed-kit):`, `fix:`, `chore:`) — a hook rejects others.
-- Fork naming: crates `zenith_*`, umbrella `zenith`, settings key `"zenith"`, branch `zenith`, data dir `~/.local/share/zenith/`, bundle `Zenith.app`. New `zenith_*` crates: GPL-3.0-or-later.
+- Fork naming: crates `zenith_*`, umbrella `zenith`, settings key `"zenith"`, branch `zenith`, data dir `paths::data_dir()` (macOS `~/Library/Application Support/Zenith`), bundle `Zenith.app`. New `zenith_*` crates: GPL-3.0-or-later.
 - All fork code in new crates; upstream files get one-line hooks only (plan/02). Extension/LS-first where possible (plan/16). Shared infra in `zenith_core` (plan/15).
 - Supercharger hook blocks writes under `~/.config/` — give the user the exact edit instead; never work around it.
 

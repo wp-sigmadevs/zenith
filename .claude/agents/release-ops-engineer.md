@@ -74,7 +74,7 @@ cargo build && cargo test -p zenith   # plus each zenith_* crate (run in the for
 - Bundle with `script/bundle-mac` (needs full Xcode). Read the script for its
   flags and how the release channel sets name and bundle id before relying on
   them. Name **Zenith**, id `dev.zenith.app`, data dir
-  `~/.local/share/zenith/`, own icon — never Zed's name or logo.
+  `paths::data_dir()`, own icon — never Zed's name or logo.
 - Auto-update off or pointed at our feed; telemetry (`diagnostics`, `metrics`)
   off by default; crash upload and any endpoint that reports under Zed's name
   off. Find where each is configured (`auto_update`, `telemetry`, `crashes`

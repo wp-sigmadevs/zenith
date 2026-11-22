@@ -1,6 +1,6 @@
 # 04 — Scratch Files
 
-> **Status (2026-11-22):** 🟨 new/list/rename/trash/reveal + ⌘⇧N in fork `zenith`. Run scratch (ctrl-r), `zenith.scratches.*` settings, group by language: branch `feat/scratches-run` @ `da0a6707c1`, not merged.
+> **Status (2026-11-22):** 🟨 new/list/rename/trash/reveal + ⌘⇧N in fork `zenith`. Run scratch (ctrl-r), `zenith.scratches.*` settings, group by language: `da0a6707c1`, in fork `zenith` (verified: `git -C ~/GithubProjects/zed log zenith -- crates/zenith_scratches`; `66bdccbd97` is the current `zenith` head). Project-panel "Scratches and Consoles" node: see plan 39 (branch `feat/scratches-node`).
 
 ## Goal
 
@@ -30,12 +30,12 @@ Verified against fork @ b4130a774e.
 - Delete: `Fs::trash(path, RemoveOptions)` (`fs/src/fs.rs:129`). `trash_file` in this plan is wrong.
 - `cmd-shift-n` collides with `jetbrains.json:86,138` (file_finder) and `default-macos.json:722` (`NewWindow`). `zenith.json` must bind the same contexts.
 - Must work with no project open (global scratches).
-- Recommend an own panel, not a project_panel node.
+- Recommend an own panel, not a project_panel node. Superseded 2026-11-22: the owner approved a project-panel node too (plan 39); the panel stays.
 - Owner decision pending: may `cmd-shift-n` override Go to File / New Window?
 
 ## Architecture
 
-- Storage dir: `~/.local/share/zenith/scratches/` (setting override).
+- Storage dir: `paths::data_dir()/scratches` (setting override).
 - Files opened via `workspace.open_abs_path` — they're real files, so LSP/highlighting work.
 - Panel watches dir via `fs.watch`.
 - Run uses `task::SpawnInTerminal` with command from runner map; `$ZED_FILE` substitution.

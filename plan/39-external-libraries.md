@@ -186,6 +186,31 @@ The external libraries section uses a synthetic `WorktreeId` marker (or a separa
 
 Each hook is a one-line call to a function in `zenith_external_libraries`.
 
+## Owner-approved additions (2026-11-22)
+
+**(a) Scratches and Consoles node** after External Libraries. In progress on branch `feat/scratches-node`.
+
+- Built in the project-panel glue `zenith_libraries.rs` (child module `zenith_libraries/scratches_node.rs`). The scratches store is an invisible worktree.
+- Upstream: 2 lines in `crates/project_panel/Cargo.toml`, 0 in `project_panel.rs`.
+- Setting `zenith.scratches.project_panel_node`, default true. The "Extensions" folder is omitted.
+- Scratch storage and run: plan 04.
+
+**(b) "Configure PHP Include Paths…" (⌘↓)** on the External Libraries node. Not started.
+
+A modal titled "PHP":
+
+- PHP language level: "Auto (composer.json)" or 7.0–8.5. Written to the project's `.phpantom.toml` `[php] version`, then PHPantom restarts. Owner approved writing this file.
+- CLI interpreter, chosen from `php_candidates`. Stored in user settings `zenith.php_tools.php_binary`, never in project settings (plan 35).
+- Include Path tab: edits `zenith.external_libraries.paths`, global for all projects (owner approved). Lists `vendor/*/*` packages read-only.
+- The PHP Runtime, Analysis and Composer Files tabs are hidden until built (owner approved).
+- ⌘↓ is bound in `assets/keymaps/zenith.json` under "ProjectPanel && not_editing" to `zenith_external_libraries::JumpToSource`, with a router. 0 upstream lines.
+
+| Milestone | Owner | Scope |
+|---|---|---|
+| M1 | rust-core-engineer | pure functions in `zenith_php_tools/src/php_config.rs` |
+| M2 | gpui-ui-engineer | the modal |
+| M3 | — | the other tabs and Intelephense keys |
+
 ## Build order
 
 ```

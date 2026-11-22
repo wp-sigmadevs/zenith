@@ -49,7 +49,7 @@ local user or process**, or **an agent** acting beyond its turn.
 | `zenith_core::process`, Docker exec prefix (11) | argv-based; env and cwd explicit; a filename cannot inject flags or commands |
 | Agent worktrees / review queue (22, 23) | paths canonicalised (no `..` escape); merge/discard confirmed; no force-push; reject restores, never deletes user edits |
 | DB tool, HTTP client (12, 08) | secrets in macOS Keychain, never in settings JSON or logs; TLS verification on by default, "insecure" per request and visible |
-| Local history / store (05, 15) | data under `~/.local/share/zenith/`, not world-readable; `.env`/secret files excluded or encrypted per plan |
+| Local history / store (05, 15) | data under `paths::data_dir()`, not world-readable; `.env`/secret files excluded or encrypted per plan |
 | Extension / LS downloads | HTTPS, pinned release + checksum; no exec of downloaded scripts |
 | Telemetry, crash upload, auto-update (13, 18 A8) | nothing reports to Zed endpoints under Zed's name; update feed ours or off |
 | Standalone LSes | a crafted PHP file cannot path-traverse the index, OOM or hang the server |

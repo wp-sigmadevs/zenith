@@ -21,7 +21,7 @@ guess.
 
 **Zenith conventions.** Crates `zenith_*`, umbrella `zenith` with one Cargo
 feature per crate; settings `"zenith": { "<feature>": { "enabled": true } }`;
-actions `zenith_<feature>::*`; data `~/.local/share/zenith/`; bundle
+actions `zenith_<feature>::*`; data `paths::data_dir()`; bundle
 `Zenith.app`, id `dev.zenith.app`. Product text, icons and ids never use the
 Zed name or logo (trademark); Zed is only ever named as upstream. Fork code
 goes in new crates; an upstream file gets a one-line hook from lead-engineer's

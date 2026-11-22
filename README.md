@@ -95,7 +95,7 @@ Issue (zenith repo) → plan doc → feat/<name> branch (fork) → implement →
 
 Rules:
 - Conventional commits: `feat(<crate>):`, `fix(<crate>):`, `docs:`, `chore:`. A hook rejects anything else.
-- Fork naming: crates `zenith_*`, settings key `"zenith"`, data dir `~/.local/share/zenith/`, app `Zenith.app`.
+- Fork naming: crates `zenith_*`, settings key `"zenith"`, data dir `paths::data_dir()` (macOS `~/Library/Application Support/Zenith`), app `Zenith.app`.
 - Zed internals in plan docs are marked *verify*; check them against the fork's source before relying on them.
 - Never use Zed's name or logo for Zenith.
 
