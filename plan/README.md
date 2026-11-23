@@ -56,6 +56,7 @@ Goal: make Zed a full replacement for PhpStorm/WebStorm for classic **and** agen
 | 40 | [Next.js & React Tools](40-nextjs-react-tools.md) | Web | ~1.5 wk | 🔨 wired in fork `zenith` (`crates/zenith_nextjs`) (M1, M2). Route-path completion in `href`/`router.push` strings on `integrate/batch-b` |
 | 41 | [PHP language server](41-php-language-server.md) | Core | ~1–2 wk | 🟨 M1 done: PHPantom default + code lens on (fork `de9214e025`, unverified in app); M3/M4 in progress (`feat/php-ls-m3m4`); M2 superseded by plan 42 |
 | 42 | [PHPantom from main](42-phpantom-main-build.md) | Core | ~2 d | 🟨 approved 2026-11-22. M0 done (PHPantom `main` @ `b759b41da6` built + installed, see fork-findings); M1 config writer in fork `zenith`; on `integrate/batch-b` the writer uses a Zenith-only `XDG_CONFIG_HOME` |
+| 43 | [AI Terminal](43-ai-terminal.md) | Core + config | ~4 wk (+ plan 06) | ⬜ plan only (owner 2026-11-23); needs 06 for the Claude Code IDE link |
 
 ## Build order & rationale
 
