@@ -58,6 +58,7 @@ Xcode notes from the work machine:
 | Fork 2026-11-22 (night, home) | ✅ batch B fixed + merged: 14 failing tests on `integrate/batch-b` `13c322d73f` (welcome page request, code-lens Open in Tab, usages test settings, stale inline-diagnostics test) fixed in `5e13493d92` `6e2204e036` `5d12e161da`; `zenith` ff + pushed. Upstream sync `d31d1074a0` (35 commits) merged `66bdccbd97`, pushed (`plan/sync-log.md`). Gate: `cargo check -p zed`, nextest zenith_* 672/672, clippy clean. `Zenith.app` bundled 23:10 (20 m 32 s) from `66bdccbd97`, launches; not yet checked by the owner |
 | Fork 2026-11-23 (home) | ✅ `zenith` @ `16a24c9fa6`: plan 37 M1a (`zenith_deploy`), plan 39 scratches node, plan 39 PHP config M1 (the scratches/M1a review findings below are now fixed) |
 | Fork 2026-11-23 (work, evening) | 🟨 pushed WITHOUT running tests or the gate (owner's call; only `cargo check -p zenith`). Merged: scratches fixes + "Scratches" label, deploy M1b (dialog + Remote Host panel, FTP/SFTP hardening, target-bound Keychain secrets), PHP modal + config fixes, HTTP history masking, `toolbar.breadcrumbs` default off, `zenith.navbar.enabled`. Opus-reviewed. Details and open items: `docs/guides/fork-findings.md` § "Review round (2026-11-23, work machine)". FIRST next session: run the full gate (`cargo nextest` on all `zenith_*` + clippy), then fix the HTTP history userinfo gap (`strip_url_userinfo`), then the open deploy items |
+| Fork 2026-11-23 (home, night) | ✅ gate on merged tree: 976/976 zenith_* + project_panel/scratches, clippy -D warnings, `cargo check -p zenith`. Fixed: zenith_templates duplicate-action test panic (18 fails), HTTP history userinfo gap (every URL spelling; templates keep `{{var}}`), owner-approved masking names, `find_php` retry for all callers. Opus-reviewed. `zenith` @ `e02f05c5f9` (local, ahead 4) |
 | Fork branches in progress 2026-11-22 | 🟨 plan 27 TODO filters `feat/todo-filters` @ `9d09c9e6dd`, plan 32 welcome `feat/welcome-finish` @ `3da2b49dd3`, plan 04 scratches run `feat/scratches-run` @ `da0a6707c1`, plan 14 run widget `feat/run-widget` @ `35648a90f2`; engineers on 20 templates M1 (built, `297f274e5e`), 02/17 flags, 08 disk history, 41 M3/M4, 35 M3+, 03 zed-kit |
 | Plan 42 M0 | ✅ PHPantom `main` @ `b759b41da6` built (Rust 1.98.1, `--ignore-rust-version`), installed `~/.local/share/zenith/tools/phpantom/b759b41da6/phpantom_lsp` + `current`; SHA-256 in `docs/guides/fork-findings.md`. Security review: no new network/process/write sites. Stdio: `add_action` → `wp-includes/plugin.php:441` |
 | Owner settings 2026-11-22 | `~/.config/zenith/{settings,keymap}.json` now point at `zed-config/config/zenith-settings.json` / `zenith-keymap.json` (were the same files as Zed's) |
@@ -101,11 +102,11 @@ Name risk: pending USPTO "ZENITH" word mark (Zenith IOS Manager LLC, filed Jun 2
 2. ✅ `<example>` blocks dropped from agent descriptions.
 3. ✅ Scratches kept (plan 04/39 node is built).
 4. ✅ Plan 22 shrunk to tasks.json recipes + a guide (lead-engineer audit, no fork code).
-5. HTTP history masking: add `ssn`, `card_number`, `cvv`, `cvc`, `otp`, `totp`, `mfa_code`, `pin`, `secrets`, `tokens`, `refresh`, `signing_key`, `write_key`, `AccountKey`; not bare `access`. Not built yet.
+5. ✅ (`ac604bb44d`) HTTP history masking: add `ssn`, `card_number`, `cvv`, `cvc`, `otp`, `totp`, `mfa_code`, `pin`, `secrets`, `tokens`, `refresh`, `signing_key`, `write_key`, `AccountKey`; not bare `access`..
 6. Collab + invisible worktrees: document only (owner works solo); no upstream hook.
-7. Delete the 13 merged fork branches on origin (commits stay in `zenith`). Not done yet.
+7. ✅ Deleted the 13 merged fork branches on origin (commits stay in `zenith`).
 8. `settings_ui` entries for `zenith.*` flags: deferred, add as one batch later.
-9. `find_php` 10 s retry moves into `find_php` itself (all callers). Not built yet.
+9. ✅ (`e9e8409070`) `find_php` 10 s retry moves into `find_php` itself (all callers).
 10. `project_panel` 9 hook lines: accepted exception to plan 02's budget of 5.
 11. "Scratches > Scratches" label: leave.
 12. JetBrains settings import (plan 31): after the gate and bundle check.
