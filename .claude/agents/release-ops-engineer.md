@@ -8,8 +8,6 @@ description: >-
     release tags. Prepares changes and exact commands; the user runs anything
     that pushes, installs system software or needs sudo. Not for zenith crate
     code (rust-core-engineer) or a crate broken by the merge (debugger first).
-    <example>It's the weekly sync → release-ops-engineer merges upstream into
-    zenith, runs every zenith crate's tests and logs minutes and conflicts.</example>
 tools: Read, Edit, Write, Glob, Grep, Bash, WebFetch, mcp__context7__supercharger__resolve-library-id, mcp__context7__supercharger__query-docs
 model: sonnet
 effort: medium

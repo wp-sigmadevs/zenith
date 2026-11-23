@@ -9,8 +9,6 @@ description: >-
     profiler/coverage parsers). Use once lead-engineer has planned the chunk. Not
     for panels or views (gpui-ui-engineer), language servers
     (lsp-extension-engineer) or the IDE/MCP server (agentic-integrations-engineer).
-    <example>lead-engineer's plan says build zenith_core::store with migrations and
-    a zstd blob store → rust-core-engineer implements and tests it.</example>
 tools: Read, Edit, Write, Glob, Grep, Bash, LSP, WebFetch, mcp__context7__supercharger__resolve-library-id, mcp__context7__supercharger__query-docs
 model: sonnet
 effort: high

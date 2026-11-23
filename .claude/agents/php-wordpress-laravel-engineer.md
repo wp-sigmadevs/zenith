@@ -8,8 +8,6 @@ description: >-
     plan 18 A7 LS tuning), the domain rules, data tables and fixtures for plans
     19 20 21 25 26, and the PhpStorm mapping in 31. Not for LS plumbing
     (lsp-extension-engineer) or fork UI (gpui-ui-engineer).
-    <example>Plan 19 needs the WordPress template hierarchy as data plus a fixture
-    plugin → php-wordpress-laravel-engineer encodes it from the WP developer docs.</example>
 tools: Read, Edit, Write, Glob, Grep, Bash, WebFetch, mcp__context7__supercharger__resolve-library-id, mcp__context7__supercharger__query-docs
 model: sonnet
 effort: medium

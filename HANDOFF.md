@@ -95,12 +95,20 @@ Data: on the work machine `~/.config/zenith` and `~/Library/Application Support/
 
 Name risk: pending USPTO "ZENITH" word mark (Zenith IOS Manager LLC, filed Jun 2025) — goods/services unchecked. Check before any public release.
 
-## 3. Open decisions (owner)
+## 3. Owner decisions (2026-11-23, all approved)
 
-1. Commit prefix in the fork: `feat(<crate>):` (recommended, passes the commit hook) or `zenith(<feature>):` (plans 02/16 say this; the hook rejects it). Then have docs-editor fix plans 02/16.
-2. Keep or drop the `<example>` block in agent descriptions (Anthropic's guidance dropped them in Apr 2026).
-3. "scratch removed": unclear whether this meant dropping the Scratch files feature (plan 04). Confirm.
-4. Plan 22 scope: Zed now isolates agent threads in worktrees upstream. Have lead-engineer shrink plan 22 to the gaps.
+1. ✅ Commit prefix `feat(<crate>):` (plans 02/16 updated).
+2. ✅ `<example>` blocks dropped from agent descriptions.
+3. ✅ Scratches kept (plan 04/39 node is built).
+4. Plan 22: lead-engineer shrinks it to the gaps upstream worktree isolation leaves.
+5. HTTP history masking: add `ssn`, `card_number`, `cvv`, `cvc`, `otp`, `totp`, `mfa_code`, `pin`, `secrets`, `tokens`, `refresh`, `signing_key`, `write_key`, `AccountKey`; not bare `access`. Not built yet.
+6. Collab + invisible worktrees: document only (owner works solo); no upstream hook.
+7. Delete the 13 merged fork branches on origin (commits stay in `zenith`). Not done yet.
+8. `settings_ui` entries for `zenith.*` flags: deferred, add as one batch later.
+9. `find_php` 10 s retry moves into `find_php` itself (all callers). Not built yet.
+10. `project_panel` 9 hook lines: accepted exception to plan 02's budget of 5.
+11. "Scratches > Scratches" label: leave.
+12. JetBrains settings import (plan 31): after the gate and bundle check.
 
 ## 4. Next steps (in order)
 
@@ -110,7 +118,7 @@ Owner decisions 2026-11-22: plan 42 approved; plans 14/34 fork-only parts; batch
 0. **Only when the owner asks:** `cargo check -p zed` + zenith crate tests, then bundle current `zenith` (stable channel ⇒ `Zenith.app`; ~2.5 h without warm sccache; keep ≥ 30 GiB free, 56 GiB late 2026-11-22). Then: confirm ⇧⇧/⌘O/⌘E/⌘⇧E no longer quit; screenshot vs `mockups/claude-design/Main.dc.html`, then tool windows + Search Everywhere (not yet checked). Remaining gaps + owner's settings edit (PHP servers, WP stubs): `plan/visual-check-2026-11-19.md`. Do not restore the backup app (owner).
 0b. ✅ `feat/look` is in `zenith`. Owner: remove the fork README notice.
 0c. Plan 27 TODO window ✅ in code (`294b4c570a`, plan 27 §Progress; not seen in the app). Done in fork (unpushed): plan 21 B0–B2, plan 05 C1–C3. Next: plan 05 C4/C5, plan 21 B3, running-app checks. Board gaps waiting on plans: plan 34 "Main board check" table.
-0d. ✅ 2026-11-21 wired `zenith_http`, `zenith_refactor`, `zenith_postfix`, `zenith_wordpress`, `zenith_laravel`, `zenith_nextjs` (`zenith_nextjs` merged as in-progress/unreviewed, `d94951dfb3`). Still open from the merge review: Owner decision: `project_panel` has 9 hook lines + 475-line module vs plan 02 budget of 5. Known gaps: plan 39 M3 and hook 5 not built; `apply_to_disk` not transactional; `read_regular` duplicated in laravel/nextjs (unify with the shared fn in `zenith_php_tools`); `zenith_row_kind` per-frame cost; redirect check misses hostnames resolving to loopback; wordpress scans only the first 4 KiB of a line; `zenith_menu` hook untested; fish quoting untested (fish not installed); a future wordpress caller must use a bounded read before `index_source`.
+0d. ✅ 2026-11-21 wired `zenith_http`, `zenith_refactor`, `zenith_postfix`, `zenith_wordpress`, `zenith_laravel`, `zenith_nextjs` (`zenith_nextjs` merged as in-progress/unreviewed, `d94951dfb3`). Still open from the merge review: `project_panel` 9 hook lines + 475-line module: owner accepted (§3.10). Known gaps: plan 39 M3 and hook 5 not built; `apply_to_disk` not transactional; `read_regular` duplicated in laravel/nextjs (unify with the shared fn in `zenith_php_tools`); `zenith_row_kind` per-frame cost; redirect check misses hostnames resolving to loopback; wordpress scans only the first 4 KiB of a line; `zenith_menu` hook untested; fish quoting untested (fish not installed); a future wordpress caller must use a bounded read before `index_source`.
 0a. Owner to decide: JetBrains settings import first slice (plan 31) on the welcome Customize page — detect `~/Library/Application Support/JetBrains/<Product><ver>`, import keymap base + editor font/size/tabs/soft wrap/theme; hide or redirect "get merch"/"open docs".
 1. ✅ 2026-11-16: notice removed, `feat/branding` merged into `zenith` (`76f912fa08`), pushed.
 2. Commit-prefix decision (§3.1), then close plan 02.

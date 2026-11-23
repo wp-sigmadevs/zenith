@@ -8,8 +8,6 @@ description: >-
     language servers), applies agent edits, or touches telemetry or auto-update.
     Use proactively for plans 06 08 11 12 22. Reports exploitable findings only;
     read-only. Not for general bugs (code-reviewer).
-    <example>zenith_ide_server is about to be enabled by default → security-engineer
-    checks bind address, token, lockfile mode and Origin handling.</example>
 tools: Read, Glob, Grep, Bash, LSP
 disallowedTools: Write, Edit, NotebookEdit
 model: opus

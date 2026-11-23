@@ -8,8 +8,6 @@ description: >-
     Zenith's rules (code outside zenith_* crates, upstream-hook budget, Zed's
     .rules). Use proactively after an implementer reports DONE. Read-only. Not
     for security deep-dives (security-engineer) or style.
-    <example>feat/scratches is ready to merge into zenith → code-reviewer checks
-    the diff, its callers and the upstream-touch count.</example>
 tools: Read, Glob, Grep, Bash, LSP
 disallowedTools: Write, Edit, NotebookEdit
 model: opus

@@ -196,10 +196,9 @@ don't delegate a handful of tool calls.
   gated writers; context7 tools given to lead-engineer; colours regrouped
   (debugger pink, release-ops yellow, docs-editor purple).
 - Descriptions: trigger-first prose ("Use this agent when…", typical triggers,
-  "Use proactively…", "Not for … (use X)") plus one situation-style
-  `<example>`. Anthropic's plugin-dev guidance (2026-04) dropped transcript
-  examples (user:/assistant:/commentary) for prose triggers; we kept one short
-  example per agent as asked.
+  "Use proactively…", "Not for … (use X)") (no `<example>`: dropped 2026-11-23 by the owner,
+  following Anthropic's plugin-dev guidance (2026-04); they cost context in
+  every agent listing).
 - Bodies: Read first → inputs → method → domain traps → verify → report block →
   stop/hand-off. Reviewers report everything ≥ 50 confidence in two tiers
   instead of silently filtering below 80 (current Opus follows "only report

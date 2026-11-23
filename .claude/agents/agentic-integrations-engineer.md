@@ -9,8 +9,6 @@ description: >-
     zenith_agent_review on local-history checkpoints). Starts by auditing what
     upstream Zed already ships. Not for generic panels (gpui-ui-engineer) or
     zenith_core internals (rust-core-engineer).
-    <example>Plan 06 is planned → agentic-integrations-engineer implements
-    get_active_editor and open_diff in zenith_ide_server with a token-refusal test.</example>
 tools: Read, Edit, Write, Glob, Grep, Bash, LSP, WebFetch, mcp__context7__supercharger__resolve-library-id, mcp__context7__supercharger__query-docs
 model: sonnet
 effort: high

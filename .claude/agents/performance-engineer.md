@@ -8,8 +8,6 @@ description: >-
     Use proactively before a release and when a change runs on the main thread,
     at startup or on every keystroke/save. Read-only; reports numbers and causes,
     the owner fixes. Not for correctness review (code-reviewer).
-    <example>zenith_local_history now hooks every save → performance-engineer
-    measures save latency against stock Zed and names any main-thread work.</example>
 tools: Read, Glob, Grep, Bash, LSP
 disallowedTools: Write, Edit, NotebookEdit
 model: sonnet

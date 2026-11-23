@@ -8,8 +8,6 @@ description: >-
     won't load, a UI freeze. Proves the root cause with a probe and names the
     owning engineer. Read-only; never fixes. Not for a one-line typo the error
     already explains.
-    <example>cargo test -p zenith_core passes locally but hangs in CI → debugger
-    reproduces, finds the cause, and hands it to rust-core-engineer.</example>
 tools: Read, Glob, Grep, Bash, LSP
 disallowedTools: Write, Edit, NotebookEdit
 model: opus

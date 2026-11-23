@@ -8,8 +8,6 @@ description: >-
     elements expose AccessKit roles and labels. Use proactively before a UI
     feature merges. Read-only; gives exact fixes for gpui-ui-engineer. Not for
     web/WCAG audits (Zenith has no web UI).
-    <example>The tool-window stripes from plan 14 are done → accessibility-engineer
-    checks they work without a mouse and that VoiceOver announces each button.</example>
 tools: Read, Glob, Grep, Bash, LSP
 disallowedTools: Write, Edit, NotebookEdit
 model: sonnet

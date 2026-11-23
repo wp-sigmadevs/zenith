@@ -9,8 +9,6 @@ description: >-
     implementer reports DONE and before code-reviewer. Edits tests and fixtures
     only; a bug in source goes back to its owner. Not for diagnosing a red gate
     (debugger).
-    <example>The scratches panel landed with one smoke test → test-engineer adds
-    gpui tests for each action and proves each fails without the code it guards.</example>
 tools: Read, Edit, Write, Glob, Grep, Bash, LSP, mcp__context7__supercharger__resolve-library-id, mcp__context7__supercharger__query-docs
 model: sonnet
 effort: high

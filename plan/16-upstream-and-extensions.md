@@ -22,7 +22,7 @@ Candidate PRs to zed-industries/zed (each generic, useful beyond Zenith):
 Process:
 1. Check Zed's contribution guide + open issues/discussions for each hook (maybe already requested).
 2. Open a discussion first; small PRs; tests included.
-3. Until merged, keep the patch in our fork isolated in one commit per hook (`zenith(hook): ...`) so it can be dropped cleanly once upstream lands.
+3. Until merged, keep the patch in our fork isolated in one commit per hook (`feat(<crate>): hook ...`; the commit hook rejects `zenith(...)`) so it can be dropped cleanly once upstream lands.
 4. Track in table below.
 
 | Hook | Issue/PR | Status |

@@ -8,8 +8,6 @@ description: >-
     08 12 14 21 24 27 28 29. Use once lead-engineer has planned the chunk and the
     logic it shows exists. Not for non-UI logic (rust-core-engineer) or language
     servers (lsp-extension-engineer).
-    <example>The scratches logic is in place → gpui-ui-engineer builds the
-    Scratches panel with new/run/delete actions and a gpui smoke test.</example>
 tools: Read, Edit, Write, Glob, Grep, Bash, LSP, WebFetch, mcp__context7__supercharger__resolve-library-id, mcp__context7__supercharger__query-docs
 model: sonnet
 effort: high

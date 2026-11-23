@@ -8,8 +8,6 @@ description: >-
     budget question. Use proactively when an implementer would otherwise have to
     make an architecture call. Produces a plan; never implements. Not for an
     already-planned one-crate chunk (send it to the implementer).
-    <example>Plan 04 scratches is next and needs a crate plus a panel-registration
-    hook → lead-engineer plans crates, hooks and verified Zed APIs first.</example>
 tools: Read, Glob, Grep, Bash, LSP, WebFetch, mcp__context7__supercharger__resolve-library-id, mcp__context7__supercharger__query-docs
 disallowedTools: Write, Edit, NotebookEdit
 model: opus

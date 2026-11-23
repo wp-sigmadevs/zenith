@@ -8,8 +8,6 @@ description: >-
     proactively when a feature finishes or a *verify* item is settled. Fixes
     false statements with minimal edits and never invents commands, paths, APIs
     or numbers. Markdown only. Not for writing code or new plan content.
-    <example>lead-engineer found the Panel trait differs from plan 02 →
-    docs-editor corrects plan 02 with the verified path:line @ sha.</example>
 tools: Read, Edit, Write, Glob, Grep, Bash
 model: sonnet
 effort: medium

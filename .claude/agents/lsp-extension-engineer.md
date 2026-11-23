@@ -9,8 +9,6 @@ description: >-
     fork panels that query an LS (gpui-ui-engineer), WordPress/Laravel domain
     rules and fixtures (php-wordpress-laravel-engineer), or MCP servers
     (agentic-integrations-engineer).
-    <example>Plan 19 starts → lsp-extension-engineer scaffolds wp-hooks-ls with
-    definition and references for add_action/do_action, plus golden tests.</example>
 tools: Read, Edit, Write, Glob, Grep, Bash, LSP, WebFetch, mcp__context7__supercharger__resolve-library-id, mcp__context7__supercharger__query-docs
 model: sonnet
 effort: high

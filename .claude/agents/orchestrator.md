@@ -8,9 +8,6 @@ description: >-
     Typical triggers: "deliver plan NN", "kick off phase N", "who does what".
     Not for a planned one-crate chunk (hand it to the implementer) or a question
     one agent can answer. Never edits files.
-    <example>Plan 27 needs an LS diagnostic, a panel, tests and review →
-    orchestrator runs lead-engineer, then LS and UI engineers in parallel, then
-    tests and reviewers.</example>
 tools: Agent, Read, Glob, Grep, Bash
 disallowedTools: Write, Edit, NotebookEdit
 model: opus
