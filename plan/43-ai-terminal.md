@@ -1,6 +1,6 @@
 # 43 — AI Terminal
 
-Status: ⬜ plan only (owner 2026-11-23). Upstream audited at fork `zenith` @ `e8ad13ff41` by lead-engineer. Anything not checked in source is marked *verify*.
+Status: ⬜ plan approved (owner 2026-11-23); build after the bundle check of merged work. Upstream audited at fork `zenith` @ `e8ad13ff41` by lead-engineer. Anything not checked in source is marked *verify*.
 
 ## Goal
 
@@ -10,12 +10,15 @@ A terminal-first AI workspace inside Zenith. It should feel like iTerm + oh-my-z
 
 | # | Decision | Status |
 |---|---|---|
-| 1 | 43 **depends on** plan 06 (does not absorb it). Plan 06 serves the whole IDE and is its own crate; 43 M1 only pulls 06's Claude Code adapter to the front | proposed |
-| 2 | Terminal agents run as upstream **Terminal Threads** (Threads Sidebar), not a new panel | proposed |
-| 3 | Supercharger: **detect first**. A user's own install is never touched; Zenith installs or updates only after an explicit click | proposed |
-| 4 | Cross-agent guards = config writers (each CLI's own hook file) + Zed Agent `tool_permissions`. No interception in Zenith code in v1 | proposed |
-| 5 | Inline terminal images = research spike + upstream PR, not fork code | proposed |
-| 6 | Zenith does not install oh-my-zsh or touch `~/.zshrc`; it ships font + theme + keys only | proposed |
+| 1 | 43 **depends on** plan 06 (does not absorb it). Plan 06 serves the whole IDE and is its own crate; 43 M1 only pulls 06's Claude Code adapter to the front | approved |
+| 2 | Terminal agents run as upstream **Terminal Threads** (Threads Sidebar), not a new panel | approved |
+| 3 | Supercharger: **offer, don't auto-install**. First run offers one-click "Install Supercharger (recommended)", safe mode preselected; a user's own install is never touched; updates only for Zenith-made installs | approved 2026-11-23 |
+| 4 | Cross-agent guards = config writers (each CLI's own hook file) + Zed Agent `tool_permissions`. No interception in Zenith code in v1 | approved |
+| 5 | Inline terminal images = research spike + upstream PR, not fork code | approved |
+| 6 | Zenith does not install oh-my-zsh or touch `~/.zshrc`; it ships font + theme + keys only | approved |
+| 7 | Gemini: support **both** `agy` and `gemini`; the launcher uses whichever is installed (`agy` first); both configurable | approved 2026-11-23 |
+| 8 | Supercharger pin = **release tag + sha256** in `vendor/supercharger/PIN`; owner tags each release | approved 2026-11-23 |
+| 9 | Build order: bundle check of merged work first → M2 status → M3 launcher → plan 06 (M1) → M4 → M5 spike | approved 2026-11-23 |
 
 ## Upstream audit (@ `e8ad13ff41`)
 
@@ -215,7 +218,6 @@ Plan 16 A2 candidates: per-launch Terminal Thread command; terminal attention ki
 6. `LOCAL_PEERPID` / `SO_PEERCRED` via `libc` at the workspace version.
 7. Nerd Font licence and size; iTerm action names.
 8. Existing upstream issue for kitty / iTerm2 image protocol?
-9. Owner: target Gemini CLI, Antigravity CLI, or both?
 
 ## Build order (lead-engineer)
 
