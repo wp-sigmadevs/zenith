@@ -1,6 +1,6 @@
 # 44 — PhpStorm parity, owner review round 1
 
-Status: ⬜ plan, awaiting owner decisions (2026-11-24). Source: owner review of `Zenith.app` built from fork `zenith` @ `503fca5ea7`; screenshots and the 18 requests in [`mockups/owner-review-2026-11-23/`](../mockups/owner-review-2026-11-23/README.md). Two lead-engineer audits @ `503fca5ea7` (read-only). Anything unchecked is *verify*. More rounds will follow (owner: "there are a lot more").
+Status: ⬜ plan approved (owner 2026-11-24): D1–D15 as recommended except D3 (minimap stays **on**). Source: owner review of `Zenith.app` built from fork `zenith` @ `503fca5ea7`; screenshots and the 18 requests in [`mockups/owner-review-2026-11-23/`](../mockups/owner-review-2026-11-23/README.md). Two lead-engineer audits @ `503fca5ea7` (read-only). Anything unchecked is *verify*. More rounds will follow (owner: "there are a lot more").
 
 ## Summary
 
@@ -75,10 +75,10 @@ Tools: AI Assistant › · New from Template / New PHP Class · Create Command L
 
 a. Menus "Selection", "Go", Help items to zed.dev (release notes, email, docs, repo, Twitter, join the team), "Check for Updates" while updates are off, Collab Panel → fixed by item 14.
 b. Zed-logo icons (`zed_agent*.svg`, `zed_assistant.svg`, `zed_predict*.svg`, `ai_zed.svg`) in quick action bar, agent panel, edit prediction button, onboarding, sidebar → swap SVG contents for Lucide glyphs (assets only).
-c. UI font `.ZedSans` (IBM Plex Sans) 16 vs PhpStorm Inter 13 — owner decision.
+c. UI font → Inter 13 (owner 2026-11-24, D2).
 d. Edit-prediction status button with no provider → hide.
 e. Palette "get merch" / "open docs" → hide via command-palette filter.
-f. Minimap on (PhpStorm has none) — owner decision.
+f. Minimap: stays on (owner 2026-11-24).
 g. Later rounds: Git panel layout (plans 10/14), settings / keymap UI (29), Ctrl-Tab switcher.
 
 ## Upstream budget
@@ -116,7 +116,7 @@ Every chunk: Sonnet builds, Opus reviews (code-reviewer + accessibility; perform
 |---|---|---|
 | D1 | Title bar 40 px (PhpStorm) or 42 px (design board)? | 40 |
 | D2 | UI font: Inter 13 (bundled, OFL), system font, or keep Plex 16? | Inter 13 |
-| D3 | Minimap off by default? | off |
+| D3 | Minimap off by default? | **owner: keep on** |
 | D4 | Sticky headers on for everyone? | on |
 | D5 | Usages line: author shown, end-of-line blame hidden on that line, "usages" wording? | yes ×3 |
 | D6 | Code-lens indent fix as an upstream PR, carried until merged? | yes |
