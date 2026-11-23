@@ -1,6 +1,6 @@
 # 27 — TODO Panel (F9)
 
-> **Status (2026-11-22):** 🟨 panel done in fork `zenith`. `enabled` setting, author/age filters (git blame), commit warning: branch `feat/todo-filters` @ `9d09c9e6dd`, not merged.
+> **Status (2026-11-22):** 🟨 panel done in fork `zenith`. `enabled` setting, author/age filters (git blame), commit warning: merged in `zenith` (`9d09c9e6dd`); not seen in an app.
 
 ## Goal
 

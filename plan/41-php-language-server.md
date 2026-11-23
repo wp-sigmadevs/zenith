@@ -1,6 +1,6 @@
 # 41 — PHP language server decision
 
-> **Status (2026-11-22):** 🟨 M1 done (PHPantom default + code lens on, `de9214e025`; unverified in app). M2 superseded by plan 42 (M0 done). M3/M4 in progress (branch `feat/php-ls-m3m4`).
+> **Status (2026-11-22):** 🟨 M1 done (PHPantom default + code lens on, `de9214e025`; unverified in app). M2 superseded by plan 42 (M0 done). M3/M4 merged in `zenith` (`3f79a980d5`; not seen in an app).
 
 Originally PROPOSED. Date: 2026-11-21. Fork `zenith` @ `85ae9afa91`.
 Source: read-only audit by `lead-engineer` (agent ac1152b5951dd2416). Not run against binaries; items marked UNVERIFIED need M0.
@@ -19,7 +19,7 @@ Can Zenith have its own free "Intelephense" (find usages, "N usages" code lens, 
 | Intelephense | proprietary freemium | free: references, hover, completion. Premium: rename, implementations, code lens (fork-findings:122) | owner will not pay |
 | Phpactor | MIT | references, rename, implementations, no lens | crashes on PHP 8.5 (`Amp\Failure`), no WP stubs, noisy, slow |
 | `zenith_php_tools` | own crate | not an LS: phpcs/phpstan installer and status item | n/a |
-| `zenith_wordpress`, `zenith_laravel` | own crates | indexers and panels, no LSP | wiring in progress (`feat/wire-tools`) |
+| `zenith_wordpress`, `zenith_laravel` | own crates | indexers and panels, no LSP | wired, merged in `zenith` (`feat/wire-tools`) |
 
 No `wp-hooks-ls` or `laravel-ls` exists. Fork default today: `["intelephense","!phpactor","!phptools","!phpantom","..."]` (`assets/settings/default.json:2638`, `:3073`, commit `29ab1ddb12`).
 
@@ -34,7 +34,7 @@ No `wp-hooks-ls` or `laravel-ls` exists. Fork default today: `["intelephense","!
 - **M1 defaults:** `default.json:2638` and `:3073` → `["phpantom","!intelephense","!phpactor","!phptools","..."]`. Run the touched crates' tests and `cargo check -p zenith`.
 - **M2 WordPress stubs:** in `zenith_php_tools`, behind the existing consent banner, write `lsp.phpantom.initialization_options.stubs.paths = [<managed_root>/wordpress/vendor/php-stubs/wordpress-stubs]` via `update_settings_file` (built, fork `878e868254`, whether PHPantom reads it from init options is UNVERIFIED). Idempotent, WordPress projects only. Tests: path builder, idempotent write, consent never defaults to yes. Sabotage each.
   - *Audit 2026-11-22:* the stubs write was dropped in `d58e761135` (plan 42); `phpantom.rs` had no tests until the audit fix added one sync test.
-- **M3 code lens:** done. `code_lens` is a global setting (no per-language key); the fork default is `"on"` (`default.json:471`, `de9214e025`). PHPantom `b759b41da` already serves "N references / N implementations" lenses with `editor.action.showReferences` + `Location[]`, so no upstream pull request is needed. M4 (lens click opens the Usages popup) is on fork branch `feat/php-ls-m3m4` @ `39c7edf67f`, not compiled yet.
+- **M3 code lens:** done. `code_lens` is a global setting (no per-language key); the fork default is `"on"` (`default.json:471`, `de9214e025`). PHPantom `b759b41da` already serves "N references / N implementations" lenses with `editor.action.showReferences` + `Location[]`, so no upstream pull request is needed. M4 (lens click opens the Usages popup) is merged in `zenith` (`39c7edf67f`, merge `3f79a980d5`); not seen in an app.
 - **M4 usages popup:** the PhpStorm-style popup is covered by the PhpStorm-parity plan (M3 there, `zenith_search::ShowUsages`). Routing a lens click into it needs one hook in `code_lens.rs` (hot editor code).
 
 Upstream touches: 3 of the 5-line budget, all in `default.json`. Reviewers: security (M1 unpinned download, M2 settings write), performance (M1 RAM).

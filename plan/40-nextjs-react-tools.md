@@ -1,6 +1,6 @@
 # 40 — Next.js & React Tools (WebStorm Parity)
 
-> **Status (2026-11-22):** wired in fork `zenith` (2026-11-21, `crates/zenith_nextjs`). Route paths complete inside `href` and `router.push` strings (`dd589402c6`, on `integrate/batch-b` @ `205d3c3827` (tests + `cargo check -p zenith` + clippy pass; not built into an app)).
+> **Status (2026-11-22):** wired in fork `zenith` (2026-11-21, `crates/zenith_nextjs`). Route paths complete inside `href` and `router.push` strings (`dd589402c6`, merged in `zenith` via `integrate/batch-b` (not built into an app)).
 
 ## Goal
 

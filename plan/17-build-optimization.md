@@ -1,6 +1,6 @@
 # 17 — Build Optimization & Feature Flags (A4, A5)
 
-> **Status (2026-11-22):** 🟨 tooling done (see Progress). Cargo feature flags in progress (branch `feat/feature-flags`, with plan 02).
+> **Status (2026-11-22):** 🟨 tooling done (see Progress). Cargo feature flags merged in `zenith` (`2383de8081`, with plan 02).
 
 ## Goal
 

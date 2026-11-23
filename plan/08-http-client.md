@@ -1,6 +1,6 @@
 # 08 — HTTP Client
 
-> **Status (2026-11-22):** wired in fork `zenith` (2026-11-21, `crates/zenith_http`). On `integrate/batch-b` @ `205d3c3827` (tests + `cargo check -p zenith` + clippy pass; not built into an app): gutter ▶ per request line + session response history (`d0bf6e7cdd`), Basic auth shorthand / Bearer, `< file` and multipart bodies, import from cURL (`e8c1277ed5`). Disk-backed history in progress (`feat/http-disk-history`). Milestone ✅ below means code and tests.
+> **Status (2026-11-22):** wired in fork `zenith` (2026-11-21, `crates/zenith_http`). Merged in `zenith` (via `integrate/batch-b`; not built into an app): gutter ▶ per request line + session response history (`d0bf6e7cdd`), Basic auth shorthand / Bearer, `< file` and multipart bodies, import from cURL (`e8c1277ed5`). Disk-backed history merged in `zenith` (`ebb7f38774`). Milestone ✅ below means code and tests.
 
 ## Goal
 

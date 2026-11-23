@@ -1,6 +1,6 @@
 # 20 — File & Project Templates (F2)
 
-> **Status (2026-11-22):** 🟨 M1 built on branch `feat/php-class-templates` (`297f274e5e`, `ee96cc2821`; not merged): template format + renderer, PSR-4 resolver, New PHP Class dialog. Not built: right-click "New ▸", framework template sets, artisan generators, scaffolds, PhpStorm import. See Progress.
+> **Status (2026-11-22):** 🟨 M1 merged in `zenith` (`297f274e5e`, `ee96cc2821`; not seen in an app): template format + renderer, PSR-4 resolver, New PHP Class dialog. Not built: right-click "New ▸", framework template sets, artisan generators, scaffolds, PhpStorm import. See Progress.
 
 ## Goal
 
@@ -48,7 +48,7 @@ PhpStorm "New → PHP Class" flow: correct namespace from PSR-4, proper file nam
 
 | Step | State | Commit |
 |---|---|---|
-| M1 engine + PSR-4 + New PHP Class | 🟨 built on `feat/php-class-templates`, not merged: renderer, PSR-4 from the nearest `composer.json` `autoload`/`autoload-dev`, dialog (class/interface/trait/enum, extends/implements, final/abstract, strict_types), built-ins in `assets/zenith/templates/` | `297f274e5e`, `ee96cc2821` |
+| M1 engine + PSR-4 + New PHP Class | 🟨 merged in `zenith`: renderer, PSR-4 from the nearest `composer.json` `autoload`/`autoload-dev`, dialog (class/interface/trait/enum, extends/implements, final/abstract, strict_types), built-ins in `assets/zenith/templates/` | `297f274e5e`, `ee96cc2821` |
 | M2 project panel menu + user templates | 🟨 user + project template dirs built; right-click "New ▸" not built | `297f274e5e` |
 | M3 framework templates, artisan generators | ⬜ | |
 | M4 scaffolds; PhpStorm import (31) | ⬜ | |

@@ -1,6 +1,6 @@
 # 42 — PHPantom from `main`: WordPress stubs and external library roots
 
-> **Status (2026-11-22):** 🟨 approved (owner 2026-11-22). M0 done: `main` @ `b759b41da6` built + installed (`docs/guides/fork-findings.md`). M1 config writer in fork `zenith` (`cce1a4825b`, `d58e761135`; stubs write dropped). On `integrate/batch-b` @ `205d3c3827` (tests + `cargo check -p zenith` + clippy pass; not built into an app) the writer uses a Zenith-only `XDG_CONFIG_HOME` (`4c4cf69555`). Binary SHA-256 is recorded in docs only, not checked in code. Originally PROPOSED; follows plan 41 (M2 stubs, a no-op).
+> **Status (2026-11-22):** 🟨 approved (owner 2026-11-22). M0 done: `main` @ `b759b41da6` built + installed (`docs/guides/fork-findings.md`). M1 config writer in fork `zenith` (`cce1a4825b`, `d58e761135`; stubs write dropped). Merged in `zenith` via `integrate/batch-b` (not built into an app) the writer uses a Zenith-only `XDG_CONFIG_HOME` (`4c4cf69555`). Binary SHA-256 is recorded in docs only, not checked in code. Originally PROPOSED; follows plan 41 (M2 stubs, a no-op).
 
 ## Problem
 Two owner-visible bugs, one cause: PHPantom 0.11.1 (the latest release, the one Zed's PHP extension downloads) has no way to learn about code outside the project.
