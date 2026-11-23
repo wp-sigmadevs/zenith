@@ -1,6 +1,6 @@
 # 43 — AI Terminal
 
-Status: ⬜ plan approved (owner 2026-11-23); build after the bundle check of merged work. Upstream audited at fork `zenith` @ `e8ad13ff41` by lead-engineer. Anything not checked in source is marked *verify*.
+Status: ⏸ ON HOLD (owner 2026-11-23, "belay"). Plan approved; do not build until the owner resumes it. Upstream audited at fork `zenith` @ `e8ad13ff41` by lead-engineer. Anything not checked in source is marked *verify*.
 
 ## Goal
 
