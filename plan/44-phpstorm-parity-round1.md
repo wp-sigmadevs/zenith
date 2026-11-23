@@ -1,0 +1,139 @@
+# 44 — PhpStorm parity, owner review round 1
+
+Status: ⬜ plan, awaiting owner decisions (2026-11-24). Source: owner review of `Zenith.app` built from fork `zenith` @ `503fca5ea7`; screenshots and the 18 requests in [`mockups/owner-review-2026-11-23/`](../mockups/owner-review-2026-11-23/README.md). Two lead-engineer audits @ `503fca5ea7` (read-only). Anything unchecked is *verify*. More rounds will follow (owner: "there are a lot more").
+
+## Summary
+
+| # | Request | Where it lives today | Fix | Effort | Upstream lines |
+|---|---|---|---|---|---|
+| 1 | Tab right-click menu = PhpStorm | `workspace/src/pane.rs:3123-3484` | `zenith_menus::tab_menu` via one call site + appended block | 1 d | 1 + block |
+| 2 | Editor right-click menu = PhpStorm | `editor/src/mouse_context_menu.rs:246-333` | `Editor::set_custom_context_menu` from `observe_new::<Editor>` (full mode + project only) | 1–2 d | 0 |
+| 3 | Orphaned ⋮ row | QuickActionBar in toolbar `zed/src/zed/quick_action_bar.rs:101-126` | hide toolbar item; render ⋮ + extras at the tab bar's right end via `pane.set_render_tab_bar_buttons` | 1 d | 2 |
+| 4 | Usages line like PhpStorm | upstream code lens `editor/src/code_lens.rs:634-740` | 4a tab-aware indent (upstream bug: tabs counted as 1 column, `:625`); 4b style hook → UI font, muted colour, "usages", author | 1–1.5 d | 3 |
+| 5 | Sticky class/function headers | upstream `sticky_scroll`, off (`default.json:828-831`) | turn on; pin old value in affected upstream tests | 0.5 d | 1 |
+| 6 | Code / split / preview buttons relocated | `zenith_markdown/src/zenith_markdown.rs:42-60` (toolbar row) | render through item 3's tab-bar extras, left of ⋮ | 0.5 d | 0 |
+| 7 | PHP dialog = PhpStorm | `zenith_php_tools/src/php_modal.rs` | level + interpreter above tabs, include list with + / − / folder, vendor rows green, staged Cancel / Apply / OK | 1.5–2 d | 0 |
+| 8 | Double "Scratches" | `project_panel/src/zenith_libraries/scratches_node.rs:12-13`, root path from `project_panel.rs:8548` | "Scratches and Consoles" › "Scratches", drop path suffix | 1 h | 0 |
+| 9 | Remote Host panel + Deployment dialog = PhpStorm | `zenith_deploy/src/panel.rs:583-705`, `dialog.rs:668-1030` | field-by-field relayout, real tabs, Mappings + Excluded Paths, browse / Autodetect root, LIST-compat | ≈ 4 d | 0 |
+| 10 | Two AI icons | Agent Panel and Agent Review both `IconName::ZenithBot` | Agent Review → `file_diff.svg` | XS | 0 |
+| 11 | Inspection widget + browser icons at editor top-right | bottom `diagnostics/src/items.rs` | `zenith_inspections` corner widget via item 3 extras; browsers need a URL source | 2 d + | 0 |
+| 12 | Preview tab italic | upstream already italic (`editor/src/items.rs:834`); single-click opens preview | check in app; optionally preview from ⇧⇧ / file finder | XS | 0–1 |
+| 13 | Bigger navbar font | `zenith_navbar.rs:469-502` `LabelSize::Small` | Default size (or follow UI font) | 1 h | 0 |
+| 14 | Tools menu controlling every feature; PhpStorm menu bar | `zed/src/zed/app_menus.rs:9-341` | `zenith_menus` reorders upstream items into File / Edit / View / Navigate / Code / Refactor / Run / Tools / Git / Window / Help; Tools lists every Zenith feature with ☑ enable toggles | 2–3 d | 2 (−4 reverted) |
+| 15 | Taller title bar | `ui/src/utils/constants.rs:18` 34 px | 40 px, traffic lights y 9 → 12 | S | 2 |
+| 16 | More left spacing in tabs | fork block in `ui/src/components/tab.rs` (8 px) | 12 px | XS | 1 (in forked block) |
+| 17 | No visible Zed | menus, icons, font, palette, minimap | audit list below | S each | 0 |
+| 18 | Draggable splitter in Find in Files | fixed `PREVIEW_HEIGHT` (`zenith_search/src/style.rs:22`, `find_in_files.rs:1434`) | row-resize handle, session-stored height, clamped | 0.5 d | 0 |
+
+New crate: `zenith_menus` (GPL-3.0-or-later, Cargo feature `menus`): `app_menu.rs`, `tools.rs`, `editor_menu.rs`, `tab_menu.rs`. Touched: `zenith_rails` (`tab_bar_end.rs`), `zenith_inspections` (`corner_widget.rs`), `zenith_look`, `zenith_navbar`, `zenith_markdown`, `zenith_search`, `zenith_php_tools`, `zenith_deploy`, `zenith_agent_review`, project_panel's `zenith_libraries`.
+
+## Item details
+
+### 1 Tab menu
+
+Close / Close Other / Close All / Close Unmodified / Close All but Pinned / Close Tabs to the Left / Right: actions exist (`CloseActiveItem`, `CloseOtherItems`, `CloseAllItems{close_pinned}`, `CloseCleanItems`, `CloseItemsToTheLeft/Right`). Copy Path/Reference ›: absolute / relative exist; file name, repo-root path new; PHP FQN new (from LS document symbols). Split Right / Down and Split and Move: exist (`SplitRight/Down{mode}`, *verify* variant). Pin Tab: `TogglePinTab` (pin/unpin helpers private → public wrappers in appended block). Configure Editor Tabs…: `OpenSettingsAt`. Reopen Closed Tab: `ReopenClosedItem`. Override File Type: `language_selector::Toggle` (*verify*). Run › / Debug ›: partly (task spawn, debugger start, scratch run, HTTP run). Open In ›: Finder / Terminal / GitHub exist; Browser missing. Local History ›: show history exists. Git ›: file history exists, others *verify*. Rename File…: new. Bookmarks ›: plan 28 (hidden until built). Deployment ›: plan 37 M2 (shown disabled). Open Tab in New Window: new.
+
+### 2 Editor menu
+
+Show Context Actions (`ToggleCodeActions`), AI Actions › (add to thread, inline assist), Paste, Copy / Paste Special › (cut / copy / copy and trim / permalink; paste from history new), String Manipulation › (case/sort actions, *verify* names), Go To › (definition / declaration / type / implementation / usages / calls, `zenith_search` GoToClass / GoToSymbol, go to line), Folding › (*verify*), Rename…, Refactor › (`zenith_refactor`: RefactorThis, ExtractMethod, ExtractVariable, ChangeSignature, MoveClass, SafeDelete), Generate… (plan 09), Run / Debug ›, Open In ›, Local History ›, Git ›, Compare with Clipboard (*verify*), Deployment › (plan 37). The custom closure must keep upstream's "move cursor to click" step. Risk: overwriting a future upstream full-mode custom menu → `rg set_custom_context_menu` on every sync.
+
+### 4 Usages line
+
+- 4a: `group_lenses_by_row` counts indent in bytes (`code_lens.rs:625`, `IndentSize.len`), so on tab-indented PHP the lens sits ~1.5 em in instead of 4 em; also drop the `+ 0.5` (`:733`). ~4 lines; send upstream as a PR and carry it until merged.
+- 4b: appended `set_code_lens_style` hook (same pattern as `set_code_lens_locations_handler` `:2199`) + one call site in `build_code_lens_renderer` + re-export `editor.rs:82`. `zenith_look` returns UI font at 0.9 × UI size, "N usages", two-space separator, people icon + blame author of the declaration row (`GitBlame::blame_for_rows`, capture the `Entity<GitBlame>` at block build; *verify* the editor isn't leased during block render).
+- Theme: set `editor.code_lens.foreground` to PhpStorm's code-vision grey.
+
+### 7 PHP dialog
+
+| PhpStorm | Change |
+|---|---|
+| "PHP language level:" dropdown above tabs with feature description, ? help | move above tabs; static version→feature table in `php_config.rs`; tooltip ? |
+| "CLI Interpreter:" dropdown + "…" | move above tabs; "…" = file picker to add a php binary |
+| Tabs Include Path / PHP Runtime / Analysis / Composer Files | Include Path only; others hidden until owner screenshots |
+| Toolbar + / − / folder; one scrollable list; vendor rows green | single `uniform_list`, vendor rows `Color::Success`, read-only |
+| Footer ? / Cancel / Apply / OK | stage edits, one write per Apply / OK (one PHPantom restart); removes `clicks` / `restart_pending` bookkeeping |
+
+Include paths stay global (plan 39 decision) unless the owner says per project.
+
+### 9 Remote Host + Deployment
+
+Panel: bordered full-width host field with type icon; "…"; Collapse All; refresh (green); disconnect = red ✕; Locate opened file (needs M2 mappings); remove the duplicate gear; tree root "Name (host)" with errors as a child row ("No authentication data provided") instead of the red banner.
+
+Dialog (top to bottom): real tab strip Connection / Mappings / Excluded Paths; "Visible only for this project" at top; Type dropdown with icon (FTPS default + insecure-FTP callout kept); Host + Port one row; Username + "Login as anonymous"; Password + "Save password" + ? (tooltip: Keychain); Test Connection under password; Root path + remote folder browse + ? + Autodetect (`PWD` after login, *verify* transport); "Web server URL" + open button; inline "⚠ Username is not specified"; Advanced: Passive mode, Show and process hidden files, Use LIST command › Compatible with old version of listing children (new `list_compat`) / Instead of MLSD; Number of connections, keep-alive each N s, keep-alive command (fields exist in `config.rs:53-55` but unused → show with plan 37 M3). Mappings: Local / Deployment / Web path table (add `web` field). Excluded Paths: local and deployment lists (`excluded_local` / `excluded_remote` exist, unused). Security review mandatory (browse / Autodetect connect with stored credentials).
+
+### 11 Inspection widget
+
+Per-file error / warning / weak warning / typo counts with ↑ ↓ (`GoToPreviousDiagnostic` / `GoToDiagnostic`), click → `zenith_problems::ShowFileProblems`. Drawn from item 3's tab-bar extras as an anchored overlay at the editor's top-right (*verify* positioning; fallback inline in the tab row). Hide upstream's bottom indicator (*verify*). Browser icons need a URL source (deployment mapping web path or a built-in server); http/https only.
+
+### 14 Menu bar and Tools
+
+`main.rs:861` and `zed.rs:2343` call `zenith::app_menus(upstream_builder, cx)`; `zenith_menus` matches upstream items by action and places them in PhpStorm's bar; unplaced items go to the nearest menu; a test asserts no upstream action is lost. Rebuild on Zenith setting changes. Revert the 4 renamed lines in `app_menus.rs` (net upstream diff shrinks).
+
+Tools: AI Assistant › · New from Template / New PHP Class · Create Command Line Launcher · Local History › · Scratches › · TODO › · Inspections › · HTTP Client › · Deployment › · Start SSH Session · PHP › · WordPress › · Laravel › · Next.js › · Markdown › · Run Command · IDE Features › (Search Everywhere, Navigation Bar, Tool Window Rails, Zenith Look, Islands, Title Bar Additions, Hover Card, External Libraries, Welcome). Each feature gets ☑ Enabled (`zenith.<f>.enabled`); navbar, templates, rails, islands, look, search, inspections need a restart (notification offers it); the rest apply live (*verify* each crate observes its flag).
+
+### 17 Visible Zed-isms
+
+a. Menus "Selection", "Go", Help items to zed.dev (release notes, email, docs, repo, Twitter, join the team), "Check for Updates" while updates are off, Collab Panel → fixed by item 14.
+b. Zed-logo icons (`zed_agent*.svg`, `zed_assistant.svg`, `zed_predict*.svg`, `ai_zed.svg`) in quick action bar, agent panel, edit prediction button, onboarding, sidebar → swap SVG contents for Lucide glyphs (assets only).
+c. UI font `.ZedSans` (IBM Plex Sans) 16 vs PhpStorm Inter 13 — owner decision.
+d. Edit-prediction status button with no provider → hide.
+e. Palette "get merch" / "open docs" → hide via command-palette filter.
+f. Minimap on (PhpStorm has none) — owner decision.
+g. Later rounds: Git panel layout (plans 10/14), settings / keymap UI (29), Ctrl-Tab switcher.
+
+## Upstream budget
+
+| Feature | Lines |
+|---|---|
+| menus (`zenith_menus`): Cargo ×2, main.rs:861, zed.rs:2343, pane.rs:3125 (+ appended block), −4 reverted | 5 |
+| tab bar end: quick_action_bar.rs:102, zed.rs ~1515 | 2 |
+| look: constants.rs:18, zed.rs:393, tab.rs forked block | 3 |
+| editor: default.json sticky_scroll, code_lens.rs 4a + 4b call site, editor.rs:82 re-export | 4 (5 with preview-from-finder) |
+
+`code_lens.rs` and `pane.rs` are hot upstream files: one call site each, appended blocks, PR candidates (code-lens tab indent; tab context-menu extension point).
+
+## Build order (quick wins first)
+
+| Step | Items | Owner | Check |
+|---|---|---|---|
+| 1 | 10, 13, 8, 16 + 15 (one `ui` rebuild) | gpui-ui-engineer | crate tests, `cargo check -p zenith` |
+| 2 | 17b icon SVG swap, 17d/e | gpui-ui-engineer | `cargo test -p icons` |
+| 3 | 5 sticky headers, 12 check | rust-core-engineer | `cargo nextest run -p editor` |
+| 4 | 14 menus + Tools | rust-core-engineer + gpui-ui-engineer | `cargo test -p zenith_menus` |
+| 5 | 2 editor menu, 1 tab menu | gpui-ui-engineer | `-p zenith_menus -p workspace` |
+| 6 | 3 + 6 tab-bar end | gpui-ui-engineer | `-p zenith_rails -p zenith_markdown -p zed` |
+| 7 | 18 splitter | gpui-ui-engineer | `-p zenith_search` |
+| 8 | 4 usages line | rust-core-engineer + gpui-ui-engineer | `-p editor -E 'test(code_lens)'`, `-p zenith_look` |
+| 9 | 7 PHP dialog | gpui-ui-engineer | `-p zenith_php_tools` |
+| 10 | 9 Remote Host + Deployment | gpui-ui-engineer + rust-core-engineer | `-p zenith_deploy`, security review |
+| 11 | 11 inspection widget (+ browsers once URL source decided) | gpui-ui-engineer | `-p zenith_inspections` |
+
+Every chunk: Sonnet builds, Opus reviews (code-reviewer + accessibility; performance for 2 / 4 / 11; security for 9 / 11), new tests proven to fail without the fix, `df` ≥ 30 GiB, then a bundle check in the running app before ✅.
+
+## Owner decisions
+
+| # | Question | Recommendation |
+|---|---|---|
+| D1 | Title bar 40 px (PhpStorm) or 42 px (design board)? | 40 |
+| D2 | UI font: Inter 13 (bundled, OFL), system font, or keep Plex 16? | Inter 13 |
+| D3 | Minimap off by default? | off |
+| D4 | Sticky headers on for everyone? | on |
+| D5 | Usages line: author shown, end-of-line blame hidden on that line, "usages" wording? | yes ×3 |
+| D6 | Code-lens indent fix as an upstream PR, carried until merged? | yes |
+| D7 | Scratches: "Scratches and Consoles" › "Scratches" (reverses earlier "leave")? | yes |
+| D8 | PHP dialog in-window, staged Cancel / Apply / OK, "…" = file picker? Send screenshots of PHP Runtime / Analysis / Composer Files | yes |
+| D9 | Deployment: hide unwired connection / keep-alive fields until M3; keep Name row; remove gear | yes |
+| D10 | Preview tabs also from ⇧⇧ / file finder? | yes |
+| D11 | Navbar font follows UI font size? | yes |
+| D12 | Open-in-browser URL source (deployment web path vs built-in server) and browsers | deployment web path; system default browser first |
+| D13 | Drop plugin entries (GitToolBox, Highlight, Diagrams, Gist) and new items (Open in New Window, Column Selection, Generate, Paste from History) for round 1? | drop |
+| D14 | Treat menus / tab bar end / look / editor as separate 5-line upstream budgets? | yes |
+| D15 | Agent Review icon | `file_diff` |
+
+## Open *verify*
+
+Diagnostic summary API; `language_selector::Toggle`; case / fold / git action names; Restart action; spacing token for 12 px; command-palette filter API; clipboard-diff action; overlay positioning; SplitMode "move" variant; editor lease during block render; `zenith_is_scratch` in `scratches_off.rs`; PHP outline query for sticky headers; `LabelSize::Ui`; FTP `PWD`; live observation of each `enabled` flag; whether `zenith_postfix` has an `enabled` setting.
+
+## Doc fixes when building
+
+plan 14 (zenith_menus, tab-bar end, 40 px, 12 px tabs), plan 02 (app-menu swap call sites), plan 34 (markdown switcher, inspection widget placement), plan 37 checklist (Locate, LIST-compat, Autodetect, browse root, web path, error rows), plan 39 (PHP modal built; item 7 spec; Scratches label reversed), plan 41 (4a / 4b), fork-findings (`set_custom_context_menu` as the editor-menu hook; `default.json` code_lens line now `:471` "on").

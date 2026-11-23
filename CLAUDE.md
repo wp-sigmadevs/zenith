@@ -16,7 +16,7 @@ Zenith = fork of Zed aiming at full PhpStorm/WebStorm parity (classic + agentic 
 
 ## Layout
 
-- `plan/` 43 plan docs (start at `plan/README.md`) · `zed-kit/` plan 03 config layer for stock Zed (`zed-kit/README.md`) · `docs/` router + guides · `.github/` issue and PR templates.
+- `plan/` 44 plan docs (start at `plan/README.md`) · `zed-kit/` plan 03 config layer for stock Zed (`zed-kit/README.md`) · `docs/` router + guides · `.github/` issue and PR templates.
 
 ## Conventions
 
