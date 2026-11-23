@@ -1,6 +1,6 @@
 # 04 — Scratch Files
 
-> **Status (2026-11-22):** 🟨 new/list/rename/trash/reveal + ⌘⇧N in fork `zenith`. Run scratch (ctrl-r), `zenith.scratches.*` settings, group by language: `da0a6707c1`, in fork `zenith` (verified: `git -C ~/GithubProjects/zed log zenith -- crates/zenith_scratches`; `66bdccbd97` is the current `zenith` head). Project-panel "Scratches and Consoles" node: see plan 39 (branch `feat/scratches-node`).
+> **Status (2026-11-22):** 🟨 new/list/rename/trash/reveal + ⌘⇧N in fork `zenith`. Run scratch (ctrl-r), `zenith.scratches.*` settings, group by language: `da0a6707c1`, in fork `zenith` (verified: `git -C ~/GithubProjects/zed log zenith -- crates/zenith_scratches`; `66bdccbd97` is the current `zenith` head). Project-panel "Scratches" node: see plan 39 (branch `feat/scratches-node`).
 
 ## Goal
 

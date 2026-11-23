@@ -188,7 +188,7 @@ Each hook is a one-line call to a function in `zenith_external_libraries`.
 
 ## Owner-approved additions (2026-11-22)
 
-**(a) Scratches and Consoles node** after External Libraries. In progress on branch `feat/scratches-node`.
+**(a) Scratches node** after External Libraries. In progress on branch `feat/scratches-node`.
 
 - Built in the project-panel glue `zenith_libraries.rs` (child module `zenith_libraries/scratches_node.rs`). The scratches store is an invisible worktree.
 - Upstream: 2 lines in `crates/project_panel/Cargo.toml`, 0 in `project_panel.rs`.
