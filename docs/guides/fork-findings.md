@@ -187,3 +187,19 @@ Opus reviews found and the fixes landed on `zenith` (tests/gate NOT run on the m
 - **cargo audit** (installed 2026-11-23): 22 vulnerabilities, identical to upstream `main`'s lockfile (ammonia, crypto-bigint, h2, libsqlite3-sys, quick-xml x3, quinn-proto, quinn-udp, rsa, url). The suppaftp, futures-rustls, lazy-regex and jiff crates are clean. **2026-11-23 home (`e8ad13ff41`)**: bumped `url` 2.5.9, `quinn-proto` 0.11.19, `quinn-udp` 0.5.16, `ammonia` 4.1.9 → 17 vulnerabilities; the rest are shared with upstream (no compatible fix). Flaky under a full parallel nextest run, pass alone: `zenith_deploy sftp::tests::dropping_the_operation_kills_the_sftp_child`, `zenith_inspections tests::test_a_single_save_looks_up_the_base_beside_the_tools` ("tools never started").
 
 - **Test-only action stubs** (`gpui::actions!(other_crate, [X])` in a test module) panic with "already registered" once the real crate is linked into the same test binary, e.g. through a feature such as `project_panel/scratches` in a workspace-wide nextest run. Use a dev-dependency on the real crate. `zenith_search` tests still stub `zenith_scratches`/`zenith_todo`/`zenith_problems` (latent).
+
+## Session 2026-11-23/24 (home): gate, deploy rounds, plan 44 audit
+
+Upstream facts verified @ fork `503fca5ea7` by two lead-engineer audits (plan 44):
+- **Code lens indent bug (upstream):** `editor/src/code_lens.rs:625` uses `indent_size_for_line(row).len`, which counts bytes, so a tab counts as one column; plus `+ 0.5` em at `:733`. On tab-indented PHP the usages line sits ~1.5 em in instead of 4 em. Upstream-PR candidate (plan 44 #4a). Lens colour key `editor_code_lens_foreground` (`:651`) is unset in our themes.
+- **Editor right-click hook needs no upstream line:** `Editor::set_custom_context_menu` (`editor.rs:3296`) is checked first (`mouse_context_menu.rs:171`). Upstream's own custom menus (agent message editor, channel notes, commit editor) are all on editors without a project, so a hook limited to full-mode editors with a project overwrites none; re-check with `rg set_custom_context_menu` on every sync.
+- **Tab bar end:** `Pane::set_render_tab_bar_buttons` (`pane.rs:859`) is public; the default buttons (`pane.rs:4322`) and `pin_tab_at`/`unpin_tab_at` (`:2715/:2719`) are private.
+- **Sticky headers exist upstream**, off by default (`assets/settings/default.json:828-831`, render `editor/src/element/header.rs:42-72`).
+- **Italic preview tabs exist upstream** (`editor/src/items.rs:834`); single click opens a preview, `enable_preview_from_file_finder` is false.
+- `default.json` code_lens is now `:471` `"on"` (the older note saying `:467 "off"` is stale).
+- App menus: `zed/src/zed/app_menus.rs:9-341`, set at `main.rs:861` and `zed.rs:2343`; `MenuItem::checked` exists (`gpui/src/platform/app_menu.rs:174`).
+
+Process:
+- Deploy follow-ups needed 3 Opus review rounds; each found an ordering hole in "save while a Keychain prompt is open" that the implementer's tests missed (round 1 detached-save race, round 2 snapshot read at OK time, round 3 PASS). Test both orders of any two-save race.
+- Reviewer subagents cannot run cargo (their read-only hook refused `df … && cargo nextest`); the main session runs the checks before merge.
+- `target/debug/incremental` reached 57 GiB on the home machine; deleting it while nothing builds is safe and the next warm release bundle took ≈ 17 min.
