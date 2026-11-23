@@ -12,6 +12,14 @@ Checked 2026-11-20. Not legal advice; Zed's own trademark policy text was not fo
 2. Release notes link the tag (this is the GPL source offer): `https://github.com/wp-sigmadevs/zed/tree/<tag>`.
 3. Fork README keeps the Zenith / not-affiliated paragraph (added 2026-11-20); About window keeps the credit line.
 4. Name/logo: no Zed name or logo as Zenith's own. "Zed Agent" stays as Zed's feature name (owner 2026-11-20).
+5. Copy every line of "Pending release notes" below into the notes, then empty that list.
+
+## Pending release notes
+
+Lines for the next release that users must read. Remove each one once it has shipped.
+
+- Deployment: FTP/FTPS/SFTP passwords saved by builds from before 2026-11-23 are not found any more, because Keychain entries are now tied to user, host, port and protocol. Enter each saved password once more in Deployment Settings (Remote Host panel).
+- HTTP client history: URLs are now stored without `user:password@`, and without default ports or uppercase schemes; more field names are masked (`pin`, `otp`, `cvv`, `ssn`, card numbers, `tokens`, `refresh` and others).
 
 ## Zed's hosted services
 - Sign-in, Zed Agent hosted models, collab, extensions registry: Zed Industries' Terms (`legal/terms.md` in the fork). Do not imply Zed supports Zenith.
