@@ -1,6 +1,6 @@
 # 37 — Deployment (Remote Host tool window + Deployment dialog)
 
-Status: 🟨 IN PROGRESS. Owner decisions made 2026-11-22 (see end). M1a on fork branch `feat/deploy-m1a` (worktree `~/GithubProjects/zed-deploy`). Facts verified against fork @ b4130a774e unless marked UNVERIFIED.
+Status: 🟨 IN PROGRESS. Owner decisions made 2026-11-22 (see end). M1a and M1b are merged in fork `zenith` (2026-11-23, Opus-reviewed three rounds; tests/gate not run on the merged tree). Not done: M1 exit in a running app, upload-on-save confirmation (M4), Mappings/Excluded Paths and SFTP password auth (M2). Open review items: `docs/guides/fork-findings.md` § "Review round (2026-11-23, work machine)". Facts verified against fork @ b4130a774e unless marked UNVERIFIED.
 
 ## Goal
 

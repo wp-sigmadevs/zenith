@@ -131,5 +131,5 @@ Owner decisions 2026-11-22: plan 42 approved; plans 14/34 fork-only parts; batch
 
 ```
 cd ~/GithubProjects/zenith && claude   # work machine: ~/GithubRepos/zenith
-> Read HANDOFF.md, CLAUDE.md and .claude/handoff-376df963-51a5-404a-97bf-711b3e6b3ae1.md (the current brief). Never build/bundle unless the owner says so in that message; ask about §4 step 0.
+> Read HANDOFF.md, CLAUDE.md and .claude/handoff-720c91eb-26bc-4d55-b4d3-4b0b2b064923.md (the current brief). Never build/bundle unless the owner says so in that message; ask about §4 step 0.
 ```
