@@ -12,6 +12,7 @@ Work machine (macOS, Apple Silicon), Rust 1.98.1, fork branch `feat/look`.
 | 2026-11-19 | Same, warm | `cargo nextest run -p zenith_todo` after touching one file | 11.2 s |
 | 2026-11-19 | Release, after core edits (`settings_content`, `editor`) | `script/bundle-mac -i` | 162 m 14 s (9733.52 s) |
 | 2026-11-19 | Release, `zenith_todo` change only (+ `editor` dirtied by a stopped build) | `script/bundle-mac -i` | 47 m 09 s (2829.35 s) |
+| 2026-11-23 | Release (home, sccache warm), `zenith` @ `503fca5ea7`, after removing `target/debug/incremental` (57 GiB) | `script/bundle-mac -i` | ≈ 17 m; disk −15 GiB; known exit 1 at the DMG `mv` |
 
 Notes:
 - `bundle-mac -i` exits 1 after installing (the DMG `mv` step fails); the installed app is fine.
