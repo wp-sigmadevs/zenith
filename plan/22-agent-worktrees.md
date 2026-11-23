@@ -1,65 +1,57 @@
-# 22 — Agent Worktree Manager (F4)
+# 22 — Agent Worktrees (F4) — config only
+
+Owner decision 2026-11-23: shrink to the gaps upstream leaves. lead-engineer audit @ fork `f97b67b69b` (2026-11-23).
 
 ## Goal
 
-Run several coding agents (Claude Code, Codex, Gemini CLI, Zed Agent) in parallel, each isolated in its own git worktree, and manage them from one panel: status, diff, test, merge, discard.
+Run several coding agents in parallel, each in its own git worktree. Upstream Zed now does most of this; Zenith adds `tasks.json` recipes and one guide, no fork code.
 
-First: audit upstream Zed — it may already have parallel agent threads/worktree support; build only the gaps.
+## Upstream coverage (audit @ `f97b67b69b`)
 
-Audit note 2026-11-19 (fork @ b4130a774e): upstream already has claude-agent-acp (`project/src/agent_server_store.rs:2223`), Gemini (`agent_servers/src/agent_servers.rs:28`), Codex (UNVERIFIED) and worktree threads (`agent_ui/src/thread_worktree_archive.rs`). Plan 22 shrinks to the gaps.
+| Item | Status | Where |
+|---|---|---|
+| Create worktree from base | partly | worktree picker, detached HEAD (`zed_actions/src/lib.rs:305-327`, `git_ui_core/src/worktree_service.rs:739`), dir `git.worktree_directory` (`settings_content/src/project.rs:706`); agent tool `create_thread{prompt, agent, use_new_worktree, worktree_name, base_ref}` (`agent/src/tools/create_thread_tool.rs:40-96`). Gap: no `agent/<slug>` branch, no single dialog |
+| Start agent in worktree | covered | ACP Claude/Codex/Gemini via ACP Registry (`docs/src/ai/external-agents.md:47-51`); CLI agents as Terminal Threads (`agent.terminal_init_command`, `settings_content/src/agent.rs:370`) |
+| Status list | covered | Threads Sidebar grouped by project incl. linked worktrees, Running/Waiting/Completed/Error, ± lines (`sidebar/src/sidebar.rs:1878-1915`, `:6461`). No elapsed time: accepted |
+| Notify | covered | `agent.notify_when_agent_waiting`, `play_sound_when_agent_done` (`settings_content/src/agent.rs:326,330`); Claude Code needs `preferredNotifChannel = terminal_bell` |
+| Diff vs base, tests | covered | BranchDiff "Changes since {branch}" (`git_ui/src/branch_diff.rs:44-49`); worktree is a full workspace |
+| Merge / PR | PR covered, merge gap | `git::CreatePullRequest` (`git_ui/src/git_ui.rs:167`); no merge/rebase action → recipe; conflicts and rebase belong to plan 10 |
+| Discard | covered | thread archive saves to `refs/archived-worktrees/<id>` and removes (`agent_ui/src/thread_worktree_archive.rs`); picker Delete/ForceDeleteWorktree |
+| Env/setup copy | covered by hook | `TaskHook::CreateWorktree` (`task/src/task_template.rs:95-98`), run for trusted worktrees only (`workspace/src/tasks.rs:241-252`); `ZED_MAIN_GIT_WORKTREE` (`task/src/task.rs:186`) |
+| Port isolation | gap (later) | Valet recipe |
+| Cost/tokens | covered | ACP UsageUpdate (`acp_thread/src/acp_thread.rs:5189`) |
 
-## Parity checklist (no JetBrains equivalent — Zenith differentiator)
+## Gaps → recipes (global `~/.config/zenith/tasks.json`)
 
-- [ ] New agent task: prompt + agent type + base branch → creates worktree `../<repo>.wt/<slug>` on branch `agent/<slug>` (must)
-- [ ] Start agent in that worktree (terminal session for CLI agents; ACP thread for ACP agents) (must)
-- [ ] Panel: list tasks with status (running / waiting for input / done / failed), elapsed, changed files count (must)
-- [ ] Notify when an agent waits for input or finishes (must)
-- [ ] Review: open diff vs base (multibuffer), run tests/inspections in that worktree (07/21) (must)
-- [ ] Merge: squash-merge or rebase into base branch; or open PR (`gh pr create`) (must)
-- [ ] Discard: remove worktree + branch (with confirmation) (must)
-- [ ] Copy env/setup: `.env`, `vendor`/`node_modules` strategy (symlink / copy / run install) per project (must)
-- [ ] Port isolation for dev servers (later)
-- [ ] Cost/token display if agent exposes it (later)
+- [ ] Setup hook (`hooks: ["create_worktree"]`, cwd `$ZED_WORKTREE_ROOT`): copy `.env` from `$ZED_MAIN_GIT_WORKTREE`; `composer install` if `composer.json`; `npm ci` if `package-lock.json`. Install, never symlink `vendor/`/`node_modules/` (two worktrees would share state) (must)
+- [ ] Optional branch hook: `git switch -c agent/<worktree dir name>` (should)
+- [ ] "Worktree: squash into base" manual task: abort if `git status --porcelain` is non-empty in the worktree; else `git -C $ZED_MAIN_GIT_WORKTREE merge --squash <worktree HEAD>`; never commits (must)
+- [ ] Optional Valet hook: `valet link <worktree dir name>` → `<name>.test` (later)
+- [ ] Guide `docs/guides/agent-worktrees.md` with the recipes + Claude Code `preferredNotifChannel = terminal_bell`; router row in `docs/map/DOCS.md`
 
-## UX
+Kill rule: drop each recipe when upstream ships it.
 
-- Right-stripe panel "Agents": `+ New Task`, list rows (status dot, title, agent, branch, Δ files), row actions: Open (switch Zed window to worktree or open as additional worktree), Terminal, Diff, Test, Merge, Discard.
-- Task detail: prompt, log tail, changed files.
+## Not built (upstream has it)
 
-## Architecture
+`zenith_agents` crate, "Agents" panel, `.zed/zenith-agents.json`, CLI status heuristics, Claude Code hook → IDE server path.
 
-- Crate `zenith_agents`.
-- Git ops via `git` CLI through `zenith_core::process` (`git worktree add -b`, `git worktree remove`, `git merge --squash`).
-- Setup hooks: project `.zed/zenith-agents.json`:
-  ```json
-  { "setup": ["cp ../main/.env .env", "composer install --no-interaction", "npm ci"],
-    "share": ["vendor"], "base_branch": "main" }
-  ```
-- Agent launch:
-  - CLI agents: Zed terminal in worktree cwd running configured command (`claude "<prompt>"`, `codex "<prompt>"`).
-  - ACP agents: open agent thread with project root = worktree (*verify* ACP thread per-worktree support).
-- Status detection: CLI → process alive + idle-output heuristic + agent hooks (Claude Code `Stop`/`Notification` hooks can POST to Zenith IDE server (06) → precise status).
-- State persisted in `zenith_core::store`.
+## M2 (deferred, owner request only)
+
+"New Agent Task" modal (prompt + agent + base → CreateWorktree + thread). Crate `zenith_agent_tasks`; 2 upstream lines (workspace members + dependency). *verify*: whether `AgentPanel::create_thread_with_options` is `pub`. A2 candidate instead of the branch recipe: a `git.worktree_branch_prefix` setting upstream.
 
 ## Safety
 
-- Discard/merge always confirm; show uncommitted changes count.
-- Never auto-merge; never force-push.
-- Worktrees outside the main repo dir but next to it; path shown in UI.
-
-## Milestones
-
-1. Upstream audit.
-2. Create/list/discard worktrees + setup hooks.
-3. Launch CLI agents in terminal; status via process.
-4. Claude Code hooks → precise status + notifications.
-5. Review diff + tests + merge/PR.
-6. ACP agents.
+Never auto-merge or auto-commit; hooks run only in trusted worktrees (upstream gate); delete the worktree right after merge (owner 2026-11-22). The squash recipe gets a security review (shell quoting, cwd) before it ships.
 
 ## Tests
 
-Temp repo integration tests for create/merge/discard; setup-hook runner tests.
+No Rust. `jq empty` on the recipe JSON. Running-app checklist: create worktree → `.env` present + deps installed; squash task refuses a dirty tree and stages changes on a clean one; archive removes the worktree and restore brings it back.
+
+## Open (*verify*)
+
+- Do `ZED_*` task variables expand inside `sh -c` strings or only in command/args/cwd? Test in the app, or write recipes as command + args.
+- Does plan 23 agent review see edits from threads in a separate worktree workspace?
 
 ## Effort
 
-2–3 weeks.
+~0.5 day.

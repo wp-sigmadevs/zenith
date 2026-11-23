@@ -35,7 +35,7 @@ Goal: make Zed a full replacement for PhpStorm/WebStorm for classic **and** agen
 | 19 | [WordPress tools](19-wordpress-tools.md) | LS + Core | 2–3 wk | 🔨 built + reviewed, wired 2026-11-21 (`crates/zenith_wordpress`, fork `zenith` @ `d58e761135`) (M1, M2) |
 | 20 | [File & project templates](20-file-templates.md) | Core | 1 wk | 🟨 M1 built on branch `feat/php-class-templates` (`297f274e5e`, not merged): template format + renderer, PSR-4, New PHP Class dialog |
 | 21 | [Project-wide inspections & Problems panel](21-project-inspections.md) | Core | 1–2 wk | 🔨 M1a, M1b, M3a, M3b (all scopes); B0–B3 new-since-branch done, in fork `zenith` (app check pending) |
-| 22 | [Agent worktree manager](22-agent-worktrees.md) | Core | 2–3 wk | ⬜ |
+| 22 | [Agent worktrees (config recipes)](22-agent-worktrees.md) | Core | ~0.5 d | ⬜ |
 | 23 | [Agent review queue](23-agent-review-queue.md) | Core | 1–2 wk | 🟨 M1 + review fixes merged in fork `zenith` (`aa2247a2d2`…`180d8b20cd`, now @ `8ef52d743d`); not seen in an app |
 | 24 | [Composer & npm panel](24-package-manager-panel.md) | Core | 1 wk | ⬜ |
 | 25 | [Laravel tools](25-laravel-tools.md) | LS + Core | 2–3 wk | 🔨 wired in fork `zenith` (`crates/zenith_laravel`) (M1, M2). Route-name completion inside `route()` strings on `integrate/batch-b` |

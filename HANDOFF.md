@@ -100,7 +100,7 @@ Name risk: pending USPTO "ZENITH" word mark (Zenith IOS Manager LLC, filed Jun 2
 1. ✅ Commit prefix `feat(<crate>):` (plans 02/16 updated).
 2. ✅ `<example>` blocks dropped from agent descriptions.
 3. ✅ Scratches kept (plan 04/39 node is built).
-4. Plan 22: lead-engineer shrinks it to the gaps upstream worktree isolation leaves.
+4. ✅ Plan 22 shrunk to tasks.json recipes + a guide (lead-engineer audit, no fork code).
 5. HTTP history masking: add `ssn`, `card_number`, `cvv`, `cvc`, `otp`, `totp`, `mfa_code`, `pin`, `secrets`, `tokens`, `refresh`, `signing_key`, `write_key`, `AccountKey`; not bare `access`. Not built yet.
 6. Collab + invisible worktrees: document only (owner works solo); no upstream hook.
 7. Delete the 13 merged fork branches on origin (commits stay in `zenith`). Not done yet.
