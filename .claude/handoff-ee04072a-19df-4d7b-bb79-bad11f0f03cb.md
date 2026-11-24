@@ -1,4 +1,10 @@
-## Handoff (deep) — Zenith — 2026-11-24 evening (home machine, `~/GithubProjects/`)
+## Handoff (deep) — Zenith — 2026-11-25 (updated; home machine `~/GithubProjects/`)
+
+### Update 2026-11-25 (supersedes In Flight below)
+- Merged + pushed to fork `zenith`: #3+#6 tab-bar end @ `7f1980288a` (zenith_rails tab_bar_end registry, `draws_tab_bar_end` predicate, per-view visibility; 3 upstream src lines + 4-line `#[path]` test hook), #18 Find splitter @ `217d6dfa88` (0 upstream lines). `zenith` = `origin/zenith` @ `217d6dfa88`. Docs `main` pushed (this commit adds notes + HANDOFF/plan rows).
+- In Flight: none. Next in order: #11 inspection widget (use tab-bar end), #4 usages author, #9 Remote Host + Deployment, #17 Zed-isms, menu chunks 2-3, Linux/Windows menus. Suggest a bundle now (tab menu, PHP dialog, tab-bar end, splitter all unseen).
+- Open (new): Replace-row not in Find popup min height; splitter/⋮ no keyboard route; stock vs markdown buttons may touch (no gap, `tab_bar_end.rs` h_flex); round-3 fixes of both chunks merged without Opus re-review; notify-only-on-change untested.
+- Engineering notes: `docs/guides/fork-findings.md` § Session 2026-11-25.
 
 ### Done
 - Supercharger updated 4.4.8 → 4.4.9 (new hooks load in a NEW session only; adds a Fable model prompt, ask-before-running-downloaded-files, token-store read denials). Autopilot ON (full) until 05:14 on 2026-11-25, this session only.

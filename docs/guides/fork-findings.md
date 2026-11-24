@@ -243,3 +243,16 @@ Process:
   - Known unfixed: a probe/folder pick finishing during Apply is dropped with a notice that the Apply success clears; level + include change together restart PHPantom twice (`ponytail:` comment).
 - **Env:** HOME machine needs no `DEVELOPER_DIR` (Xcode 27.2 is active); the WORK machine does. `cargo fmt --all` by an agent reformatted ~11 files (stashed, not dropped: `git stash drop` is guard-blocked).
 - **Process:** a four-round loop per chunk is normal here (reviewers found a real bug in rounds 1-3 each time); the main-session gate never found them, because stubbed tests pass. Give implementers the "never update an entity inside its own update / resolve at click time / stubs must do what the real hook does" lessons up front.
+
+## Session 2026-11-25 (home): tab-bar end #3/#6, Find in Files splitter #18
+
+Merged `zenith` @ `217d6dfa88`, pushed. Not seen in the app.
+
+- **Tab-bar end.** `zenith_rails::tab_bar_end(view, order, visible_fn, cx)` registers a view per toolbar entity id (cleanup via `cx.on_release`); `zenith_rails::init` installs `pane.set_render_tab_bar_buttons` on every centre pane (existing + `PaneAdded`), calls `default_render_tab_bar_buttons` (made `pub`, 1 upstream line) then appends visible views. Last caller of `set_render_tab_bar_buttons` wins; dock panes (terminal, debugger) are not in `workspace.panes()` and keep their own.
+- **Hide/show must agree.** The toolbar item is Hidden only when `zenith_rails::draws_tab_bar_end(cx)` (rails && `tab_bar.show` && `show_tab_bar_buttons`). Opus round 1 found ⋮ and markdown buttons vanishing when the tab bar buttons were off; fallback keeps them in the toolbar row (markdown uses `PreviewToolbarSpacer`, observes `SettingsStore`).
+- **Empty end slot.** `default_render_tab_bar_buttons` returns `(None, None)` for an unfocused pane; a registered view that renders zero-size still makes `TabBar` draw a bordered end slot. Each view needs a visibility predicate asked at draw time; none visible ⇒ return the stock tuple.
+- **Upstream budget.** Plan said 2, real 3 source lines. Tests for upstream-file changes go in a fork file via `#[cfg(test)] #[path = "x_zenith_tests.rs"] mod zenith_tests;` (4 lines) instead of 100 appended lines.
+- **Splitter.** Modal is anchored at the top (`modal_layer.rs:303-304`): growing a fixed-list popup moves the handle away from the pointer. Pin the measured body height into `PopupSizes.cards` on mouse-down so the sized path (handle follows pointer) applies. Pinning changes `preview_height`; read it BEFORE pin and write it back after, or short windows (< ~729 px) jump 29-104 px. Stored heights shared across windows must be clamped on read, not only on drag.
+- **Test windows hide short-window bugs.** Default test window is 1536x1095; use `simulate_resize` for small-window paths. `cx.notify()` is not covered by gpui tests (harness repaints after every simulated event).
+- Reviews: tab-bar end 2 Opus rounds + unreviewed round 3; splitter Opus ×2 NEEDS CHANGES, round 3 unreviewed. Gate-green again missed 4 real bugs.
+- Open: Replace-mode row not counted in Find popup min height (36 px + 8 px gap, `find_in_files.rs:~1342`); splitter and ⋮ have no keyboard route; `update_location` notify-only-on-change untested; dock panes untested.

@@ -86,7 +86,7 @@ g. Later rounds: Git panel layout (plans 10/14), settings / keymap UI (29), Ctrl
 | Feature | Lines |
 |---|---|
 | menus (`zenith_menus`): Cargo ×2, main.rs:861, zed.rs:2343, pane.rs:3125 (+ appended block), −4 reverted | 5 |
-| tab bar end: quick_action_bar.rs:102, zed.rs ~1515 | 2 |
+| tab bar end (built): pane.rs:4325 `pub`, zed.rs:1494, quick_action_bar.rs:93 + 4-line `#[path]` test hook | 3 (+4 test hook) |
 | look: constants.rs:18, zed.rs:393, tab.rs forked block | 3 |
 | editor: default.json sticky_scroll, code_lens.rs 4a + 4b call site, editor.rs:82 re-export | 4 (5 with preview-from-finder) |
 
