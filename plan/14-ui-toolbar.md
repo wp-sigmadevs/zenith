@@ -83,6 +83,8 @@ Left stripe: Project, Git, Tests, Local History, Scratches. Right stripe: Databa
 - Accessibility: every toolbar/stripe button needs a tooltip + action name (keyboard and command-palette reachable).
 - Islands geometry (target look in `mockups/zenith-v2.html`): colours and icons come from theme/icon-theme JSON (Driftwood + Archipelago Icons, no code), but rounded, gapped panels (editor, docks and bottom panel as separate islands) cannot be expressed in a Zed theme. It needs dock/pane rendering changes in `workspace` (*verify* where docks and the center pane are drawn) — the same hot code as the stripes hook. Mitigation: do it in the stripes hook's call site, behind a `zenith.ui.islands` setting, and drop it if it breaks the merge-cost kill criterion.
 
+Planned (plan 44, not built): new crate `zenith_menus` (PhpStorm menu bar, Tools menu, editor and tab context menus); ⋮ and extras rendered at the tab bar's right end; title bar 34 → 40 px (owner D1); tab left padding 8 → 12 px. Spec and upstream budget: [44](44-phpstorm-parity-round1.md).
+
 ## Effort
 
 2–3 weeks. Can start right after 04 (it gives 04–08 their entry points).

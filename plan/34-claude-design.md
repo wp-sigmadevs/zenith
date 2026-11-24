@@ -98,6 +98,7 @@ Make the running editor match `mockups/claude-design/` (11 boards, Driftwood dar
 
 ## Open
 
+- Planned (plan 44, not built): Code / split / preview markdown buttons move to the tab bar's right end, left of ⋮ (item 6); the inspection counts widget goes at the editor's top-right via the same tab-bar extras, with the bottom indicator hidden (item 11, positioning *verify*). See [44](44-phpstorm-parity-round1.md).
 - Gutter hook icons: extension API or fork hook? Check Zed source before step 3.
 - Agent review on a worktree branch: does Zed's agent diff support it, or does plan 23 need its own view?
 - "Accept all": **decided neutral** (2026-11-18). Zenith's Keep All / Reject All buttons in `agent_ui` already use the default style; keep it that way when the review board is built.

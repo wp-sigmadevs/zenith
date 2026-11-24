@@ -23,6 +23,7 @@ Upstream touch points (target: ≤ 5 lines total across upstream files per featu
 - `crates/zed/Cargo.toml` → depend on `zenith`.
 - `crates/zed/src/main.rs` → `zenith::init(cx)`.
 - `crates/zed/src/zed.rs` → no edit needed for panels: observe `Workspace` creation and `add_panel` (pattern: `zenith_todo.rs:114-122`, verified @ b4130a774e).
+- Planned (plan 44, not built): app-menu swap: `zenith::app_menus(upstream_builder, cx)` called from `main.rs:861` and `zed.rs:2343` (line numbers from plan 44 audit @ `503fca5ea7`), and the 4 renamed lines in upstream `app_menus.rs` reverted. See [44](44-phpstorm-parity-round1.md) item 14.
 - `assets/keymaps/default-macos.json` → avoid; ship our own keymap file merged at init if possible.
 
 ## Zed building blocks (verify each against current source)

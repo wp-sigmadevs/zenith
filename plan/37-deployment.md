@@ -10,6 +10,7 @@ JetBrains Deployment: upload a local project to a server (FTP/FTPS/SFTP) and bro
 
 - [ ] Remote Host tool window: host dropdown (`<None>`), toolbar (upload, download, sync, disconnect), remote tree (must)
 - [ ] Deployment dialog: connection config — type FTP/FTPS/SFTP, host, port, user, password (Keychain), root path, web URL, passive mode (must)
+- [ ] Planned (plan 44, not built): Locate opened file (needs M2 mappings), "Use LIST command › Compatible with old version" (`list_compat`), root-path Autodetect and remote folder browse, Web path column in Mappings, errors as a child row in the tree. Security review mandatory (browse and Autodetect connect with stored credentials). Spec: [44](44-phpstorm-parity-round1.md) item 9.
 - [ ] Mappings (local path to remote path) and excluded paths (must)
 - [ ] Upload on save (must, off by default; see Security)
 - [ ] SSH hosts: use Zed remote projects (`remote/src/transport/ssh.rs:310-379`). Gap Zenith fills: FTP/FTPS, local-to-server mirror, upload on save.

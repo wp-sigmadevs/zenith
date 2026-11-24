@@ -192,10 +192,11 @@ Each hook is a one-line call to a function in `zenith_external_libraries`.
 
 - Built in the project-panel glue `zenith_libraries.rs` (child module `zenith_libraries/scratches_node.rs`). The scratches store is an invisible worktree.
 - Upstream: 2 lines in `crates/project_panel/Cargo.toml`, 0 in `project_panel.rs`.
+- Planned (plan 44, not built): label becomes "Scratches and Consoles" › "Scratches" with no path suffix, reversing the earlier "leave" (owner D7).
 - Setting `zenith.scratches.project_panel_node`, default true. The "Extensions" folder is omitted.
 - Scratch storage and run: plan 04.
 
-**(b) "Configure PHP Include Paths…" (⌘↓)** on the External Libraries node. Not started.
+**(b) "Configure PHP Include Paths…" (⌘↓)** on the External Libraries node. A modal exists (`zenith_php_tools/src/php_modal.rs`, per plan 44 audit @ `503fca5ea7`; not seen working in an app). Planned (plan 44, not built): PhpStorm-style layout: level and interpreter above the tabs, include list with + / − / folder, vendor rows green, staged Cancel / Apply / OK (owner D8); spec in [44](44-phpstorm-parity-round1.md) item 7. The spec below is the original design.
 
 A modal titled "PHP":
 

@@ -134,6 +134,18 @@ Every chunk: Sonnet builds, Opus reviews (code-reviewer + accessibility; perform
 
 Diagnostic summary API; `language_selector::Toggle`; case / fold / git action names; Restart action; spacing token for 12 px; command-palette filter API; clipboard-diff action; overlay positioning; SplitMode "move" variant; editor lease during block render; `zenith_is_scratch` in `scratches_off.rs`; PHP outline query for sticky headers; `LabelSize::Ui`; FTP `PWD`; live observation of each `enabled` flag; whether `zenith_postfix` has an `enabled` setting.
 
+### Settled 2026-11-24 (read-only audit of fork `feat/plan44-quick-wins`, paths in `~/GithubRepos/zed`)
+
+- **Step 1 built** (fork `zenith` @ `f835bb7f97`): 12 px tab padding uses `DynamicSpacing::Base12` (token exists; `LabelSize::Ui` not needed, navbar uses `LabelSize::Default`). Row 8 upstream budget is 1 (4 lines inside the fork's appended `impl ProjectPanel` block, `project_panel.rs:8549`), not 0.
+- **17b icons**: the Z logo is drawn by `ai_zed`, `zed_agent`, `zed_predict` and `zed_predict_{up,down,error,disabled}`; `zed_assistant` and `zed_agent_two` are sparkles (leave). Swap SVG contents only; icon names and icons tests stay.
+- **17c font**: Inter is not bundled (`assets/fonts` has ibm-plex-sans, jetbrains-mono, lilex). Add `assets/fonts/inter/*.ttf` + OFL; `default.json:75` `".ZedSans"` → `"Inter"`, `:87` `16` → `13`.
+- **17d**: `default.json:2001` `"provider": "zed"` → `"none"` hides the button; run `edit_prediction_ui` tests.
+- **17e**: hide with `CommandPaletteFilter::hide_action_types` (`command_palette_hooks.rs:45`): `GetMerch`, `OpenDocs`, `OpenStatusPage`, `feedback::OpenZedRepo`, `EmailZed`.
+- **Item 5**: PHP outline comes from the installed `php` extension's `outline.scm` (class/function/method/interface/enum/trait); which editor tests assume sticky off is unknown until `cargo nextest run -p editor` after the flip.
+- **Item 14**: `reload_menus` runs only on `disable_ai` change (`zed.rs:2168`), so the Tools ☑ toggles need their own reload trigger; gpui `MenuItem::Action` supports `checked` / `disabled`. Restart = `workspace::Reload`; Compare with Clipboard = `DiffClipboardWithSelection`.
+- **Items 1/2**: `workspace` cannot depend on `zenith_menus` (cycle) → register a global tab-menu builder, one call site at `pane.rs:3129`. `pin_tab_at` / `unpin_tab_at` / `is_tab_pinned` / `entry_abs_path` are private. Editor menu: `set_custom_context_menu` (`editor.rs:3296`) skips upstream's full-mode check and cursor move, so the closure redoes both; copy `zenith_look/src/bulb.rs:64-71`. `SplitMode::MovePane` exists (`pane.rs:216`). `language_selector::Toggle` exists.
+- Still unverified: diagnostic summary API, overlay positioning, editor lease during block render, FTP `PWD`, live `enabled` observation, `zenith_postfix` `enabled` setting.
+
 ## Doc fixes when building
 
 plan 14 (zenith_menus, tab-bar end, 40 px, 12 px tabs), plan 02 (app-menu swap call sites), plan 34 (markdown switcher, inspection widget placement), plan 37 checklist (Locate, LIST-compat, Autodetect, browse root, web path, error rows), plan 39 (PHP modal built; item 7 spec; Scratches label reversed), plan 41 (4a / 4b), fork-findings (`set_custom_context_menu` as the editor-menu hook; `default.json` code_lens line now `:471` "on").
