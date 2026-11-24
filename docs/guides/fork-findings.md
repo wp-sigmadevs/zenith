@@ -203,3 +203,27 @@ Process:
 - Deploy follow-ups needed 3 Opus review rounds; each found an ordering hole in "save while a Keychain prompt is open" that the implementer's tests missed (round 1 detached-save race, round 2 snapshot read at OK time, round 3 PASS). Test both orders of any two-save race.
 - Reviewer subagents cannot run cargo (their read-only hook refused `df … && cargo nextest`); the main session runs the checks before merge.
 - `target/debug/incremental` reached 57 GiB on the home machine; deleting it while nothing builds is safe and the next warm release bundle took ≈ 17 min.
+
+## Session 2026-11-24 (work): plan 44 steps 1-5a built
+
+Fork `zenith` @ `2af98edadc` (pushed). Gated per chunk; nothing seen in a running app yet.
+
+Build env and disk:
+- Every cargo run needs `DEVELOPER_DIR=/Applications/Xcode-27.2.0.app/Contents/Developer` (tests too, not only bundles), else `gpui_apple` fails with `unable to find utility "metal"` (looks like a shader or load failure).
+- Agents' test runs regrow `target/debug/incremental` to 36-57 GiB and eat ~19 GiB per run; run with `CARGO_INCREMENTAL=0`. `cargo sweep --maxsize` is age-based and may free almost nothing; `rm -r target/debug/incremental` while nothing builds freed 57 GiB.
+- A gate run while an implementer is still editing the same checkout reports half-finished states; run the gate only after the agent reports.
+
+Upstream behaviour found:
+- Sticky scroll panic (upstream bug, also on Zed main, hidden because it is off by default): `visible_sticky_header_count_for_point` (`editor/src/scroll/autoscroll.rs`) mixed multibuffer and buffer Points; an expanded deleted diff hunk makes rows differ, so `to_point` panicked in prepaint (agent in-buffer review expands hunks). Fixed by converting through anchors like `refresh_sticky_headers`; carried in the fork (~16 code lines, owner-approved exception), upstream PR candidate. Conflict risk at the next sync.
+- `ui_font_size` is also the window rem size: 13 shrank the whole UI to 81% (DynamicSpacing scales by size/16). Kept 16; Inter is applied by family only.
+- `agent_ui` re-shows `OpenZedPredictOnboarding` in the palette on every settings change, so hiding branded actions needs a `SettingsStore` observer, and must sit above the `look.enabled` gate (branding hiding is fork-wide).
+- `observe_global` activates in a deferred effect; a settings change in the same `cx.update` as `init` is missed (tests use two updates).
+- Linux/Windows `ApplicationMenu` (`title_bar/src/application_menu.rs`) drops a submenu nested in a submenu and rebuilds only on `disable_ai` change: keep menu depth to one level; check marks go stale there (deferred).
+- `observe_new::<Editor>` runs after the creating update, so our `set_custom_context_menu` overwrites a custom menu set in the same update; no current caller is affected (their editors have no project).
+- `ToggleFeature { feature: String }` has a required field, so it never shows in the command palette; keymap form `["zenith_menus::ToggleFeature", {"feature": "navbar"}]`.
+- Inter v4.1 bundled from the official rsms/inter release (zip sha256 `9883fdd4a49d4fb66bd8177ba6625ef9a64aa45899767dde3d36aa425756b11e`), static Regular/Italic/Bold/BoldItalic only; SemiBold/Medium resolve to Bold/Regular (~36 call sites use them).
+
+Process:
+- Reviewer and planner subagents hit their turn caps (50-60) with no report three times; a message "deliver the report now" via SendMessage recovers it. Give a tool-call budget in the brief. A second SubagentHandback from the same agent is refused: wait for its completion notice before asking again.
+- Supercharger blocks edits to files outside the session project root (the fork) until `.supercharger.json` in `~/GithubRepos/zenith` has `additionalRoots` (the file is gitignored).
+- Editor right-click menu lost items on first build (Format, Run to Cursor, Evaluate Selection, previews); compare against upstream's default menu (`mouse_context_menu.rs` ~249-313) before replacing any upstream menu.
