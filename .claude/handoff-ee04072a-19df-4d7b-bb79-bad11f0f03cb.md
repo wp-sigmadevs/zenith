@@ -1,63 +1,68 @@
-## Handoff (deep) — Zenith — 2026-11-25 night (home machine `~/GithubProjects/`; merges the work-machine evening brief)
+## Handoff (deep) — Zenith — 2026-11-26 (home machine `~/GithubProjects/`)
 
 ### Done
-- State verified 2026-11-25: fork `~/GithubProjects/zed` `zenith` = `origin/zenith` @ `6ce6200365`; docs `main` = `origin/main` @ `ff4ae8b` (after this brief's commit: one local docs commit, push only on the owner's word). Clean trees. Only `main` + `zenith` branches, no worktrees; 2 old stashes (`stash@{0,1}`, fmt noise; `git stash drop` is guard-blocked, owner drops with `!`).
-- Home stretch: #3+#6 tab-bar end @ `7f1980288a`, #18 Find splitter @ `217d6dfa88` (Opus rounds + unreviewed round 3 each), bundled `Zenith.app` from `217d6dfa88` (installed 2026-11-25 00:32), storage cleaned (27 → 62 GiB, 72 GiB free now).
-- Work stretch (already in `zenith`, see `git log ecbee8f25d..6ce6200365`): #11 inspection widget + #18 follow-ups, #4 lens (indent fix, usages, author), #17-R1 rebrand + R2 keymap label, G1 pinned tabs one row, menu chunks 2-3, plan 37 M4a "Edit remote file" C1-C3 (`zenith_deploy`, 0 upstream lines). Details: `docs/guides/fork-findings.md` §§ "Session 2026-11-25 (home)", "(work)", "(work, later)", "(work, evening)"; HANDOFF §2 plan 44 row is current.
-- Memory (home dir): `zenith-review-process` (2026-11-25 evidence), `machines` (disk 2026-11-25), new `zenith-push-rules`.
+- Fork `~/GithubProjects/zed` `zenith` = `origin/zenith` @ `4eaacbb784` (verified `git status -sb`). `Zenith.app` bundled from it, installed 2026-11-26 00:28 (log `/tmp/zenith-bundle.log`, exit at the DMG `mv` is the known harmless one). NOT seen in a running app.
+- Full gate on the work-machine tree (`6ce6200365`): 2 stale `zed` tests, both fixed (`e93075f650` namespace filter, `996d8f8311` cmd-7 for the base-keymap test). Then 1476/1476, clippy and check clean.
+- Deployment dialog: form `min_w_0`, width capped at 95% of the window, footer/panel status lines wrap (`326c90a363`, `9919a513ce`); Remote Host "<folder> is empty" row (`b971de7eea`) + refresh keeps it so the selection does not move (`bbc9dad850`); stock Split Pane hidden while markdown buttons show, kept on tabs that cannot split (`602d1619c6`, `4eaacbb784`, pane.rs 7+/4-). All in `git log 996d8f8311..4eaacbb784`.
+- Docs `main`: engineering notes `docs/guides/fork-findings.md` § "Session 2026-11-26 (home)", HANDOFF plan 44 row (this brief's commit; push only on the owner's word). Earlier this session: merged brief of the work-machine evening session (its brief file removed).
+- Memory: `zenith-push-rules` (new), `machines`, `zenith-review-process`, `supercharger-blocks`, `zsh-colon-modifier` updated, index current.
+- Reviewed an unrelated project on request: `~/GithubProjects/readback` (nothing changed there).
 
 ### In Flight
-- none. No agents, builds or worktrees.
+- none. No agents, builds or worktrees running.
 
 ### Decisions Made
-- Owner: one by one, build/fix plan 44; loop = Sonnet builds → main-session gate → fresh Opus review per round → fix rounds → `--ff-only` merge → owner decides push.
-- Owner: M4a before M2/M3; in-place remote write; confirm once per server per session; C4 Compare HELD; block uploads in shared/non-local projects. Option A keymap label; Zed service names stay; Linux/Windows menus flattened until an upstream nested-submenu PR; five apparently-live features keep their restart prompt until checked in the app.
-- Close All closes pinned tabs too (owner not asked). Fork pushes need the owner's word each batch; docs `main` too.
+- Owner: hide the stock Split Pane button when markdown buttons show (not a second icon); empty remote folder shows a placeholder row ("yes, a placeholder"); fork pushes need the word per batch ("push and bundle", "yes" after my ask).
+- Owner accepted pane.rs 7+/4- (budget 5): no cheaper form (workspace cannot depend on zenith_rails). Keep stock split on tabs that cannot split.
+- Not decided: narrow-window dialog layout (<475 px), long server names.
 
 ### What Failed
-- Gate green but Opus found real bugs in every chunk (see Measurements); sabotage by agents did not catch M4a bugs.
-- Round-3 fixes of tab-bar end and splitter were merged without a third Opus pass.
-- `cargo sweep` run in the docs repo → "manifest path ... does not exist" (run it in the fork).
-- Bundle script exits 1 at the DMG `mv` (harmless, app installs).
-- Work machine: full gate SKIPPED by owner for `6ce6200365`; only `cargo check -p zenith -p zed` ran.
+- zsh `$P` for `-p` lists: cargo got one argument; use `${=P}`.
+- `rm -rf target/debug/incremental` blocked by the Supercharger guard; `cargo sweep --maxsize 40GB` in the fork worked (35.59 GiB). Owner's own `cargo sweep` in the docs repo failed twice (no Cargo.toml).
+- `percent` / `relative(0.95)` / `max_w` widths in the modal layer: ignored or off-centre; computed width works.
+- The empty-row guard on `loading` (my accepted implementation) moved the selection on refresh (Opus MUST).
 
 ### Blockers
-- none. Owner: push docs `main` when ready; check the new bundle.
+- none. Owner: check the new bundle (list below); docs `main` push on the owner's word.
 
 ### Worktrees
-- none (main checkouts only: `~/GithubProjects/zenith` on `main`, `~/GithubProjects/zed` on `zenith`).
+- none (main checkouts only: `~/GithubProjects/zenith` on `main`, `~/GithubProjects/zed` on `zenith`). 2 old stashes in the fork (`stash@{0,1}`, fmt noise, `git stash drop` is guard-blocked; owner drops with `!`).
 
 ### Files Touched
-- This pass: `docs/guides/fork-findings.md` (home section: disk/bundle bullet), this brief (replaces `.claude/handoff-a39798fb-…md`, merged here), memory `machines.md`, `zenith-push-rules.md`, `MEMORY.md`.
+- Fork: `crates/zenith_deploy/src/{dialog,panel,zenith_deploy}.rs`, `crates/zenith_rails/src/{tab_bar_end,zenith_rails}.rs`, `crates/zenith_markdown/src/zenith_markdown.rs`, `crates/workspace/src/pane.rs` (7+/4-), `crates/zed/src/zed.rs` (two test fixes).
+- Docs: `HANDOFF.md` (plan 44 row), `docs/guides/fork-findings.md` (new section), this brief.
 
 ### Resume With
-Read this brief + `docs/guides/fork-findings.md` § "Session 2026-11-25 (work, evening)". Run the full gate on `zenith` @ `6ce6200365` (below), rebundle `Zenith.app` (installed app is from `217d6dfa88`), then owner checks: Remote Host editing on a real FTP/SFTP host, lens, menus, Tools toggles, pinned-tab row, inspection widget, splitter/⋮, tab menu, PHP dialog. Then decide C4 Compare / M4b / #9 layout.
+Read this brief and `docs/guides/fork-findings.md` § "Session 2026-11-26 (home)". Owner checks the 00:28 bundle (list below); fix what fails through the loop (Sonnet builds → my gate incl. `-p zed` → Opus review). Then pick: C4 Compare (held), M4b, #9 layout, #17 R3-R5 once answered, PHP Runtime/Analysis/Composer tabs once PhpStorm screenshots arrive.
 
 ### Start With
-- `/sc-status` — confirm hooks and autopilot state in the new session (autopilot from the old session has expired).
+- `/sc-status` — hooks and autopilot state in the new session (old autopilot expired).
 
 ### Measurements
-- Gate on `7f1980288a`/`217d6dfa88`: nextest 99 passed (rails/zed), clippy clean; round counts: tab-bar end 3, splitter 3 (Opus ×2 NEEDS CHANGES), tab menu 4, PHP dialog 3, M4a 6 review rounds.
-- Upstream source lines: tab-bar end 3 (+4-line `#[path]` test hook), splitter 0, M4a 0.
-- Disk: free 27 → 62 GiB after sweep + incremental removal; 72 GiB at 2026-11-25 evening. Bundle ≈ 17 min, ~15 GiB.
-- Subagent cost per round ≈ 60-190k tokens implementer, 60-85k reviewer.
+- Full zenith_* + workspace + zed nextest: 1476 tests, 38.6 s test time, 2 skipped (after the fixes; 1474 + 2 failed before). Disk per gate ≈ 14 GiB; bundle ≈ 17 min, free 56 → 43 GiB.
+- Deployment form before/after (test rem 14 px, dialog 672 px): FTP form 720 px, right edge 1426 vs 1296 (+130); after 442.5 px, right edge 1284.5. At a 600 px window the old dialog sat at -36..636, now 15..585.
+- `cargo sweep --maxsize 40GB` in the fork: 35.59 GiB freed (29 → 65 GiB).
+- Tests: zenith_deploy 183 passed / 1 skipped; zenith_rails+markdown+workspace+zed+zenith 506 passed / 1 skipped.
+- Opus rounds: dialog 1 (+notes), Empty row 1 (NEEDS CHANGES), split hide 1 (PASS WITH NOTES).
 
 ### Rejected — do not rebuild
-- Manual `Workspace::zenith_activate_pane`; dispatching `git::CopyFilePermalink`/`OpenFilePermalink`/`FileHistory` from the pane; `tab_index` alone for dialog focus (base keymap `tab → menu::SelectNext` wins); resolving the tab menu target by captured `ix` (use `item_id`).
-- Temp+rename for remote upload (resets remote mode/owner, leaves readable temp `.php`).
-- FreeModel as default / separate AI platform / Supercharger auto-install / minimap off (carried).
+- Second icon for markdown Split (`DiffSplit`): replaced by hiding the stock button (owner).
+- Fork-side copy of `default_render_tab_bar_buttons`: drifts from upstream; a bool param was cheaper.
+- Hiding the empty-folder placeholder while `loading`: row-count change moves the selection.
+- Temp+rename remote upload, FreeModel default, Supercharger auto-install, minimap off (carried; see earlier notes).
 
 ### Dead ends
-- `cx.notify()` removal is not detectable by gpui tests (harness repaints after each simulated event).
-- A global `sed` over `zenith_local_history/src/tests.rs` renamed `wp-config.php` in five tests (reverted); `wp-config.php` matches private globs so the first test passed without the fix.
+- Probing whether the fork's JetBrains default made `test_disabled_keymap_binding` fail: set default `base_keymap` to VSCode, still failed. Cause was the zenith keymap loaded after the base (`cmd-6` Problems).
+- Bisecting 559 commits was not needed: one run with the zenith keymap block disabled gave the answer.
 
 ### Open questions
-- Unverified in the app: everything since the 2026-11-25 00:32 bundle (tab menu on non-active/split panes, PHP dialog look, tab-bar end ⋮ + markdown buttons gap, splitter at short windows, M4a, lens, menus, rebrand, pinned row).
-- Splitter pins popup size for the session after any handle mouse-down; dock panes untested for tab-bar end; stock vs markdown buttons may touch.
-- An unrequested push of `feat/plan37-m4a-edit-remote` reached origin from the work session (source unknown; deleted). Check the push-guard hook.
-- Owner pending: PhpStorm screenshots of PHP Runtime / Analysis / Composer Files tabs (not built); Close All pinned confirmation.
+- Unverified in the app (all of the bundle): markdown tab layout (stock split gone; two similar icons return on Editor+Preview), Deployment dialog fit and wrapping at normal and narrow windows, Empty row height/indent, selection stable on Refresh, keychain prompt behaviour ("Always Allow" then none in the session), plus the earlier list (tab menu, splitter, PHP dialog, menus, lens, remote editing, `⌘6`, base keymap switch).
+- Verified false: the fork's JetBrains default breaks `test_disabled_keymap_binding`.
+- Orphaned focus when tab-switching by keyboard with the Split menu open (55/100): unproven.
+- Dialog below ~475 px window width and long server names in the 14 rem list: known gaps, not fixed.
 
 ### Reproduce
-- Env (home): `export CARGO_INCREMENTAL=0 DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer`; `df -g ~` ≥ 30 in the same command; one cargo at a time. Work machine uses `Xcode-27.2.0.app`.
-- Gate: `cargo check -p zenith -p zed`; `cargo nextest run -p zenith_menus -p zenith_deploy -p zenith_local_history -p zenith_problems -p zenith_search -p zenith_rails -p zenith -p workspace --no-fail-fast`; `cargo clippy -p <touched> --all-targets -- -D warnings`; upstream budget `git diff --stat <base>..HEAD -- . ':!crates/zenith*'`.
-- Bundle: `script/bundle-mac -i` with the env (≈ 17 min). Merge: `git checkout zenith && git merge --ff-only <branch>`.
+- Env (home): `export CARGO_INCREMENTAL=0 DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer`; `df -g ~` ≥ 30 in the same command; one cargo at a time.
+- Full gate: `P=$(ls crates | grep '^zenith' | sed 's/^/-p /' | tr '\n' ' '); cargo nextest run ${=P} -p workspace -p zed --no-fail-fast`; `cargo clippy ${=P} -p zed --all-targets -- -D warnings`; `cargo check -p zenith -p zed`.
+- Disk: `cd ~/GithubProjects/zed && cargo sweep --maxsize 40GB` (not in the docs repo). Bundle: `script/bundle-mac -i` with the env; verify `ls -lT /Applications/Zenith.app/Contents/MacOS/zed`.
+- Layout test: `cargo nextest run -p zenith_deploy -E 'test(the_form_stays_inside_the_dialog)'`; refresh regression: `a_refresh_keeps_the_empty_row_and_the_selection` (20 seeds).
