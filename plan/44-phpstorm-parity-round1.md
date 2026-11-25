@@ -16,7 +16,7 @@ Status: ⬜ plan approved (owner 2026-11-24): D1–D15 as recommended except D3 
 | 8 | Double "Scratches" | `project_panel/src/zenith_libraries/scratches_node.rs:12-13`, root path from `project_panel.rs:8548` | "Scratches and Consoles" › "Scratches", drop path suffix | 1 h | 0 |
 | 9 | Remote Host panel + Deployment dialog = PhpStorm | `zenith_deploy/src/panel.rs:583-705`, `dialog.rs:668-1030` | field-by-field relayout, real tabs, Mappings + Excluded Paths, browse / Autodetect root, LIST-compat | ≈ 4 d | 0 |
 | 10 | Two AI icons | Agent Panel and Agent Review both `IconName::ZenithBot` | Agent Review → `file_diff.svg` | XS | 0 |
-| 11 | Inspection widget + browser icons at editor top-right | bottom `diagnostics/src/items.rs` | `zenith_inspections` corner widget via item 3 extras; browsers need a URL source | 2 d + | 0 |
+| 11 | Inspection widget + browser icons at editor top-right | bottom `diagnostics/src/items.rs` | widget in `zenith_problems` (`inspection_widget.rs`) at the tab-bar end via `zenith_rails::tab_bar_end`; browser icons deferred (need a URL source) | 2 d + | 0 (Cargo.lock +3) |
 | 12 | Preview tab italic | upstream already italic (`editor/src/items.rs:834`); single-click opens preview | check in app; optionally preview from ⇧⇧ / file finder | XS | 0–1 |
 | 13 | Bigger navbar font | `zenith_navbar.rs:469-502` `LabelSize::Small` | Default size (or follow UI font) | 1 h | 0 |
 | 14 | Tools menu controlling every feature; PhpStorm menu bar | `zed/src/zed/app_menus.rs:9-341` | `zenith_menus` reorders upstream items into File / Edit / View / Navigate / Code / Refactor / Run / Tools / Git / Window / Help; Tools lists every Zenith feature with ☑ enable toggles | 2–3 d | 2 (−4 reverted) |
@@ -25,7 +25,7 @@ Status: ⬜ plan approved (owner 2026-11-24): D1–D15 as recommended except D3 
 | 17 | No visible Zed | menus, icons, font, palette, minimap | audit list below | S each | 0 |
 | 18 | Draggable splitter in Find in Files | fixed `PREVIEW_HEIGHT` (`zenith_search/src/style.rs:22`, `find_in_files.rs:1434`) | row-resize handle, session-stored height, clamped | 0.5 d | 0 |
 
-New crate: `zenith_menus` (GPL-3.0-or-later, Cargo feature `menus`): `app_menu.rs`, `tools.rs`, `editor_menu.rs`, `tab_menu.rs`. Touched: `zenith_rails` (`tab_bar_end.rs`), `zenith_inspections` (`corner_widget.rs`), `zenith_look`, `zenith_navbar`, `zenith_markdown`, `zenith_search`, `zenith_php_tools`, `zenith_deploy`, `zenith_agent_review`, project_panel's `zenith_libraries`.
+New crate: `zenith_menus` (GPL-3.0-or-later, Cargo feature `menus`): `app_menu.rs`, `tools.rs`, `editor_menu.rs`, `tab_menu.rs`. Touched: `zenith_rails` (`tab_bar_end.rs`), `zenith_problems` (`inspection_widget.rs`), `zenith_look`, `zenith_navbar`, `zenith_markdown`, `zenith_search`, `zenith_php_tools`, `zenith_deploy`, `zenith_agent_review`, project_panel's `zenith_libraries`.
 
 ## Item details
 
@@ -63,13 +63,17 @@ Dialog (top to bottom): real tab strip Connection / Mappings / Excluded Paths; "
 
 ### 11 Inspection widget
 
-Per-file error / warning / weak warning / typo counts with ↑ ↓ (`GoToPreviousDiagnostic` / `GoToDiagnostic`), click → `zenith_problems::ShowFileProblems`. Drawn from item 3's tab-bar extras as an anchored overlay at the editor's top-right (*verify* positioning; fallback inline in the tab row). Hide upstream's bottom indicator (*verify*). Browser icons need a URL source (deployment mapping web path or a built-in server); http/https only.
+Merged locally on fork `zenith` @ `ecbee8f25d` (commits `3673357265`, `94eb037dfc`, `35168c7511`, `ecbee8f25d`; unpushed; 4 review rounds, Opus + accessibility). Not seen in the app. Implemented in `zenith_problems/src/inspection_widget.rs`, drawn at the tab-bar end via `zenith_rails::tab_bar_end` (priority -1). Per-file errors / warnings / weak warnings (weak excludes `is_unnecessary` hints; reuses `zenith_problems::collect`); green check when clean; ↑ ↓ call `Editor::go_to_prev_diagnostic` / `go_to_diagnostic`; clicking the counts opens the Problems File tab. Shown only when the buffer has a running language server (remote projects: once a `DiagnosticsUpdated` arrived for the path). Setting `zenith.inspection_widget.enabled` (unset = on, applies live; `settings_content/src/zenith.rs`; Tools menu row in `zenith_menus/src/tools.rs`). 0 upstream source lines (Cargo.lock +3). New dependency `zenith_problems -> zenith_rails` (precedent `zenith_markdown`).
+
+Deviations from the first plan: editor top-right overlay dropped (needs an `editor/src/element.rs` hook); typo counter dropped (no spell checker); browser icons deferred to the plan 37 web path (http/https only; security review then); no toolbar-row fallback; upstream bottom `DiagnosticIndicator` kept (right-click Hide).
+
+Known limits: arrows are `ButtonLike`, not `IconButton` (no `aria_keyshortcuts` without touching `ui`); a clean remote file stays hidden until its first diagnostics update; the widget takes ~120 px of tab-bar end per pane; arrows also stop on hints the count excludes.
 
 ### 14 Menu bar and Tools
 
 `main.rs:861` and `zed.rs:2343` call `zenith::app_menus(upstream_builder, cx)`; `zenith_menus` matches upstream items by action and places them in PhpStorm's bar; unplaced items go to the nearest menu; a test asserts no upstream action is lost. Rebuild on Zenith setting changes. Revert the 4 renamed lines in `app_menus.rs` (net upstream diff shrinks).
 
-Tools: AI Assistant › · New from Template / New PHP Class · Create Command Line Launcher · Local History › · Scratches › · TODO › · Inspections › · HTTP Client › · Deployment › · Start SSH Session · PHP › · WordPress › · Laravel › · Next.js › · Markdown › · Run Command · IDE Features › (Search Everywhere, Navigation Bar, Tool Window Rails, Zenith Look, Islands, Title Bar Additions, Hover Card, External Libraries, Welcome). Each feature gets ☑ Enabled (`zenith.<f>.enabled`); navbar, templates, rails, islands, look, search, inspections need a restart (notification offers it); the rest apply live (*verify* each crate observes its flag).
+Tools: AI Assistant › · New from Template / New PHP Class · Create Command Line Launcher · Local History › · Scratches › · TODO › · Inspections › · Inspection Widget · HTTP Client › · Deployment › · Start SSH Session · PHP › · WordPress › · Laravel › · Next.js › · Markdown › · Run Command · IDE Features › (Search Everywhere, Navigation Bar, Tool Window Rails, Zenith Look, Islands, Title Bar Additions, Hover Card, External Libraries, Welcome). Each feature gets ☑ Enabled (`zenith.<f>.enabled`); navbar, templates, rails, islands, look, search, inspections need a restart (notification offers it); the rest apply live (*verify* each crate observes its flag).
 
 ### 17 Visible Zed-isms
 
@@ -106,9 +110,9 @@ g. Later rounds: Git panel layout (plans 10/14), settings / keymap UI (29), Ctrl
 | 8 | 4 usages line | rust-core-engineer + gpui-ui-engineer | `-p editor -E 'test(code_lens)'`, `-p zenith_look` |
 | 9 | 7 PHP dialog | gpui-ui-engineer | `-p zenith_php_tools` |
 | 10 | 9 Remote Host + Deployment | gpui-ui-engineer + rust-core-engineer | `-p zenith_deploy`, security review |
-| 11 | 11 inspection widget (+ browsers once URL source decided) | gpui-ui-engineer | `-p zenith_inspections` |
+| 11 | 11 inspection widget (browser icons deferred to plan 37) | gpui-ui-engineer | `-p zenith_problems -p zenith_menus` |
 
-Every chunk: Sonnet builds, Opus reviews (code-reviewer + accessibility; performance for 2 / 4 / 11; security for 9 / 11), new tests proven to fail without the fix, `df` ≥ 30 GiB, then a bundle check in the running app before ✅.
+Every chunk: Sonnet builds, Opus reviews (code-reviewer + accessibility; performance for 2 / 4 / 11; security for 9, and for 11 only with browser icons), new tests proven to fail without the fix, `df` ≥ 30 GiB, then a bundle check in the running app before ✅.
 
 ## Owner decisions
 

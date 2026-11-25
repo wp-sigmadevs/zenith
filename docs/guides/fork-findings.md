@@ -256,3 +256,15 @@ Merged `zenith` @ `217d6dfa88`, pushed. Not seen in the app.
 - **Test windows hide short-window bugs.** Default test window is 1536x1095; use `simulate_resize` for small-window paths. `cx.notify()` is not covered by gpui tests (harness repaints after every simulated event).
 - Reviews: tab-bar end 2 Opus rounds + unreviewed round 3; splitter Opus ×2 NEEDS CHANGES, round 3 unreviewed. Gate-green again missed 4 real bugs.
 - Open: Replace-mode row not counted in Find popup min height (36 px + 8 px gap, `find_in_files.rs:~1342`); splitter and ⋮ have no keyboard route; `update_location` notify-only-on-change untested; dock panes untested.
+
+## Session 2026-11-25 (work): inspection widget #11, splitter follow-ups #18
+
+Merged locally on fork `zenith` @ `ecbee8f25d`. NOT pushed (owner pushes). Not seen in the app.
+
+- **Inspection widget (#11)** (`3673357265`, `94eb037dfc`, `35168c7511`, `ecbee8f25d`). `zenith_problems/src/inspection_widget.rs` draws at the tab-bar end through `zenith_rails::tab_bar_end` (priority -1). Per-file errors / warnings / weak counts (weak excludes `is_unnecessary` hints; reuses `zenith_problems::collect`); green check when clean; ↑ ↓ call `Editor::go_to_prev_diagnostic` / `go_to_diagnostic`; counts open the Problems File tab. Shown only when the buffer has a running language server (remote: proven by a `DiagnosticsUpdated` per path). Setting `zenith.inspection_widget.enabled` (unset = on, live; `settings_content/src/zenith.rs`; Tools row in `zenith_menus/src/tools.rs`). 0 upstream source lines (Cargo.lock +3). Dependency `zenith_problems -> zenith_rails` (precedent `zenith_markdown`).
+  - Dropped: editor overlay (needs an `editor/src/element.rs` hook), typo counter (no spell checker), toolbar-row fallback. Deferred: browser icons (plan 37 web path, security review then). Upstream bottom `DiagnosticIndicator` kept (right-click Hide).
+  - Limits: arrows are `ButtonLike` (an `IconButton` would need `ui` changes for `aria_keyshortcuts`); a clean remote file stays hidden until its first diagnostics update; ~120 px of tab-bar end per pane; arrows also stop on hints the count excludes.
+- **Splitter follow-ups (#18)** (`58b9002823`, `35706d614c`). A press without drag pins nothing. Splitter is focusable with aria value/min/max/step, Up/Down nudge, Home/End/Enter, VoiceOver increment/decrement. Key context `FindInFilesSplitter` in `assets/keymaps/zenith.json` (tab → `picker::ConfirmCompletion`, shift-tab → new `zenith_search::FocusPreviousField`). Replace row (44 px) now counted in preview room.
+  - Limits: Shift-Tab from the text boxes still runs `Editor::Backtab`; keymap tie-break verified by reading `gpui/src/keymap.rs`, not in the app.
+- **Gate pattern.** Sonnet build → main-session gate → Opus + accessibility review → 3 fix rounds. Reviews found a Tab trap (splitter), a stale widget after Save As / rename, and a remote tab-switch bug; tests and the gate missed all three.
+- **Tooling.** `assets/keymaps/*.json` are JSONC: plain `json.load` fails on them.

@@ -40,6 +40,7 @@ let php = zenith_core::detect::composer(&fs, root).await?; // psr4: Vec<(prefix,
 - No UI logic in `process`/`store`/`jobs` (testable headless).
 - Every async op cancellable; nothing blocks the main thread.
 - Public API documented with one example each.
+- Cross-crate dependencies on the tab-bar registry: `zenith_markdown -> zenith_rails` and `zenith_problems -> zenith_rails` (inspection widget, plan 44 #11, fork `zenith` @ `ecbee8f25d`). Shared UI hooks go through `zenith_rails`, not upstream files.
 
 ## Milestones
 
