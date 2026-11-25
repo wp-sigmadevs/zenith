@@ -1,68 +1,64 @@
-## Handoff (deep) — Zenith — 2026-11-26 (home machine `~/GithubProjects/`)
+## Handoff (deep) — Zenith — 2026-11-26 late (home machine `~/GithubProjects/`)
 
 ### Done
-- Fork `~/GithubProjects/zed` `zenith` = `origin/zenith` @ `4eaacbb784` (verified `git status -sb`). `Zenith.app` bundled from it, installed 2026-11-26 00:28 (log `/tmp/zenith-bundle.log`, exit at the DMG `mv` is the known harmless one). NOT seen in a running app.
-- Full gate on the work-machine tree (`6ce6200365`): 2 stale `zed` tests, both fixed (`e93075f650` namespace filter, `996d8f8311` cmd-7 for the base-keymap test). Then 1476/1476, clippy and check clean.
-- Deployment dialog: form `min_w_0`, width capped at 95% of the window, footer/panel status lines wrap (`326c90a363`, `9919a513ce`); Remote Host "<folder> is empty" row (`b971de7eea`) + refresh keeps it so the selection does not move (`bbc9dad850`); stock Split Pane hidden while markdown buttons show, kept on tabs that cannot split (`602d1619c6`, `4eaacbb784`, pane.rs 7+/4-). All in `git log 996d8f8311..4eaacbb784`.
-- Docs `main`: engineering notes `docs/guides/fork-findings.md` § "Session 2026-11-26 (home)", HANDOFF plan 44 row (this brief's commit; push only on the owner's word). Earlier this session: merged brief of the work-machine evening session (its brief file removed).
-- Memory: `zenith-push-rules` (new), `machines`, `zenith-review-process`, `supercharger-blocks`, `zsh-colon-modifier` updated, index current.
-- Reviewed an unrelated project on request: `~/GithubProjects/readback` (nothing changed there).
+- Fork `~/GithubProjects/zed` `zenith` = `origin/zenith` @ `939b240ac7` (pushed on the owner's "push"; verified `git status -sb`). Since `4eaacbb784`: `db58d37b03` fix(zenith_http) truncated JSON response body stored unmasked in history; `939b240ac7` comment fix. Details: `docs/guides/fork-findings.md` § "Session 2026-11-26 late (home)".
+- Earlier today (all pushed): 2 stale `zed` tests fixed (`e93075f650`, `996d8f8311`), Deployment dialog overflow (`326c90a363`, `9919a513ce`), Remote Host Empty row (`b971de7eea`, `bbc9dad850`), stock Split hidden on markdown tabs (`602d1619c6`, `4eaacbb784`).
+- Gate on `db58d37b03`: 1493/1493 (2 skipped), clippy, `cargo check -p zenith -p zed`. Sabotage by me: guard disabled → exactly the 2 new truncation tests fail. Opus review PASS WITH NOTES (no MUST); SHOULD (multipart comment) fixed in `939b240ac7`. After that comment-only commit only `zenith_http` tests (60/60) and its clippy were re-run, not the full gate.
+- Worktree `~/GithubProjects/zed-httpmask` and branch removed. Fork: only the main checkout.
+- Replay kit work for `readback-e2` (another Claude session): sent 21 past fixes as cases (message text, not in the repo); sent status of the c18 fix twice (not-merged, then merged-not-pushed). No message yet that it is PUSHED.
+- Docs `main` = `origin/main`; this brief + notes + HANDOFF row + memory edits are uncommitted (`HANDOFF.md`, `docs/guides/fork-findings.md`, this file).
+- Memory: `zenith-review-process` (agent worktree gotcha, peer-report loop), `zenith-push-rules` (peer request ≠ owner word) updated.
 
 ### In Flight
-- none. No agents, builds or worktrees running.
+- none. No agents, builds, worktrees running.
 
 ### Decisions Made
-- Owner: hide the stock Split Pane button when markdown buttons show (not a second icon); empty remote folder shows a placeholder row ("yes, a placeholder"); fork pushes need the word per batch ("push and bundle", "yes" after my ask).
-- Owner accepted pane.rs 7+/4- (budget 5): no cheaper form (workspace cannot depend on zenith_rails). Keep stock split on tabs that cannot split.
-- Not decided: narrow-window dialog layout (<475 px), long server names.
+- Owner: "go" to fix the c18 leak through the normal loop; "push and delete the worktree" (fork only; worktree was already gone).
+- Truncated JSON body that cannot be masked → placeholder `[body not stored: truncated, secrets could not be masked]`. Form/multipart NOT widened (Opus: a prefix cut leaves no secret value; widening drops HTML/text and fixes nothing).
+- Earlier (carried): hide stock Split on markdown tabs; empty remote folder shows a placeholder row; pane.rs 7+/4- accepted; pushes need the owner's word per batch.
 
 ### What Failed
-- zsh `$P` for `-p` lists: cargo got one argument; use `${=P}`.
-- `rm -rf target/debug/incremental` blocked by the Supercharger guard; `cargo sweep --maxsize 40GB` in the fork worked (35.59 GiB). Owner's own `cargo sweep` in the docs repo failed twice (no Cargo.toml).
-- `percent` / `relative(0.95)` / `max_w` widths in the modal layer: ignored or off-centre; computed width works.
-- The empty-row guard on `loading` (my accepted implementation) moved the selection on refresh (Opus MUST).
+- Agent `isolation: "worktree"` created a worktree of the docs repo, not the fork; the implementer made `zed-httpmask` itself.
+- Earlier: zsh `$P` for `-p` lists (use `${=P}`); `rm -rf target/debug/incremental` blocked (use `cargo sweep --maxsize 40GB` inside the fork); modal percent/max_w widths.
 
 ### Blockers
-- none. Owner: check the new bundle (list below); docs `main` push on the owner's word.
+- none. Owner: bundle (installed `Zenith.app` @ 00:28 predates the leak fix and everything after `4eaacbb784`), check the app (list below), docs `main` commit/push on the owner's word.
 
 ### Worktrees
-- none (main checkouts only: `~/GithubProjects/zenith` on `main`, `~/GithubProjects/zed` on `zenith`). 2 old stashes in the fork (`stash@{0,1}`, fmt noise, `git stash drop` is guard-blocked; owner drops with `!`).
+- none (main checkouts only: `~/GithubProjects/zenith` on `main`, `~/GithubProjects/zed` on `zenith`). 2 old stashes in the fork (`stash@{0,1}`, `git stash drop` is guard-blocked; owner drops with `!`).
 
 ### Files Touched
-- Fork: `crates/zenith_deploy/src/{dialog,panel,zenith_deploy}.rs`, `crates/zenith_rails/src/{tab_bar_end,zenith_rails}.rs`, `crates/zenith_markdown/src/zenith_markdown.rs`, `crates/workspace/src/pane.rs` (7+/4-), `crates/zed/src/zed.rs` (two test fixes).
+- Fork: `crates/zenith_http/src/history.rs` (+118/-3: `may_be_json`, `UNMASKABLE_BODY`, guard in `HistoryDir::append`, 3 tests). 0 upstream lines.
 - Docs: `HANDOFF.md` (plan 44 row), `docs/guides/fork-findings.md` (new section), this brief.
 
 ### Resume With
-Read this brief and `docs/guides/fork-findings.md` § "Session 2026-11-26 (home)". Owner checks the 00:28 bundle (list below); fix what fails through the loop (Sonnet builds → my gate incl. `-p zed` → Opus review). Then pick: C4 Compare (held), M4b, #9 layout, #17 R3-R5 once answered, PHP Runtime/Analysis/Composer tabs once PhpStorm screenshots arrive.
+Read this brief and `docs/guides/fork-findings.md` § "Session 2026-11-26 late". Tell `readback-e2` the c18 fix is pushed (`939b240ac7`), then wait for the owner: bundle/app check results, or pick C4 Compare (held), M4b, #9 layout, #17 R3-R5, or the NDJSON/multipart masking gaps.
 
 ### Start With
-- `/sc-status` — hooks and autopilot state in the new session (old autopilot expired).
+- `/sc-status` — hooks and autopilot state in the new session.
 
 ### Measurements
-- Full zenith_* + workspace + zed nextest: 1476 tests, 38.6 s test time, 2 skipped (after the fixes; 1474 + 2 failed before). Disk per gate ≈ 14 GiB; bundle ≈ 17 min, free 56 → 43 GiB.
-- Deployment form before/after (test rem 14 px, dialog 672 px): FTP form 720 px, right edge 1426 vs 1296 (+130); after 442.5 px, right edge 1284.5. At a 600 px window the old dialog sat at -36..636, now 15..585.
-- `cargo sweep --maxsize 40GB` in the fork: 35.59 GiB freed (29 → 65 GiB).
-- Tests: zenith_deploy 183 passed / 1 skipped; zenith_rails+markdown+workspace+zed+zenith 506 passed / 1 skipped.
-- Opus rounds: dialog 1 (+notes), Empty row 1 (NEEDS CHANGES), split hide 1 (PASS WITH NOTES).
+- Full gate `db58d37b03`: 1493 tests, 2 skipped, 43.463 s test time (1476 before; +17 = new tests plus the tree's own growth, not itemised). `zenith_http`: 60 passed. Sabotage: 14 `disk_history` tests, 2 failed with the guard off (`…drops_a_cut_off_json_body_it_cannot_mask`, `…by_its_shape_without_a_content_type`), 12 passed.
+- Disk during the gate: 43 GiB free before (`df -g ~`), shared target dir, no second build cache.
+- Replay list: 21 cases (18 escapes, 3 review-caught: `bbc9dad850`, `4eaacbb784`, `16b037135e`); introducing commits blame-only, all unconfirmed.
 
 ### Rejected — do not rebuild
-- Second icon for markdown Split (`DiffSplit`): replaced by hiding the stock button (owner).
-- Fork-side copy of `default_render_tab_bar_buttons`: drifts from upstream; a bool param was cheaper.
-- Hiding the empty-folder placeholder while `loading`: row-count change moves the selection.
-- Temp+rename remote upload, FreeModel default, Supercharger auto-install, minimap off (carried; see earlier notes).
+- Placeholder for every truncated body that masking returned `None` for: would drop large HTML/text from history, closes no leak (Opus).
+- Masking before the runner truncates: needs a second 10 MiB parse in memory; the append-side guard covers every path (one non-test caller, `history_view.rs:79`).
+- Earlier (carried): second icon for markdown Split; fork-side copy of `default_render_tab_bar_buttons`; hiding the Empty row while loading; temp+rename remote upload; FreeModel default; Supercharger auto-install.
 
 ### Dead ends
-- Probing whether the fork's JetBrains default made `test_disabled_keymap_binding` fail: set default `base_keymap` to VSCode, still failed. Cause was the zenith keymap loaded after the base (`cmd-6` Problems).
-- Bisecting 559 commits was not needed: one run with the zenith keymap block disabled gave the answer.
+- BOM handling in `serde_json::from_str` (Opus ~60% it rejects a leading BOM): not probed, harmless either way.
+- Earlier: probing the JetBrains default as the cause of `test_disabled_keymap_binding` (verified false; the zenith keymap `cmd-6` was the cause).
 
 ### Open questions
-- Unverified in the app (all of the bundle): markdown tab layout (stock split gone; two similar icons return on Editor+Preview), Deployment dialog fit and wrapping at normal and narrow windows, Empty row height/indent, selection stable on Refresh, keychain prompt behaviour ("Always Allow" then none in the session), plus the earlier list (tab menu, splitter, PHP dialog, menus, lens, remote editing, `⌘6`, base keymap switch).
-- Verified false: the fork's JetBrains default breaks `test_disabled_keymap_binding`.
-- Orphaned focus when tab-switching by keyboard with the Split menu open (55/100): unproven.
-- Dialog below ~475 px window width and long server names in the 14 rem list: known gaps, not fixed.
+- Unverified in the app: everything bundled at 00:28 (markdown tab layout, Deployment dialog fit, Empty row, Refresh selection, keychain "Always Allow") and the whole truncated-body fix (not bundled).
+- Unverified: whether existing history files on disk already hold unmasked tokens from >10 MiB responses (no scan done).
+- Known gaps, not fixed: complete `application/x-ndjson` response with secrets stored unmasked (hand to security-engineer); multipart without `boundary=` never masked; truncated text starting with `[` becomes the placeholder (accepted); dialog below ~475 px; long server names; orphaned focus with the Split menu open (55/100).
+- Replay introducing_sha values: unconfirmed until someone other than the reviewer reads each.
 
 ### Reproduce
-- Env (home): `export CARGO_INCREMENTAL=0 DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer`; `df -g ~` ≥ 30 in the same command; one cargo at a time.
+- Env (home): `export CARGO_INCREMENTAL=0 DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer`; `df -g ~` ≥ 30; one cargo at a time.
 - Full gate: `P=$(ls crates | grep '^zenith' | sed 's/^/-p /' | tr '\n' ' '); cargo nextest run ${=P} -p workspace -p zed --no-fail-fast`; `cargo clippy ${=P} -p zed --all-targets -- -D warnings`; `cargo check -p zenith -p zed`.
-- Disk: `cd ~/GithubProjects/zed && cargo sweep --maxsize 40GB` (not in the docs repo). Bundle: `script/bundle-mac -i` with the env; verify `ls -lT /Applications/Zenith.app/Contents/MacOS/zed`.
-- Layout test: `cargo nextest run -p zenith_deploy -E 'test(the_form_stays_inside_the_dialog)'`; refresh regression: `a_refresh_keeps_the_empty_row_and_the_selection` (20 seeds).
+- Leak tests: `cargo nextest run -p zenith_http disk_history`. Sabotage: cp `history.rs` aside, trap-restore, change `None if response.truncated` to `None if false && response.truncated`; the 2 truncation tests must FAIL.
+- Disk: `cd ~/GithubProjects/zed && cargo sweep --maxsize 40GB`. Bundle: `script/bundle-mac -i` with the env; verify `ls -lT /Applications/Zenith.app/Contents/MacOS/zed`.
