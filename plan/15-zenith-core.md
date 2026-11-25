@@ -1,5 +1,7 @@
 # 15 — `zenith_core`: Shared Infrastructure (A1)
 
+Status: ⬜ not built. The crate does not exist in the fork (checked 2026-11-25: no `crates/zenith_core`); still a Phase 1 item. Until then `secrets.rs` lives in `zenith_deploy` and the rebrand helper in the `zenith` crate (`brand.rs`).
+
 ## Goal
 
 One crate for infrastructure every feature needs, so 04–31 don't each reinvent it. `store` is extracted from `zenith_local_history` on second use (05 owns its own `store.rs` first); refactor 04 onto it.

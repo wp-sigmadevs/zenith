@@ -268,3 +268,10 @@ Merged locally on fork `zenith` @ `ecbee8f25d`. NOT pushed (owner pushes). Not s
   - Limits: Shift-Tab from the text boxes still runs `Editor::Backtab`; keymap tie-break verified by reading `gpui/src/keymap.rs`, not in the app.
 - **Gate pattern.** Sonnet build → main-session gate → Opus + accessibility review → 3 fix rounds. Reviews found a Tab trap (splitter), a stale widget after Save As / rename, and a remote tab-switch bug; tests and the gate missed all three.
 - **Tooling.** `assets/keymaps/*.json` are JSONC: plain `json.load` fails on them.
+
+## Session 2026-11-25 (work, later): M4a transport, screenshot fixes, review lessons
+
+- **Reviews again found bugs after green gates.** A Tab trap (from an agent's unrequested Tab-cycle addition), a stale widget, and a 30 s timeout that truncated uploads.
+- **Worktree.** Fork `.worktrees/shot` (branch `feat/plan44-screenshots`) shares `target` via `CARGO_TARGET_DIR`. The cargo lock serialises builds; run `cargo sweep` only when nothing builds.
+- **`zenith_core` does not exist** in the fork (plan 15 is Phase 1). The rebrand helper lives in the `zenith` crate (`brand.rs`).
+- **Vega comparison** (MIT, iRemote-derived, GPL crates; we copy no code). Flaws found, now in plan 37 checklist: host starting with `-` not rejected, no `--`; names with `..` or `/` accepted; project config trusted for uploads. M4a decisions: `plan/37-deployment.md` § "M4a decisions".

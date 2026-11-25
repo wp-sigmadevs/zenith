@@ -71,7 +71,7 @@ Phase 5  Big/polish   12 → 29 → 31 → 30
 Continuous            13 (maintenance), 16 (upstream PRs), 18 (A6 perf guard)
 ```
 
-- **Phase 0**: shared core + fast builds before any feature; 03 gives immediate value on stock Zed.
+- **Phase 0**: fast builds before any feature (the planned shared core, plan 15, does not exist yet: `zenith_core` is a Phase 1 item); 03 gives immediate value on stock Zed.
 - **Phase 1**: small panels prove fork workflow + measure merge cost (kill criteria). 14 early = entry points for later panels.
 - **Phase 2**: agent safety (history → review queue → parallel worktrees) — biggest agentic multiplier.
 - **Phase 3**: daily PHP/WP/JS depth. 35 first: 21, 19 and 25 need the tools it installs.

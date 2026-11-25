@@ -39,8 +39,9 @@ Show Context Actions (`ToggleCodeActions`), AI Actions › (add to thread, inlin
 
 ### 4 Usages line
 
-- 4a: `group_lenses_by_row` counts indent in bytes (`code_lens.rs:625`, `IndentSize.len`), so on tab-indented PHP the lens sits ~1.5 em in instead of 4 em; also drop the `+ 0.5` (`:733`). ~4 lines; send upstream as a PR and carry it until merged.
+- 4a: `group_lenses_by_row` counts indent in bytes (`code_lens.rs:625`, `IndentSize.len`), so on tab-indented PHP the lens sits ~1.5 em in instead of 4 em; also drop the `+ 0.5` (`:733`). Built (fork branch `feat/plan44-screenshots`, not merged): 5 changed lines in the function body + a 13-line helper + a test; PR candidate for upstream, carried until merged.
 - 4b: appended `set_code_lens_style` hook (same pattern as `set_code_lens_locations_handler` `:2199`) + one call site in `build_code_lens_renderer` + re-export `editor.rs:82`. `zenith_look` returns UI font at 0.9 × UI size, "N usages", two-space separator, people icon + blame author of the declaration row (`GitBlame::blame_for_rows`, capture the `Entity<GitBlame>` at block build; *verify* the editor isn't leased during block render).
+  - Built (same branch): 3 hook sites + 1 import line + a 62-line appended block + 1 re-export line in the fork. Lens title "N reference(s)" → "N usage(s)" and the blame author live in `zenith_look/src/code_lens.rs`.
 - Theme: set `editor.code_lens.foreground` to PhpStorm's code-vision grey.
 
 ### 7 PHP dialog
@@ -83,6 +84,7 @@ c. UI font → Inter 13 (owner 2026-11-24, D2).
 d. Edit-prediction status button with no provider → hide.
 e. Palette "get merch" / "open docs" → hide via command-palette filter.
 f. Minimap: stays on (owner 2026-11-24).
+   R1 built (branch `feat/plan44-screenshots`, not merged, not pushed): `rebrand_text` in `crates/zenith/src/brand.rs`; hooks in `zed.rs` for default settings, default keymap, semantic token rules and vim bindings; initial user settings/keymap comments say Zenith; `test = false` removed from `crates/zenith/Cargo.toml` so its tests run. Owner answers: keep Zed service names; show base keymap as "Zenith (default)" (display only); leave "Zed (Default)" theme names. Also on the branch: G1 pinned tabs share one row (`show_pinned_tabs_in_separate_row` false in `default.json`); G2 end-of-line blame left alone (no `element.rs` hook).
 g. Later rounds: Git panel layout (plans 10/14), settings / keymap UI (29), Ctrl-Tab switcher.
 
 ## Upstream budget
