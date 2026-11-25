@@ -1,64 +1,69 @@
-## Handoff (deep) — Zenith — 2026-11-26 late (home machine `~/GithubProjects/`)
+## Handoff (deep) — Zenith — 2026-11-26 night (home machine `~/GithubProjects/`)
 
 ### Done
-- Fork `~/GithubProjects/zed` `zenith` = `origin/zenith` @ `939b240ac7` (pushed on the owner's "push"; verified `git status -sb`). Since `4eaacbb784`: `db58d37b03` fix(zenith_http) truncated JSON response body stored unmasked in history; `939b240ac7` comment fix. Details: `docs/guides/fork-findings.md` § "Session 2026-11-26 late (home)".
-- Earlier today (all pushed): 2 stale `zed` tests fixed (`e93075f650`, `996d8f8311`), Deployment dialog overflow (`326c90a363`, `9919a513ce`), Remote Host Empty row (`b971de7eea`, `bbc9dad850`), stock Split hidden on markdown tabs (`602d1619c6`, `4eaacbb784`).
-- Gate on `db58d37b03`: 1493/1493 (2 skipped), clippy, `cargo check -p zenith -p zed`. Sabotage by me: guard disabled → exactly the 2 new truncation tests fail. Opus review PASS WITH NOTES (no MUST); SHOULD (multipart comment) fixed in `939b240ac7`. After that comment-only commit only `zenith_http` tests (60/60) and its clippy were re-run, not the full gate.
-- Worktree `~/GithubProjects/zed-httpmask` and branch removed. Fork: only the main checkout.
-- Replay kit work for `readback-e2` (another Claude session): sent 21 past fixes as cases (message text, not in the repo); sent status of the c18 fix twice (not-merged, then merged-not-pushed). No message yet that it is PUSHED.
-- Docs `main` = `origin/main`; this brief + notes + HANDOFF row + memory edits are uncommitted (`HANDOFF.md`, `docs/guides/fork-findings.md`, this file).
-- Memory: `zenith-review-process` (agent worktree gotcha, peer-report loop), `zenith-push-rules` (peer request ≠ owner word) updated.
+- Fork `~/GithubProjects/zed` `zenith` @ `5635f4bd51`, 3 commits AHEAD of `origin/zenith` (unpushed; verified `git status -sb`). Pushed earlier today: `939b240ac7` (c18: cut-off JSON response stored unmasked).
+- Merged locally, `zenith_http` only, 0 upstream lines: `c532dac48e` (A1 NDJSON line masking, A2 multipart without `boundary=`), `eeb2356c32` (round 2: whole-body parse first, boundary fallback, BOM, note kept), `5635f4bd51` (round 3: repeated-key-aware parse, json-seq RS framing, StreamDeserializer span rewrite, BOM sniff, empty-boundary filter). Gate on each: 1498 / 1502 / 1508 tests (2 skipped), clippy `-D warnings`, `cargo check -p zenith -p zed` green. Details: `docs/guides/fork-findings.md` § "Session 2026-11-26 night (home)".
+- Worktree `zed-httpmask2` and branch removed (owner's word). Fork has only the main checkout.
+- Verdicts sent to `readback-e2` (replay session): 21 replay cases; items 3-6 (3 confirmed by reading, 4 and 6 ruled out, 5 confirmed by reading); c18 pushed; review-round results; repeated-key LEAK confirmed. No message yet that A1/A2 are merged locally (it knows rounds 1-2 and the repeated-key result).
+- Docs `main` = `origin/main` (b07c786 already pushed by owner); this brief + notes + HANDOFF row are uncommitted.
 
 ### In Flight
-- none. No agents, builds, worktrees running.
+- none. No agents, builds, worktrees. 2 old stashes in the fork (`stash@{0,1}`; `git stash drop` guard-blocked; owner drops with `!`).
 
 ### Decisions Made
-- Owner: "go" to fix the c18 leak through the normal loop; "push and delete the worktree" (fork only; worktree was already gone).
-- Truncated JSON body that cannot be masked → placeholder `[body not stored: truncated, secrets could not be masked]`. Form/multipart NOT widened (Opus: a prefix cut leaves no secret value; widening drops HTML/text and fixes nothing).
-- Earlier (carried): hide stock Split on markdown tabs; empty remote folder shows a placeholder row; pane.rs 7+/4- accepted; pushes need the owner's word per batch.
+- Owner: "go, fix A1 A2 3 and 5" (one by one); "cut the agent and merge to zenith" (stopped the round-3 Opus review, merged locally, no push); "delete the worktree".
+- Repeated key `{"token":"S","token":null}`: re-serialise the parsed form (earlier duplicate values dropped).
+- Complete bodies keep an unparsable line as written; only a body the run marked truncated is checked for cut lines. Truncated + earlier line fails ⇒ whole body placeholder.
+- Item 5 plan (not built): `AskFirst` when both stamps are `None` and sizes match; cost = a prompt per save on FTP without MDTM.
 
 ### What Failed
-- Agent `isolation: "worktree"` created a worktree of the docs repo, not the fork; the implementer made `zed-httpmask` itself.
-- Earlier: zsh `$P` for `-p` lists (use `${=P}`); `rm -rf target/debug/incremental` blocked (use `cargo sweep --maxsize 40GB` inside the fork); modal percent/max_w widths.
+- Agent `isolation: "worktree"` makes a docs-repo worktree, not the fork (implementer must `git worktree add` itself).
+- First A1/A2 fix introduced a regression (multi-line JSON under an ndjson type stored raw): my gate and the implementer's sabotage runs were green; only Opus caught it.
+- Earlier today: zsh `$P` for `-p` lists (use `${=P}`); `rm -rf target/debug/incremental` blocked (use `cargo sweep --maxsize 40GB` in the fork).
 
 ### Blockers
-- none. Owner: bundle (installed `Zenith.app` @ 00:28 predates the leak fix and everything after `4eaacbb784`), check the app (list below), docs `main` commit/push on the owner's word.
+- none. Owner: push the fork on the word (3 commits), bundle (installed `Zenith.app` @ 00:28 has NONE of today's masking fixes), app check, decide whether the unreviewed round 3 needs an Opus pass.
 
 ### Worktrees
-- none (main checkouts only: `~/GithubProjects/zenith` on `main`, `~/GithubProjects/zed` on `zenith`). 2 old stashes in the fork (`stash@{0,1}`, `git stash drop` is guard-blocked; owner drops with `!`).
+- none (main checkouts only: `~/GithubProjects/zenith` on `main`, `~/GithubProjects/zed` on `zenith`).
 
 ### Files Touched
-- Fork: `crates/zenith_http/src/history.rs` (+118/-3: `may_be_json`, `UNMASKABLE_BODY`, guard in `HistoryDir::append`, 3 tests). 0 upstream lines.
+- Fork: `crates/zenith_http/src/history.rs` (+~650 incl. tests, masking pipeline), `crates/zenith_http/src/response.rs` (`TRUNCATION_NOTE_PREFIX`, +3/-2). 0 upstream lines.
 - Docs: `HANDOFF.md` (plan 44 row), `docs/guides/fork-findings.md` (new section), this brief.
 
 ### Resume With
-Read this brief and `docs/guides/fork-findings.md` § "Session 2026-11-26 late". Tell `readback-e2` the c18 fix is pushed (`939b240ac7`), then wait for the owner: bundle/app check results, or pick C4 Compare (held), M4b, #9 layout, #17 R3-R5, or the NDJSON/multipart masking gaps.
+Read this brief and `docs/guides/fork-findings.md` § "Session 2026-11-26 night". Ask the owner: push the 3 unpushed fork commits? Opus pass on round 3 (`git diff eeb2356c32..5635f4bd51`)? Then build item 3 (Recent Files stale `file_target`) and item 5 (no-stamp same-size upload) one at a time through the loop. Tell `readback-e2` what merged.
 
 ### Start With
 - `/sc-status` — hooks and autopilot state in the new session.
 
 ### Measurements
-- Full gate `db58d37b03`: 1493 tests, 2 skipped, 43.463 s test time (1476 before; +17 = new tests plus the tree's own growth, not itemised). `zenith_http`: 60 passed. Sabotage: 14 `disk_history` tests, 2 failed with the guard off (`…drops_a_cut_off_json_body_it_cannot_mask`, `…by_its_shape_without_a_content_type`), 12 passed.
-- Disk during the gate: 43 GiB free before (`df -g ~`), shared target dir, no second build cache.
-- Replay list: 21 cases (18 escapes, 3 review-caught: `bbc9dad850`, `4eaacbb784`, `16b037135e`); introducing commits blame-only, all unconfirmed.
+- Full gate (zenith_* + workspace + zed): round 1 1498, round 2 1502, round 3 1508 tests, 2 skipped, 38-40 s test time each. `zenith_http`: 60 → 65 → 69 → 75 tests.
+- Diff sizes: c532dac48e history.rs +214/-7; eeb2356c32 +198/-63 (history.rs, response.rs); 5635f4bd51 +340/-70. Range 939b240ac7..5635f4bd51: 635 insertions, 23 deletions net (2 files).
+- Repeated-key probe: `{"token":"S","token":null}` under `application/json` stored `{"token":"SECRETVAL","token":null}` before the fix (test `test_disk_history_masks_a_secret_key_repeated_with_null`).
+- Disk: 35 GiB free during gates (`df -g ~`), shared `CARGO_TARGET_DIR=~/GithubProjects/zed/target`.
+- Opus rounds on this chunk: 2 × NEEDS CHANGES, third stopped by owner before verdict.
 
 ### Rejected — do not rebuild
-- Placeholder for every truncated body that masking returned `None` for: would drop large HTML/text from history, closes no leak (Opus).
-- Masking before the runner truncates: needs a second 10 MiB parse in memory; the append-side guard covers every path (one non-test caller, `history_view.rs:79`).
-- Earlier (carried): second icon for markdown Split; fork-side copy of `default_render_tab_bar_buttons`; hiding the Empty row while loading; temp+rename remote upload; FreeModel default; Supercharger auto-install.
+- Placeholder for every truncated body that masking could not mask (drops HTML/text, closes no leak).
+- Masking before the runner truncates (second 10 MiB parse in memory).
+- Whole-body placeholder for a cut NDJSON (fires on every truncated stream, drops complete lines); replaced by "only the last data line may fail".
+- Earlier (carried): second Split icon for markdown; fork-side copy of `default_render_tab_bar_buttons`; hiding the Empty row while loading; FreeModel default; Supercharger auto-install.
 
 ### Dead ends
-- BOM handling in `serde_json::from_str` (Opus ~60% it rejects a leading BOM): not probed, harmless either way.
-- Earlier: probing the JetBrains default as the cause of `test_disabled_keymap_binding` (verified false; the zenith keymap `cmd-6` was the cause).
+- BOM rejection by `serde_json::from_str` never probed (Opus ~60%); the fix strips the BOM either way.
+- Smaller design alternative ("JSON-ish type not fully maskable ⇒ placeholder") was asked of Opus in round 3, which was stopped: unevaluated, not rejected.
 
 ### Open questions
-- Unverified in the app: everything bundled at 00:28 (markdown tab layout, Deployment dialog fit, Empty row, Refresh selection, keychain "Always Allow") and the whole truncated-body fix (not bundled).
-- Unverified: whether existing history files on disk already hold unmasked tokens from >10 MiB responses (no scan done).
-- Known gaps, not fixed: complete `application/x-ndjson` response with secrets stored unmasked (hand to security-engineer); multipart without `boundary=` never masked; truncated text starting with `[` becomes the placeholder (accepted); dialog below ~475 px; long server names; orphaned focus with the Split menu open (55/100).
-- Replay introducing_sha values: unconfirmed until someone other than the reviewer reads each.
+- Unreviewed (round 3, `eeb2356c32..5635f4bd51`): byte-offset span rewrite on multibyte/CRLF/BOM, depth past serde_json's 128 recursion limit (stored raw?), numbers outside f64 range falling to per-record masking (`{"token":"S","n":1e999}`). Unverified, not verified false.
+- Do existing history files on disk hold unmasked tokens? Not scanned.
+- Item 3 and 5 reproduced? No, both confirmed by reading only.
+- Everything bundled at 00:28 and none of the masking fixes seen in the app (owner check list: markdown tab layout, Deployment dialog, Empty row, Refresh selection, keychain prompt, tab menu, splitter, PHP dialog, menus, lens, remote editing, `⌘6`).
+- Known gaps, unfixed: CR-only line separators, boundary found inside a value, nested multipart, `text/event-stream`, dialog below ~475 px, long server names, orphaned focus with Split menu open (55/100).
 
 ### Reproduce
 - Env (home): `export CARGO_INCREMENTAL=0 DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer`; `df -g ~` ≥ 30; one cargo at a time.
 - Full gate: `P=$(ls crates | grep '^zenith' | sed 's/^/-p /' | tr '\n' ' '); cargo nextest run ${=P} -p workspace -p zed --no-fail-fast`; `cargo clippy ${=P} -p zed --all-targets -- -D warnings`; `cargo check -p zenith -p zed`.
-- Leak tests: `cargo nextest run -p zenith_http disk_history`. Sabotage: cp `history.rs` aside, trap-restore, change `None if response.truncated` to `None if false && response.truncated`; the 2 truncation tests must FAIL.
+- Masking tests: `cargo nextest run -p zenith_http history`. Sabotage pattern: cp `history.rs` aside, trap-restore, disable one guard, the named tests must FAIL.
+- Review the unreviewed range: `git -C ~/GithubProjects/zed diff eeb2356c32..5635f4bd51`.
 - Disk: `cd ~/GithubProjects/zed && cargo sweep --maxsize 40GB`. Bundle: `script/bundle-mac -i` with the env; verify `ls -lT /Applications/Zenith.app/Contents/MacOS/zed`.
