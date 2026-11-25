@@ -58,7 +58,7 @@ Not written yet. One or more per security rule: traversal, injection, symlinks n
 
 ## M4a decisions (planner + security review, 2026-11-25)
 
-Status: C1 transport merged on fork branch `feat/plan37-m4a-edit-remote` @ `0cffe2ae20` (commits `fa9a6180a3`, `0cffe2ae20`; not yet on `zenith`). C2 index/uploader, C3 panel UI, C4 Compare via `FileDiffView`: not built (this doc, 2026-11-25).
+Status: C1 transport merged on fork branch `feat/plan37-m4a-edit-remote` @ `0cffe2ae20` (commits `fa9a6180a3`, `0cffe2ae20`; not yet on `zenith`). C1 transport, C2 index/uploader and C3 panel UI: built, reviewed, unmerged on branch `feat/plan37-m4a-edit-remote` (2026-11-25). C4 Compare via `FileDiffView`: not built.
 
 - **Write in place.** No temp + rename: rename would reset remote mode/owner and leave a readable temp `.php`.
 - **Deadline scales with size:** 30 s + 1 s per 64 KiB (a flat 30 s truncated uploads). Local upload file is created 0644 in a 0700 dir.
