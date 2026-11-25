@@ -5,3 +5,5 @@
 - [hover card facts](hover-card-facts.md) — hover_popover internals, hook recipe, shared-target sweep flake
 - [PHPantom config facts](phpantom-config-facts.md) — global toml path on macOS; no stubs key in 0.11.1
 - [deploy M1a facts](deploy-m1a-facts.md) — suppaftp 13 smol/rustls API, sftp -D test trick, sftp quoting quirks, hook trap
+- [deploy M4a transport facts](deploy-m4a-transport-facts.md) — sftp ls follows symlinks (list parent), put keeps mode, suppaftp size/mdtm/STOR, sabotage-script trap
+- [deploy M4a C2 facts](deploy-m4a-c2-facts.md) — saved-buffer bytes API, TaskExt import, checkout-hook trap, batched sabotage runs
