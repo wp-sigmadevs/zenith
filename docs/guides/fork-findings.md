@@ -256,6 +256,7 @@ Merged `zenith` @ `217d6dfa88`, pushed. Not seen in the app.
 - **Test windows hide short-window bugs.** Default test window is 1536x1095; use `simulate_resize` for small-window paths. `cx.notify()` is not covered by gpui tests (harness repaints after every simulated event).
 - Reviews: tab-bar end 2 Opus rounds + unreviewed round 3; splitter Opus ×2 NEEDS CHANGES, round 3 unreviewed. Gate-green again missed 4 real bugs.
 - Open: Replace-mode row not counted in Find popup min height (36 px + 8 px gap, `find_in_files.rs:~1342`); splitter and ⋮ have no keyboard route; `update_location` notify-only-on-change untested; dock panes untested.
+- Disk/bundle (home): `cargo sweep` must run inside the fork (`~/GithubProjects/zed`); in the docs repo it fails with "manifest path ... does not exist". After the 217d6dfa88 bundle, sweep + `target/debug/incremental` removal took free space 27 → 62 GiB (72 GiB at 2026-11-25 evening). The installed `Zenith.app` (bundled 2026-11-25 00:32) predates the work-machine commits up to `6ce6200365` (M4a, menus 2-3, lens, rebrand): rebundle before checking them.
 
 ## Session 2026-11-25 (work): inspection widget #11, splitter follow-ups #18
 
