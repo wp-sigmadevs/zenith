@@ -17,3 +17,5 @@
 - [Tab-bar end facts](gpui-tab-bar-end-facts.md) — tab-bar buttons hook, toolbar-id registry, release/draw test traps (zenith_rails tab_bar_end)
 - [Find splitter facts](gpui-find-splitter-facts.md) — preview splitter state, drag/test traps, 3-row min (zenith_search plan 44 #18)
 - [Deploy edit-remote facts](gpui-deploy-edit-remote-facts.md) — prompt test API, invisible-worktree buffer lookup, release flush, leased-workspace action traps (zenith_deploy M4a C3)
+- [PHP status facts](gpui-php-status-facts.md) — PopoverMenu on status item, handle.show lease trap, Tab/SelectNext, debug_selector rows (zenith_php_tools)
+- [Project switcher facts](gpui-project-switcher-facts.md) — leased-workspace test trap, remote test-support dev-dep, window enumeration, hook fmt trap (zenith_title_bar)
