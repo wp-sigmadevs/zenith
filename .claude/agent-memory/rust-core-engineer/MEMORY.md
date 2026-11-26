@@ -8,3 +8,4 @@
 - [deploy M4a transport facts](deploy-m4a-transport-facts.md) — sftp ls follows symlinks (list parent), put keeps mode, suppaftp size/mdtm/STOR, sabotage-script trap
 - [deploy M4a C2 facts](deploy-m4a-c2-facts.md) — saved-buffer bytes API, TaskExt import, checkout-hook trap, batched sabotage runs
 - [deploy M4b core facts](deploy-m4b-core-facts.md) — on_save/upload_mapped design, panel exhaustive-match limit, sabotage.py recipe
+- [deploy C2 facts](deploy-c2-facts.md) — sabotage trap needs absolute path, upload_target binding, test-sabotage isolation

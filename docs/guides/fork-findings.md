@@ -343,3 +343,12 @@ Fork `zenith` @ `4eaacbb784`, pushed, bundled 2026-11-26 00:28 (not seen in the 
 - **Open-project dialog:** `zenith_welcome::open_choice` (decide, apply, dialog, setting `zenith.open_project.window`, Tools row to forget it); File > Open and OpenFiles go through it via 2 lines in `zed.rs`; with the multi-project sidebar off 'This Window' replaces the project (prompts for unsaved buffers). Merged without its Opus reviews on the owner's 'just finish it'.
 - **Switcher:** group rows resolve the last active workspace at click time; remote recent rows use upstream `open_remote_project`; keybinding `secondary-alt-shift-k` for `ToggleProjectSwitcher` (modal path).
 - **Pending:** see HANDOFF §2 plan 44 row (the last 'PENDING' list).
+
+## Session 2026-11-26/27 (home): deploy C1-C3
+
+- Home build env: no `DEVELOPER_DIR` (the work-machine path `Xcode-27.2.0.app` does not exist here). A run that sets it poisons the running sccache server, so `webrtc-sys` keeps failing after the variable is unset; `sccache --stop-server` fixes it. Combined-tree gate on `ddac351b3f`: check 1 min, nextest 730/730 (1 skipped), clippy clean; bundle ~17 min.
+- C1 (`zenith_deploy`, merged locally): `on_save::fingerprint` binds the skip answer and `reconfirmed` to target + anonymous + root + mappings (+ `excluded_local` since C2); `validate_mappings` / `validate_changed` run in `ServerStore::save`, in `resolve` and in the dialog BEFORE any Keychain write; `list_compat` = CWD into the folder, then bare MLSD/LIST (JetBrains meaning UNVERIFIED).
+- C2 (merged locally): `list_compat` only with LIST (`ftp.rs` `use_list && list_compat`); `secrets::upload_target` (= `target_account` + anonymous) binds upload decisions and remote copies; Keychain and session-password sites keep `target_account`.
+- Reviews found real bugs after green gates (again): a refused save had already rewritten the Keychain (validate before `begin_save`); anonymous login was missing from the fingerprint; C3 dialog tabs were keyboard-dead (Tab swallowed by `menu::SelectNext`, Enter on a tab saved and closed the dialog). See agent memory `gpui-deploy-dialog-tabs-facts.md` and the GPUI dialog keyboard note.
+- Known gap carried to C6: `run_upload` checks `target_problem`, then awaits Keychain + connect, and does not re-check after the session opens (5/10, not exploitable, predates C1).
+- `origin/zenith` moved to `1340bb4941` at 2026-11-27 00:33 (+0600) by a push nobody in the session claims (reflog "update by push").

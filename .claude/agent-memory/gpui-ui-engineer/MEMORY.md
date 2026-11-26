@@ -19,3 +19,4 @@
 - [Deploy edit-remote facts](gpui-deploy-edit-remote-facts.md) — prompt test API, invisible-worktree buffer lookup, release flush, leased-workspace action traps (zenith_deploy M4a C3)
 - [PHP status facts](gpui-php-status-facts.md) — PopoverMenu on status item, handle.show lease trap, Tab/SelectNext, debug_selector rows (zenith_php_tools)
 - [Project switcher facts](gpui-project-switcher-facts.md) — leased-workspace test trap, remote test-support dev-dep, window enumeration, hook fmt trap (zenith_title_bar)
+- [Deploy dialog tabs facts](gpui-deploy-dialog-tabs-facts.md) — no tab role in ToggleButtonGroup, editor a11y wrapper, native folder prompt, focus-order test (zenith_deploy C3)
