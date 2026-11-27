@@ -395,4 +395,4 @@ Fork `zenith` @ `dc688c8b70`: 28 `zenith*` crates, 366 tests in `zenith_deploy` 
 | Not code | 33 accounts (brief only), 43 AI terminal (on hold, owner 2026-11-23), 01-03, 13, 16-18, 31 (process, config, docs; `zed-kit/` exists) |
 | Unclear | 28 bookmarks: grep finds only upstream references; check upstream before planning |
 
-Weak spots: only `zenith_splash` (1 test), `zenith_agent_review` (12 tests for 2347 loc) and `zenith_todo` (15 for 2002) are thin. Four crates are not in the umbrella's optional-feature list in `crates/zenith/Cargo.toml`: `zenith_title_bar`, `zenith_local_settings_trust`, and check `zenith_markdown`/`zenith_menus` wiring (listed, so fine) — verify `zenith_title_bar` is wired another way.
+Weak spots: only `zenith_splash` (1 test), `zenith_agent_review` (12 tests for 2347 loc) and `zenith_todo` (15 for 2002) are thin. `zenith_title_bar` and `zenith_local_settings_trust` are not in the umbrella's feature list but are wired directly (`crates/title_bar/Cargo.toml:66`, `crates/project/Cargo.toml:110`), so they always build.
