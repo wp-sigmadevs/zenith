@@ -9,3 +9,4 @@
 - [deploy M4a C2 facts](deploy-m4a-c2-facts.md) — saved-buffer bytes API, TaskExt import, checkout-hook trap, batched sabotage runs
 - [deploy M4b core facts](deploy-m4b-core-facts.md) — on_save/upload_mapped design, panel exhaustive-match limit, sabotage.py recipe
 - [deploy C2 facts](deploy-c2-facts.md) — sabotage trap needs absolute path, upload_target binding, test-sabotage isolation
+- [deploy C6 facts](deploy-c6-facts.md) — confirmation_matches/RECONFIRM design, edit_servers vs by_hand, connect_gate, nextest filter trap

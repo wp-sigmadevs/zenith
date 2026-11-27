@@ -1,0 +1,18 @@
+---
+name: gpui-deploy-c6-facts
+description: zenith_deploy C6 stage 2 - explicit-save subscription (UserSavedItem), autosave/agent/SaveAll test recipes, mapped panel fixture, toast+status-line pattern (fork feat/deploy-c6 from 31e6107736)
+metadata:
+  type: reference
+---
+
+- Explicit save = `workspace::Event::UserSavedItem { pane, item: Box<dyn WeakItemHandle>, save_intent }`, emitted by `Pane::save_item` (pane.rs ~2522) AFTER `item.save` finished. `Pane::autosave_item` (pane.rs ~2530) calls `item.save(autosave: true)` directly: no event. Save All = `Pane::save_item(.., SaveIntent::SaveAll)`: emits the event, so `on_save::is_explicit` must filter it. Subscribe from `observe_new` with `cx.subscribe_in(&cx.entity(), window, ..)` (entity taken before `cx.new`).
+- Test recipes (VisualTestContext): explicit save `workspace.update_in(cx, |ws, w, cx| ws.save_active_item(SaveIntent::Save, w, cx)).await`; autosave `Pane::autosave_item(&editor, ws.project().clone(), w, cx)` (needs the tab dirty); agent write `project.update(cx, |p, cx| p.save_buffer(buffer, cx))`; Save All `cx.dispatch_action(workspace::SaveAll { save_intent: None })`. Editor saves add a final newline (uploaded bytes end in `\n`); `project.save_buffer` does not.
+- A save that really goes through the editor is the only way to make "explicit" tests mean anything: keep `project.save_buffer` for the "agent" case only.
+- Mapped panel fixture: `test_support::workspace_in(app_state, &proj_dir, cx)` (project = real tempdir path that also exists in FakeFs via `insert_tree`) + real files on disk (real-path check) + `store.set_skip_no_baseline_prompt(id, current_fingerprint(id), true)` to skip the AskFirst on first save; `false` brings the prompt back. A hand edit in tests: mutate `store.servers.servers[0].host` (fingerprint stays stale => RECONFIRM).
+- Toast text is not readable in tests (MessageNotification closure). `workspace.has_notification(&NotificationId::unique::<RemoteHostPanel>())` tells a toast is up; panel `say()` also sets `notice` (status line, `Role::Status`) so tests and screen readers read it there.
+- UploadFinished from `upload_mapped` for a never-copied file (Excluded) has no `mapped` entry: `describe` is None, so the Excluded message must be shown before `describe`.
+- After a FAILED write the copy has `uploaded_once` and no stat: a Retry asks "upload anyway?" (AskFirst), it does not write directly.
+- Test project keeps open buffers alive after the tab closes (pane 0 items, buffer still upgradeable): simulate a closed tab with `WeakEntity::new_invalid()` in `mapped_waiting`.
+- gpui delivers `cx.emit` after the emitting update chain ends, so "insert `mapped_waiting` before `upload_mapped`" cannot be proven by a test (inserting after the call but inside the same handler also passes).
+- Sabotage runner (scratchpad `sabotage.py spec.py`): spec = list of (name, [(file, old, new)..], nextest filter); restores each file from memory in `finally`.
+- Round 2: `SaveIntent::Overwrite` is NOT explicit (vim :w! :wa! :wqa! :exi! send it via SaveAll/CloseAllItemsAndPanes). Awaiting `save_active_item(Overwrite)` on a read-only orphan tab hangs in tests: do not await it. `upload_mapped` drops `force` unless the file's `mapped` copy has the same target/remote path; test helpers that pass force=true for a NEW file must give the skip answer instead. `UploadStart::Excluded` = secret file (event follows). A second panel for the "other window" test: `cx.new(|cx| RemoteHostPanel::new(ws, &entity, window, cx))` inside `workspace.update_in`, then `_subscriptions.pop()` to cut its workspace subscription.

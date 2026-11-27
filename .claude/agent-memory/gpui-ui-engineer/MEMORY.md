@@ -20,3 +20,6 @@
 - [PHP status facts](gpui-php-status-facts.md) — PopoverMenu on status item, handle.show lease trap, Tab/SelectNext, debug_selector rows (zenith_php_tools)
 - [Project switcher facts](gpui-project-switcher-facts.md) — leased-workspace test trap, remote test-support dev-dep, window enumeration, hook fmt trap (zenith_title_bar)
 - [Deploy dialog tabs facts](gpui-deploy-dialog-tabs-facts.md) — no tab role in ToggleButtonGroup, editor a11y wrapper, native folder prompt, focus-order test (zenith_deploy C3)
+- [Deploy C4 facts](gpui-deploy-c4-facts.md) — confirmation_holds store invariant, prompt in dialog, one-workspace-per-test trap (zenith_deploy C4)
+- [Deploy C5 facts](gpui-deploy-c5-facts.md) — connect_selected gate, validate_root, task-cancel tests, Enter-on-button keystroke traps (zenith_deploy C5)
+- [Deploy C6 facts](gpui-deploy-c6-facts.md) — UserSavedItem vs autosave/SaveAll test recipes, mapped panel fixture, say() status line, closed-tab sim (zenith_deploy C6 stage 2)
