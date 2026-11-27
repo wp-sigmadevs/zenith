@@ -1,6 +1,6 @@
 # 37 — Deployment (Remote Host tool window + Deployment dialog)
 
-Status: 🟨 IN PROGRESS. Owner decisions made 2026-11-22 (see end). M1a and M1b are merged in fork `zenith` (2026-11-23, Opus-reviewed three rounds; tests/gate not run on the merged tree). M4a (edit remote file, `remote_edit.rs`) is merged on `zenith`. The M4b core (`on_save.rs`, `upload_mapped` in `remote_edit.rs`) is merged, but nothing outside tests calls `upload_mapped` yet: the panel hookup is pending. Not done: M1 exit in a running app, Mappings/Excluded Paths and SFTP password auth (M2), the M4b panel hookup. The owner hit read-only remote files as "can't edit", so M4a was built first. Open review items: `docs/guides/fork-findings.md` § "Review round (2026-11-23, work machine)". Facts verified against fork @ b4130a774e unless marked UNVERIFIED.
+Status: 🟨 IN PROGRESS. Owner decisions made 2026-11-22 (see end). M1a and M1b are merged in fork `zenith` (2026-11-23, Opus-reviewed three rounds; tests/gate not run on the merged tree). M4a (edit remote file, `remote_edit.rs`) is merged on `zenith`. The M4b core (`on_save.rs`, `upload_mapped` in `remote_edit.rs`) and its explicit-save hookup (C6) are merged locally on `zenith` (C3-C6 @ `8e6011b521`; C7 merged locally @ `dc688c8b70`, 366 tests passed, not pushed, not seen in the app, needs a bundle check). Not done: M1 exit in a running app, SFTP password auth (M2). The owner hit read-only remote files as "can't edit", so M4a was built first. Open review items: `docs/guides/fork-findings.md` § "Review round (2026-11-23, work machine)". Facts verified against fork @ b4130a774e unless marked UNVERIFIED.
 
 ## Goal
 
@@ -10,7 +10,8 @@ JetBrains Deployment: upload a local project to a server (FTP/FTPS/SFTP) and bro
 
 - [ ] Remote Host tool window: host dropdown (`<None>`), toolbar (upload, download, sync, disconnect), remote tree (must)
 - [ ] Deployment dialog: connection config — type FTP/FTPS/SFTP, host, port, user, password (Keychain), root path, web URL, passive mode (must)
-- [ ] Planned (plan 44, not built): Locate opened file (needs M2 mappings), "Use LIST command › Compatible with old version" (`list_compat`: for FTP, change into the folder with `CWD`, then send a bare `MLSD` / `LIST` / `LIST -a` with no path argument; field in `AdvancedOptions`, `config.rs`; it applies only with LIST once the next chunk lands, today `ftp.rs` applies it to MLSD too; the JetBrains meaning of the label is UNVERIFIED), root-path Autodetect and remote folder browse, Web path column in Mappings, errors as a child row in the tree. Security review mandatory (browse and Autodetect connect with stored credentials). Spec: [44](44-phpstorm-parity-round1.md) item 9.
+- [ ] Locate: merged locally, unverified in the app (C7): action `zenith_deploy::SelectOpenedFileInRemoteHost` (palette "zenith deploy: select opened file in remote host", no default key). Lists the folders on the way, expands and selects the row; a mapped file resolves through the shown server, or the project default when none is shown; a remote copy selects its own path and refuses if another host is shown; a symlink on the way is named; listing only, no download or upload.
+- [ ] Planned (plan 44, not built): "Use LIST command › Compatible with old version" (`list_compat`: for FTP, change into the folder with `CWD`, then send a bare `MLSD` / `LIST` / `LIST -a` with no path argument; field in `AdvancedOptions`, `config.rs`; it applies only with LIST once the next chunk lands, today `ftp.rs` applies it to MLSD too; the JetBrains meaning of the label is UNVERIFIED), root-path Autodetect and remote folder browse, Web path column in Mappings, errors as a child row in the tree. Security review mandatory (browse and Autodetect connect with stored credentials). Spec: [44](44-phpstorm-parity-round1.md) item 9.
 - [ ] Mappings (local path to remote path) and excluded paths (must)
 - [ ] Edit remote file (M4a): editable cached copy, upload on save through the session (must)
 - [ ] Auto-upload of mapped project files (M4b; off by default; see Security)
@@ -46,7 +47,7 @@ JetBrains Deployment: upload a local project to a server (FTP/FTPS/SFTP) and bro
 | M2 | 4 | — | Mappings and Excluded Paths tabs; SFTP password auth via ssh ControlMaster + askpass (owner approved: M2, not M1), reusing upstream's `askpass` crate (`AskPassSession`) so the password travels over a local socket, not an env var or argv (*verify* API fit); download to project through a mapping. Mappings keyed per project (today a shared server has one mapping list for all projects, `config.rs:95`). Default excludes include `.env` |
 | M3 | 4 | — | upload, download, sync (size + mtime); connection pool and keep-alive; project-panel menu |
 | M4a | 2 | — | Edit remote file (no mappings needed, built first): editable cached copy; upload on every save through the existing session, written in place (no temp name, no rename: that would reset the remote file's mode and owner and leave a readable temp `.php`); remote-changed check with Overwrite / Compare / Cancel; setting upload-on-save default OFF per server with a one-time confirmation; Disconnect refuses to delete the cache while any cached buffer is unsaved or an upload is pending. Needs transport put/stat: built in C1, see "M4a decisions" below |
-| M4b | 2 | — | auto-upload of mapped project files (needs M2); overwrite check by timestamp and size; needs explicit-save vs autosave distinction: answered, `workspace::SaveIntent` (`pane.rs:84`) carries it; `on_save::is_explicit` (`on_save.rs:20`) treats Save / FormatAndSave / SaveWithoutFormat / Overwrite as explicit, never SaveAll, Close, Skip, SaveAs |
+| M4b | 2 | — | auto-upload of mapped project files (core and explicit-save hookup merged locally, C6; not seen in the app); overwrite check by timestamp and size; needs explicit-save vs autosave distinction: answered, `workspace::SaveIntent` (`pane.rs:84`) carries it; `on_save::is_explicit` (`on_save.rs:20`) treats Save / FormatAndSave / SaveWithoutFormat / Overwrite as explicit, never SaveAll, Close, Skip, SaveAs |
 
 M1 exit: in the running app, the owner saves a server as FTPS and as FTP, Test Connection reports OK or the error, the panel browses the root, and a file opens. security-engineer reviews after M1a and before merge.
 
@@ -66,10 +67,20 @@ C1 (merged 2026-11-26): the skip answer and the reconfirmation are bound to a fi
 - **Deadline scales with size:** 30 s + 1 s per 64 KiB (a flat 30 s truncated uploads). Local upload file is created 0644 in a 0700 dir.
 - **`stat` over SFTP:** lists the parent with `ls -lan`, refuses symlinks, treats ambiguous or duplicate lines as errors. FTP cannot detect server-side symlinks: the confirmation says so; plain FTP also says "clear text".
 - **`stat` returned None = ask first, never go ahead.**
-- **Upload gate:** target only from the download index, bytes from the buffer. Upload on save is OFF per server and confirmed once per server per session (session-only in M4a; persisted toggle with M4b). Never read from project settings. No uploads when the project is shared / non-local.
+- **Upload gate:** target only from the download index, bytes from the buffer. Upload on save is OFF per server and confirmed once per server per session (session-only in M4a; persisted per server with C4/C6, bound to a fingerprint). Never read from project settings. No uploads when the project is shared / non-local.
 - **Cache lifetime:** Disconnect and server deletion keep the cache while a copy has a live/dirty buffer or a running upload. Orphan restored copies are read-only.
 - **Security checklist** (from a comparison with Vega, MIT, iRemote-derived, GPL crates; we copy no code): host starting with `-` rejected and `--` used; names with `..` or `/` rejected; project config never trusted for uploads.
 - **Known limits:** stamps have minute resolution; servers older than OpenSSH 9.1 unverified (longname without folder prefix handled by bare-name match); FTPS finish against a real TLS server untested; `put` mode retention verified only on local macOS sftp-server.
+
+## Keymap (`assets/keymaps/zenith.json`, context `RemoteHostPanel`)
+
+| Key | Action |
+|---|---|
+| `tab` | `zenith_deploy::FocusNextControl` (between toolbar controls, no wrap) |
+| `shift-tab` | `zenith_deploy::FocusPreviousControl` (no wrap) |
+| `secondary-r` | `zenith_deploy::Refresh` |
+
+C7 toolbar: row 1 host dropdown + "…"; row 2 Collapse All, Refresh, Disconnect (shown as a red ✕), Select Opened File; server line "Name (host)" under the toolbar.
 
 ## Risks
 

@@ -23,3 +23,4 @@
 - [Deploy C4 facts](gpui-deploy-c4-facts.md) — confirmation_holds store invariant, prompt in dialog, one-workspace-per-test trap (zenith_deploy C4)
 - [Deploy C5 facts](gpui-deploy-c5-facts.md) — connect_selected gate, validate_root, task-cancel tests, Enter-on-button keystroke traps (zenith_deploy C5)
 - [Deploy C6 facts](gpui-deploy-c6-facts.md) — UserSavedItem vs autosave/SaveAll test recipes, mapped panel fixture, say() status line, closed-tab sim (zenith_deploy C6 stage 2)
+- [Deploy C7 facts](gpui-deploy-c7-facts.md) — toolbar tab_index/Enter/Tab traps, ListItem overflow, session-mutex list ordering, locate tests (zenith_deploy C7)

@@ -364,3 +364,10 @@ Fork `zenith` @ `4eaacbb784`, pushed, bundled 2026-11-26 00:28 (not seen in the 
 - Remote folder Browse is an inline list (not a modal); only real directories (symlinks never followed); `connect_selected` is the only place the dialog starts a login (source test enforces one `(store.connect)(` and one `open_session(`).
 - `origin/zenith` moved again: `1340bb4941` → `8e6011b521` at 2026-11-27 20:27 (+0600), "update by push", by nobody in the session (C1-C6 now on origin).
 - C7 plan (Opus): PhpStorm's toolbar has "Select Opened File in Remote Host" (locate icon); JetBrains' ✕ is Close, not Disconnect; "Edit Local File" (remote → local) is a context-menu item, not built.
+
+## Session 2026-11-27 (home): deploy C7
+
+- A stale listing selects the sibling row: re-list the folder before selecting.
+- Mapped entries come back from `copy_ref`.
+- A disabled `ButtonLike` keeps focus, so an Enter handler needs an enabled guard.
+- Role-less nodes are not exposed to VoiceOver.
