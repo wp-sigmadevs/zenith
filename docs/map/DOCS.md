@@ -14,7 +14,7 @@ Open the row for your task, then only the file it links.
 | Stock-Zed config layer (plan 03) | [zed-kit/README.md](../../zed-kit/README.md) | install.sh, templates, zed-php-fmt, verify checklist |
 | Engineer agents, routing, hooks | [.claude/agents/README.md](../../.claude/agents/README.md) | Roster and per-phase routing |
 | Target look | [mockups/zenith-v2.html](../../mockups/zenith-v2.html) | v1 = all features; v2 = target; plan 14 |
-| Owner app-check screenshots | [docs/screenshots/2026-11-27-round2/](../screenshots/2026-11-27-round2/) | 7 PNGs behind plan 44 Round 2 (R1-R9); FTP host and username hidden in the Deployment one |
+| Owner app-check screenshots | [docs/screenshots/2026-11-27-round2/](../screenshots/2026-11-27-round2/) | 13 PNGs behind plan 44 Round 2 (R1-R15); FTP host and username hidden in the Deployment one |
 | Brand assets | [brand/](../../brand/) | Icon SVG + PNGs |
 | gh accounts, repo admin, licences, issue tracking | [docs/guides/repo-admin.md](../guides/repo-admin.md) | Which account for admin tasks |
 | Releasing a build, GPL source offer, Zed trademark/credit, Zed cloud terms | [docs/guides/release-compliance.md](../guides/release-compliance.md) | Checklist before sharing any build |

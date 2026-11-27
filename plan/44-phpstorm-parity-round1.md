@@ -179,7 +179,7 @@ Owner ran `/Applications/Zenith.app` (`dc688c8b70`) on `easy-demo-importer` and 
 | R14 | "Opening a file does not activate the colour theme; close and open again and it is activated" | `openai.ts` first open: italic teal property names, no yellow type names, blame lens "smrafiz" and "2 weeks ago" shown; after close and reopen: red properties, full colouring | ⬜ same family as R12; reproducible per file, so look for a first-open path that skips the language-server or theme step |
 | R15 | (seen only) git blame lens and "N usages" hints | `5 usages  smrafiz` above the function, `smrafiz, 2 weeks ago` at the caret line in the first open only | ⬜ check they stay in the final state; the reopened view has no author hint |
 
-Screenshots R11-R15 are kept local (scratchpad `images/9-15.png`), NOT in the repo: they show a private project's `.env` file and path.
+Screenshots R11-R15: `docs/screenshots/2026-11-27-round2/` (`r11-trust-dialog`, `r12-first-open-anthropic-ts`, `r12-later-anthropic-ts`, `r13-env-colouring`, `r14-first-open-openai-ts`, `r14-reopened-openai-ts`). Owner confirmed the `.env` holds no real values.
 
 Later items from the owner: add here as they arrive.
 
