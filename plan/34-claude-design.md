@@ -113,6 +113,8 @@ Seen twice: (1) Restricted Mode on the docs repo, trust dialog open, no file ope
 | Islands | rounded panels, darker window | pixel row across panel/editor: board and app both show a ~1 px step, no wide gap; rounding not checked | UNVERIFIED (looks off or subtle) |
 | Trust dialog | not on the board | "Unrecognized Project" modal on first open | n/a (upstream) |
 
+Second pass, same day (`easy-demo-importer` with 4 tabs: readme.md, Bootstrap.php, composer.json, package.json): the threads sidebar was NOT there this time (it appeared in the first two launches; cause UNKNOWN, probably per-window state of the upstream agent panel). Seen and fine: tab bar with file icons and a distinct active tab, back/forward arrows, `+ ⊞ ⤢ ⋮` buttons at the right, amber gutter bulb at line 1 of `package.json` (JSON, not only PHP), fold arrows, minimap, JetBrains Mono, left/right rails. Still different from the board: no tab close buttons shown, no breadcrumb row, `PHP 8.4` in the status bar of a JSON file (project-level, board says `PHP 8.5 · docker`), no language-server item, no problems count, gutter has no hook icons. NOT audited, because I cannot press keys or click: Search Everywhere, Deployment dialog, Remote Host panel, menus, hover cards, settings, agent panel, welcome screen, debugger and run UI.
+
 Next: owner decides the threads sidebar, breadcrumbs placement, the row tint, the missing language-server status item; a PHP file with a WordPress hook call is needed to see gutter icons (plan 19).
 
 ## Per-board method
