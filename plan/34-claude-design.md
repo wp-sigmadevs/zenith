@@ -88,6 +88,26 @@ Make the running editor match `mockups/claude-design/` (11 boards, Driftwood dar
 | Status bar agent message "Claude Code waiting for review" | ⬜ plan 22 |
 | Collab button (not on board) | hidden by default |
 
+## Live check of the Main board (2026-11-27, `/Applications/Zenith.app` @ `dc688c8b70`; first look since 2026-11-18)
+
+Seen: the window in Restricted Mode on the docs repo, trust dialog open, NO file open, so the editor, tab bar, gutter and status-bar right side were not seen. Board rendered headless from `Main.dc.html`. Screenshots: scratchpad only (not committed).
+
+| Board element | Board | Running app | State |
+|---|---|---|---|
+| Left column | 36 px rail + Project panel | an extra ~230 px upstream agent **threads sidebar** ("Search threads…", per-project "No threads yet") left of the rail and Project | DIFFERS (upstream feature, not on the board; decide: hide or keep) |
+| Title bar, left | Zenith mark, project badge + name, branch | "Search threads…" box, "Restricted Mode" pill, badge showing "2" + `zenith`, branch glyph twice (`main` `main`); no Zenith mark | DIFFERS (mark missing here; duplicate branch; "2" badge unexplained) |
+| Title bar, middle | Search everywhere centred | Search everywhere right of centre | DIFFERS (position follows the threads box) |
+| Title bar, right | run config ▾ ▶ 🐞, chip "1 running · review 2", settings | "Add Configuration…" ▶ 🐞 + refresh, chip "Agents" (no count), settings | DIFFERS (counts wait for plan 22) |
+| Rails | 36 px icon rails both sides | present both sides (3 top + 3 foot left, 4 right) | MATCHES |
+| Project header and root | "Project ··· ×", root with path | "Project + ⤢ ⋮ −", root `zenith ~/GithubProjects` | MATCHES (extra buttons) |
+| File icons, tree | Archipelago | Archipelago | MATCHES |
+| Islands | rounded panels, gap, darker window | flat, no visible gap or rounding | DIFFERS or off (plan 10a says on with rails; check the setting) |
+| Colour | navy-blue dark | neutral grey dark (dialog dim may account for part) | UNVERIFIED (re-shoot with the dialog closed) |
+| Status bar | problems, PHP version, language server, position, UTF-8, LF, indent, agent message | left icons only, right empty (no file open) | UNVERIFIED |
+| Trust dialog | not on the board | "Unrecognized Project" modal on first open | n/a (upstream) |
+
+Next: owner opens a mapped PHP project, trusts it, opens a file; re-shoot app and board at the same size; then decide threads sidebar, duplicate branch, "2" badge.
+
 ## Per-board method
 
 1. Read the board (`mockups/claude-design/<Board>.dc.html`).
