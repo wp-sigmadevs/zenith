@@ -371,3 +371,28 @@ Fork `zenith` @ `4eaacbb784`, pushed, bundled 2026-11-26 00:28 (not seen in the 
 - Mapped entries come back from `copy_ref`.
 - A disabled `ButtonLike` keeps focus, so an Enter handler needs an enabled guard.
 - Role-less nodes are not exposed to VoiceOver.
+
+## Plan vs code audit (2026-11-27, home; static: crates, tests, grep; nothing run in an app except the launch screenshots in plan/34)
+
+Fork `zenith` @ `dc688c8b70`: 28 `zenith*` crates, 366 tests in `zenith_deploy` alone, 0 plans closed by an app check since 2026-11-24.
+
+| Plans | State (crate, loc / tests) |
+|---|---|
+| 37 deploy | `zenith_deploy` 21405 / 366. C1-C7 merged and pushed; not seen in an app. Open: Edit Local File, global key for Select Opened, show-hidden, SFTP password auth (M2), sync (M3) |
+| 14, 34 UI (title bar, search, rails, navbar, menus, look, splash) | `zenith_search` 8660 / 84, `zenith_title_bar` 2847 / 34, `zenith_menus` 3785 / 52, `zenith_navbar` 1017 / 11, `zenith_rails` 687 / 14, `zenith_look` 1272 / 14, `zenith_splash` 286 / 1. Live check: colours match the board; status bar, breadcrumbs, threads sidebar, tree tint differ (plan/34 table) |
+| 05 local history | `zenith_local_history` 5819 / 105 |
+| 08 HTTP client | `zenith_http` 5596 / 90 |
+| 09 refactoring | `zenith_refactor` 2838 / 30 |
+| 19 WordPress | `zenith_wordpress` 3119 / 41 (gutter hook icons and inline WP warning still not on screen) |
+| 20 templates | `zenith_templates` 2709 / 35 |
+| 21 inspections | `zenith_inspections` 4405 / 71 |
+| 23 agent review | `zenith_agent_review` 2347 / 12 (M1 only) |
+| 25 Laravel, 40 Next.js, 26 postfix | `zenith_laravel` 3205 / 46, `zenith_nextjs` 2797 / 41, `zenith_postfix` 1421 / 14 |
+| 27 TODO, 04 scratches, 32 welcome, 39 external libraries | `zenith_todo` 2002 / 15, `zenith_scratches` 2049 / 21, `zenith_welcome` 2827 / 38, `zenith_external_libraries` 1077 / 15 |
+| 35, 41, 42 PHP toolchain and language server | `zenith_php_tools` 6368 / 78 |
+| 44 parity round 1 | `zenith_problems` 2019 / 19, `zenith_folds` 321 / 8, `zenith_markdown` 1558 / 16, `zenith_local_settings_trust` 231 / 4 |
+| NOT BUILT (no `zenith_*` crate, grep finds nothing) | 06 IDE/MCP server, 07 test runner, 10 git merge/rebase, 11 Docker interpreters, 12 database tool, 15 `zenith_core` (secrets still in `zenith_deploy`), 22 agent worktrees, 24 package manager, 29 settings UI, 30 profiler/coverage, 36 notifications, 38 terminal |
+| Not code | 33 accounts (brief only), 43 AI terminal (on hold, owner 2026-11-23), 01-03, 13, 16-18, 31 (process, config, docs; `zed-kit/` exists) |
+| Unclear | 28 bookmarks: grep finds only upstream references; check upstream before planning |
+
+Weak spots: only `zenith_splash` (1 test), `zenith_agent_review` (12 tests for 2347 loc) and `zenith_todo` (15 for 2002) are thin. Four crates are not in the umbrella's optional-feature list in `crates/zenith/Cargo.toml`: `zenith_title_bar`, `zenith_local_settings_trust`, and check `zenith_markdown`/`zenith_menus` wiring (listed, so fine) — verify `zenith_title_bar` is wired another way.
