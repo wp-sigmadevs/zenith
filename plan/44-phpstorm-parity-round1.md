@@ -173,6 +173,14 @@ Owner ran `/Applications/Zenith.app` (`dc688c8b70`) on `easy-demo-importer` and 
 | R9 | (seen only) Open Project dialog: "Open "wordpress" (~/WPProjects/wordpress) in: This Window / New Window / Attach / Cancel" with "Don't ask again" | dialog matches PhpStorm's wording | ✅ looks right, check Attach works |
 | R10 | (seen only) PHP dialog shows `Apply` and `OK` both; language level "Auto (composer.json)", CLI "Auto (first PHP found)" | | ✅ present |
 
+| R11 | "Improve this modal UI" (Restricted Mode / "Unrecognized Project" trust dialog) | Header band with warning icon and path, grey help text, three bullet lines with faint dashes, "Trust all projects in" checkbox + path box, "Stay in Restricted Mode ^⌘S" and "Trust and Continue ↵" | ⬜ redesign like PhpStorm's "Trust and Open Project?" (clear title, bold primary button, secondary links, readable bullets) |
+| R12 | "Opening a file delays sometimes to activate all features and themes" | `anthropic.ts` just after open: usage hints and bulb are there but property names in italic teal; later the same file shows red properties, yellow types, other colours | ⬜ UNKNOWN cause. Hypothesis (UNVERIFIED): the colours come from two sources (tree-sitter first, language-server semantic tokens later), so the file visibly changes colour when the language server answers. Measure open-to-final-colour time; check whether the server starts on open or on first edit |
+| R13 | ".env theme colouring problem" | `.env`: first keys orange, first comments grey; from `CRON_SECRET="node -e "console.log(...)""` on, every following comment and key is the string green | ⬜ BUG probably the grammar: nested quotes `"... "..." ..."` make the rest of the file one string. Check what PhpStorm shows (its .env plugin ends the value at the line end); fix the dotenv grammar or add a line-based rule |
+| R14 | "Opening a file does not activate the colour theme; close and open again and it is activated" | `openai.ts` first open: italic teal property names, no yellow type names, blame lens "smrafiz" and "2 weeks ago" shown; after close and reopen: red properties, full colouring | ⬜ same family as R12; reproducible per file, so look for a first-open path that skips the language-server or theme step |
+| R15 | (seen only) git blame lens and "N usages" hints | `5 usages  smrafiz` above the function, `smrafiz, 2 weeks ago` at the caret line in the first open only | ⬜ check they stay in the final state; the reopened view has no author hint |
+
+Screenshots R11-R15 are kept local (scratchpad `images/9-15.png`), NOT in the repo: they show a private project's `.env` file and path.
+
 Later items from the owner: add here as they arrive.
 
 Screenshots for R1-R9: `docs/screenshots/2026-11-27-round2/` (Deployment one has host and username blacked out because this repo is public).
