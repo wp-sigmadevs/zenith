@@ -155,3 +155,22 @@ Diagnostic summary API; `language_selector::Toggle`; case / fold / git action na
 ## Doc fixes when building
 
 plan 14 (zenith_menus, tab-bar end, 40 px, 12 px tabs), plan 02 (app-menu swap call sites), plan 34 (markdown switcher, inspection widget placement), plan 37 checklist (Locate, LIST-compat, Autodetect, browse root, web path, error rows), plan 39 (PHP modal built; item 7 spec; Scratches label reversed), plan 41 (4a / 4b), fork-findings (`set_custom_context_menu` as the editor-menu hook; `default.json` code_lens line now `:471` "on").
+
+## Round 2: owner app check of the C1-C7 bundle (2026-11-27 night, home)
+
+Owner ran `/Applications/Zenith.app` (`dc688c8b70`) on `easy-demo-importer` and sent 8 screenshots. Nothing below is investigated or built. Owner: "others will follow when I have the time". Rule: every item ends with an app check, and the target look is PhpStorm exactly.
+
+| # | Report (owner's words, condensed) | Seen in the screenshot | State |
+|---|---|---|---|
+| R1 | "No file opened: it's just blank, need something" | Empty editor area beside the Project tree, no hints | ⬜ build an empty state like PhpStorm's (Search Everywhere, Go to File, Recent Files, Open Project hints with their keys) |
+| R2 | "Improve the UI, I need exactly like PhpStorm" | Project tree: whole rows tinted for ignored/changed paths, header buttons `+ ⤢ ⤡ ⋮ −`, title bar shows two branches (`main` / `master`) | ⬜ compare with a PhpStorm window (capture read-only, see memory `screenshot-running-app`); decide the tree tint, the double branch (which is which, UNKNOWN) |
+| R3 | "Not exactly like PhpStorm" (Deployment dialog, Recent Files, Search Everywhere, Terminal) | Deployment dialog: plain-text tabs, Type as text choices (FTPS FTP SFTP), red "Insecure: plain FTP" banner always shown for FTP, Test Connection bottom left. Recent Files: left list shows raw action names truncated ("Scr zenith_scratches::T…", "Rer zenith_deploy::Tog…") and "WordPress Hook" cut by its key. Search Everywhere: Hooks tab greyed, footer "Open In Right Split". Terminal: tab "easy-demo-importer — zsh", toolbar `+ ✦ ⊞ ⤢` | ⬜ BUG: tool-window rows without a name show the action id; ⬜ each dialog to be matched against PhpStorm's (Settings > Deployment, Recent Files, Search Everywhere, Terminal) |
+| R4 | "Where is the omz style theme?" (terminal) | Plain zsh prompt `srafiz@SMs-Mac-mini easy-demo-importer %`, "Last login… You have new mail." | ⬜ UNKNOWN cause: login shell runs but no oh-my-zsh theme visible (is `~/.zshrc` read? is the font missing prompt glyphs?). Check `$SHELL`, `ZSH`, the terminal's env and font before guessing |
+| R5 | "Scratch files do not save automatically like PhpStorm, need Cmd-S; I want auto save" | n/a | ⬜ scratches (plan 04): save on edit/idle/focus loss, no prompt |
+| R6 | "An added external library has no Remove in the right-click" | n/a | ⬜ plan 39: add "Remove" (and check Rename/Reveal) to the External Libraries node's context menu |
+| R7 | "Removing an added directory in Configure Include Path does not remove it" | PHP dialog: Include Path list in green with a monitor icon per row; the `−` button is greyed; `Apply` greyed | ⬜ BUG (plans 35/39): select a row, `−` stays disabled or the removal is not saved; reproduce first |
+| R8 | "I AirDropped the app to a colleague; PHPCS does not work in his app" | n/a | ⬜ UNKNOWN: likely per-user tool paths (settings hold `/Users/srafiz/.local/share/zenith/tools/...`), tools not bundled, or Gatekeeper quarantine on the AirDrop copy. Check where `phpcs` is looked up and what the bundle ships |
+| R9 | (seen only) Open Project dialog: "Open "wordpress" (~/WPProjects/wordpress) in: This Window / New Window / Attach / Cancel" with "Don't ask again" | dialog matches PhpStorm's wording | ✅ looks right, check Attach works |
+| R10 | (seen only) PHP dialog shows `Apply` and `OK` both; language level "Auto (composer.json)", CLI "Auto (first PHP found)" | | ✅ present |
+
+Later items from the owner: add here as they arrive.
