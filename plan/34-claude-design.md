@@ -90,7 +90,7 @@ Make the running editor match `mockups/claude-design/` (11 boards, Driftwood dar
 
 ## Live check of the Main board (2026-11-27, `/Applications/Zenith.app` @ `dc688c8b70`; first look since 2026-11-18)
 
-Seen: the window in Restricted Mode on the docs repo, trust dialog open, NO file open, so the editor, tab bar, gutter and status-bar right side were not seen. Board rendered headless from `Main.dc.html`. Screenshots: scratchpad only (not committed).
+Seen twice: (1) Restricted Mode on the docs repo, trust dialog open, no file open; (2) `easy-demo-importer` with `easy-demo-importer.php` open (already trusted). Title bar: badge `EI easy-demo-importer`, branch shown once (the duplicate was Restricted Mode). Board rendered headless from `Main.dc.html`. Screenshots: scratchpad only (not committed).
 
 | Board element | Board | Running app | State |
 |---|---|---|---|
@@ -102,11 +102,18 @@ Seen: the window in Restricted Mode on the docs repo, trust dialog open, NO file
 | Project header and root | "Project ··· ×", root with path | "Project + ⤢ ⋮ −", root `zenith ~/GithubProjects` | MATCHES (extra buttons) |
 | File icons, tree | Archipelago | Archipelago | MATCHES |
 | Islands | rounded panels, gap, darker window | flat, no visible gap or rounding | DIFFERS or off (plan 10a says on with rails; check the setting) |
-| Colour | navy-blue dark | neutral grey dark (dialog dim may account for part) | UNVERIFIED (re-shoot with the dialog closed) |
-| Status bar | problems, PHP version, language server, position, UTF-8, LF, indent, agent message | left icons only, right empty (no file open) | UNVERIFIED |
+| Colour | Driftwood | Driftwood; sampled pixels equal (editor 40,44,52 vs 41,44,51; panel 43,45,48 both). The earlier "greyer" look was the trust dialog's dim | MATCHES |
+| Status bar, right | PHP 8.5 · docker, language server name + state, 13:9, UTF-8, LF, 4 spaces | `1:1`, LF, PHP, UTF-8, 4 spaces, `PHP 8.4`; no language-server item; the left shows the file path as a breadcrumb and "Checking for updates to emmet-language-server…" | DIFFERS (no LS name/state, no docker tag) |
+| Status bar, left | ⚠ problems count, "Claude Code waiting for review" | panel toggle + clock icons, path breadcrumb; no problems count | DIFFERS (agent message waits for plan 22) |
+| Breadcrumbs | row under the tab bar | none under the tab; the path is in the status bar | DIFFERS |
+| Tab bar | tabs with file icons | one tab with the PHP icon, back/forward arrows left, `+ ⊞ ⤢ ⋮` right | MATCHES (extra buttons) |
+| Tree git tint | none; "agent" tag on agent-edited files | whole rows tinted orange/green for ignored/untracked/changed paths (`.claude`, `.idea`, `dist`, `composer.lock`, `tests`) | DIFFERS (board has no row tint) |
+| Gutter, hints | hook icons, inline WP warning, parameter pills | none seen (line 1-45 of the plugin header; plan 19 pending) | NOT BUILT |
+| Minimap, font, line numbers | minimap, JetBrains Mono | minimap, mono font | MATCHES |
+| Islands | rounded panels, darker window | pixel row across panel/editor: board and app both show a ~1 px step, no wide gap; rounding not checked | UNVERIFIED (looks off or subtle) |
 | Trust dialog | not on the board | "Unrecognized Project" modal on first open | n/a (upstream) |
 
-Next: owner opens a mapped PHP project, trusts it, opens a file; re-shoot app and board at the same size; then decide threads sidebar, duplicate branch, "2" badge.
+Next: owner decides the threads sidebar, breadcrumbs placement, the row tint, the missing language-server status item; a PHP file with a WordPress hook call is needed to see gutter icons (plan 19).
 
 ## Per-board method
 
