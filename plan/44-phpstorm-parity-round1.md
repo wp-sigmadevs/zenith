@@ -174,3 +174,5 @@ Owner ran `/Applications/Zenith.app` (`dc688c8b70`) on `easy-demo-importer` and 
 | R10 | (seen only) PHP dialog shows `Apply` and `OK` both; language level "Auto (composer.json)", CLI "Auto (first PHP found)" | | ✅ present |
 
 Later items from the owner: add here as they arrive.
+
+Screenshots for R1-R9: `docs/screenshots/2026-11-27-round2/` (Deployment one has host and username blacked out because this repo is public).
